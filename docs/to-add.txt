@@ -1,0 +1,16 @@
+1- confirm password field in registration.
+2- edit otp fields to highlight the focused field out of 5.
+3- let the user go back and edit registration info.
+4- clean the representation of language.
+5- store encrypted token.
+6- optimize stateless vs stateful layouts.
+7- make title container in FormPageContainer more centered.
+8- edit image null.
+9- add enum for district. add translation text for district.
+10- remove the streets.
+11- unify enum names.
+12- make images in HomeSearchCard have the same border radius
+13- markers shows selected and non-selected.
+
+to test:
+1- sign up without image.

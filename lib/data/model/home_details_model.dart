@@ -1,0 +1,52 @@
+
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:vaea_mobile/data/enums/district_enum.dart';
+import 'package:vaea_mobile/data/enums/floor_enum.dart';
+import 'package:vaea_mobile/data/enums/home_type.dart';
+
+/// It represents the properties of the home details info.
+class HomeDetailsModel {
+
+  late int listingId;
+  late int buildingId;
+  late HomeType listingType;
+  late DistrictEnum district;
+  late String street;
+  late double lat;
+  late double lon;
+  late int bedrooms;
+  late int bathrooms;
+  late int area;
+  late FloorEnum floor;
+  late List<String> imagesUrls;
+  late String listingTitle;
+  late int price;
+
+  /// It constructs the instance based on the decoded map from the search result.
+  HomeDetailsModel.fromMap(Map<String, dynamic> decodedMap) {
+    listingId = decodedMap["unit_id"];
+    buildingId = decodedMap["building_id"];
+    listingType = HomeTypeParser.parse(decodedMap["unit_type"]);
+    district = DistrictEnumParser.parse(decodedMap["district"]);
+    street = decodedMap["street"];
+    lat = decodedMap["lat"];
+    lon = decodedMap["lon"];
+    bedrooms = decodedMap["bedroms"];
+    bathrooms = decodedMap["bathrooms"];
+    area = decodedMap["area"];
+    floor = FloorEnumParser.parse(decodedMap["floor"]);
+    imagesUrls = List<String>.from( decodedMap["urls"] as List);
+    listingTitle = decodedMap["listing_title"];
+    price = decodedMap["price"];
+  }
+
+  HomeDetailsModel({
+    required this.listingId, required this.buildingId, required this.listingType,
+    required this.district, required this.street, required this.lat, required this.lon,
+    required this.bedrooms, required this.bathrooms,  required this.area,
+    required this.imagesUrls, required this.floor,
+    required this.listingTitle, required this.price});
+
+}
