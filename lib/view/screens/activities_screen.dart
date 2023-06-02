@@ -29,7 +29,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
               currPageTitle: AppLocalizations.of(context)!.activities,
             ),
             body: Text("Comming soon"),
-            bottomNavigationBar: BottomNavigation(currentIndex: 2),
+            bottomNavigationBar: BottomNavigation(currentIndex: 1),
           );
         }
     );

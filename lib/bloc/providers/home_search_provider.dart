@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:vaea_mobile/data/dto/home_search_dto.dart';
+import 'package:vaea_mobile/data/enums/gender.dart';
 import 'package:vaea_mobile/data/model/home_details_model.dart';
 import 'package:vaea_mobile/data/repo/home_search_repo.dart';
 
@@ -16,7 +17,7 @@ class HomeSearchProvider extends ChangeNotifier {
   HomeSearchRepo _repo = HomeSearchRepo();
 
   // Search
-  HomeSearchDto filters = HomeSearchDto(pager: 0, sortingOption: 0);
+  HomeSearchDto filters = HomeSearchDto(gender: Gender.male, pager: 0, sortingOption: 0);
   List<SearchedHomeListingModel>? searchedListings;
 
   // home details

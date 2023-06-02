@@ -3,6 +3,8 @@ import 'package:vaea_mobile/data/enums/city_name.dart';
 import 'package:vaea_mobile/data/enums/district_enum.dart';
 import 'package:vaea_mobile/data/enums/home_type.dart';
 
+import '../enums/gender.dart';
+
 /// It stores the fields of the query rest api request that is sent
 /// for searching for available housing units.
 class HomeSearchDto {
@@ -13,6 +15,7 @@ class HomeSearchDto {
   DistrictEnum? district;
   int? bedrooms;
   int? bathrooms;
+  Gender gender;
   int sortingOption;
   /// it starts from 0 and increments by 1
   int pager;
@@ -23,7 +26,8 @@ class HomeSearchDto {
       this.district,
       this.bedrooms,
       this.bathrooms,
-        required this.sortingOption,
+      required this.gender,
+      required this.sortingOption,
       required this.pager
       });
 
@@ -35,6 +39,7 @@ class HomeSearchDto {
       "district": (district == null) ? '' : DistrictEnumSerializer.serialize(district!),
       "bedrooms": (bedrooms == null) ? '' : bedrooms,
       "bathrooms": (bathrooms == null) ? '' : bathrooms,
+      "gender": GenderSerializer.serialize(gender),
       "sorting": sortingOption,
       "pager": pager
     };

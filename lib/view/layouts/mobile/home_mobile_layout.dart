@@ -92,13 +92,15 @@ class _HomeMobileLayoutState extends State<HomeMobileLayout> {
     return Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(height: imageTopMargin),
           buildImageSection(),
           SizedBox(height: textVerticalMargin),
           buildTextSection(),
           SizedBox(height: textVerticalMargin),
-          buildActionBtnSection()
+          buildActionBtnSection(),
+          SizedBox(height: textVerticalMargin)
         ],
       ),
     );
@@ -107,14 +109,16 @@ class _HomeMobileLayoutState extends State<HomeMobileLayout> {
 
   /// It is a helper method to buildNonRentBody. It builds the image section.
   Widget buildImageSection() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(imageWidth * 0.04),
-      child: Image.asset(
-        "assets/images/before_booking_home.png",
-        width: imageWidth,
-        height: imageHeight,
-        fit: BoxFit.fill,
-        alignment: Alignment.center,
+    return Expanded(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(imageWidth * 0.04),
+        child: Image.asset(
+          "assets/images/before_booking_home.png",
+          width: imageWidth,
+          //height: imageHeight,
+          fit: BoxFit.fill,
+          alignment: Alignment.center,
+        ),
       ),
     );
   }

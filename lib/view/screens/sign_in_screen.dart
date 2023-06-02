@@ -53,8 +53,14 @@ class _SignInScreenState extends State<SignInScreen> {
       SignInDto requestDto = SignInDto(emailAddress: emailAddress, password: password);
       String userLanguage = await profileProvider.signIn(requestDto);
       settingsProvider.changeUserLanguage(userLanguage);
-      
-      Navigator.of(context).pushReplacementNamed(RoutesMapper.getScreenRoute(ScreenName.home));
+
+      if (profileProvider.targetScreenAfterSignIn == null) {
+        Navigator.of(context).pushReplacementNamed(RoutesMapper.getScreenRoute(ScreenName.home));
+      } else {
+        Navigator.of(context).pushReplacementNamed(RoutesMapper.getScreenRoute(profileProvider.targetScreenAfterSignIn!));
+        profileProvider.targetScreenAfterSignIn = null;
+      }
+
     } on InternetConnectionException catch(e) {
       showDialog(
           context: context,

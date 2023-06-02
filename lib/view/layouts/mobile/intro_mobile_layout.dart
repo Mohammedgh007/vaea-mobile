@@ -9,11 +9,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 /// It structures the view layout for the IntroScreen
 class IntroMobileLayout extends StatefulWidget {
 
-  void Function() handleClickSignUp;
+  void Function() handleClickGetStarted;
 
   IntroMobileLayout({
     super.key,
-    required this.handleClickSignUp
+    required this.handleClickGetStarted
   });
 
   @override
@@ -32,18 +32,21 @@ class _IntroMobileLayoutState extends State<IntroMobileLayout> {
       builder: (BuildContext ctx, BoxConstraints constraints) {
         breakpoint = Breakpoint.fromConstraints(constraints);
 
-        return Scaffold(
-          body: Coast(
-            controller: coastController,
-            beaches: [
-              buildFirstBeach(constraints),
-              buildSecondBeach(constraints),
-              buildThirdBeach(constraints)
-            ],
-            observers: [
-              CrabController(),
-            ],
-          )
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: Scaffold(
+            body: Coast(
+              controller: coastController,
+              beaches: [
+                buildFirstBeach(constraints),
+                buildSecondBeach(constraints),
+                buildThirdBeach(constraints)
+              ],
+              observers: [
+                CrabController(),
+              ],
+            )
+          ),
         );
       },
     );
@@ -102,8 +105,8 @@ class _IntroMobileLayoutState extends State<IntroMobileLayout> {
         PrimaryBtn(
           breakpoint: breakpoint,
           layoutConstraints: constraints,
-          handleClick: widget.handleClickSignUp,
-          buttonText: AppLocalizations.of(context)!.signUp
+          handleClick: widget.handleClickGetStarted,
+          buttonText: AppLocalizations.of(context)!.getStarted
         ),
         SizedBox(height: constraints.maxHeight * 0.015),
         Row(

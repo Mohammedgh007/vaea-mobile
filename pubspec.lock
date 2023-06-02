@@ -129,6 +129,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.1"
+  easy_stepper:
+    dependency: "direct main"
+    description:
+      name: easy_stepper
+      sha256: "77f3ab4ee3c867b5a2236bf712abb08fed2b1c533cf24cf3fcd46c2821072ffd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.2+1"
   event_bus:
     dependency: "direct main"
     description:
@@ -231,7 +239,7 @@ packages:
     source: hosted
     version: "1.0.0"
   flutter_launcher_icons:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: flutter_launcher_icons
       sha256: "526faf84284b86a4cb36d20a5e45147747b7563d921373d4ee0559c54fcdbcea"
@@ -373,6 +381,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  lottie:
+    dependency: transitive
+    description:
+      name: lottie
+      sha256: "23522951540d20a57a60202ed7022e6376bed206a4eee1c347a91f58bd57eb9f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.2"
   maps_launcher:
     dependency: "direct main"
     description:
@@ -413,6 +429,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  moyasar:
+    dependency: "direct main"
+    description:
+      name: moyasar
+      sha256: daa2ff973bf72d711fa78b01b30872f8ea4b0231932fb870a5e79dd49a1c0e96
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   nested:
     dependency: transitive
     description:
@@ -485,6 +509,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.6"
+  pay:
+    dependency: transitive
+    description:
+      name: pay
+      sha256: f32c846b1373ae46cfca47298d89ebfa865927ed226b40e1f5fc22c68dc7b018
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
+  pay_android:
+    dependency: transitive
+    description:
+      name: pay_android
+      sha256: "51fb98aaaf1ce3058b62b451fbb0ce980675128912cc2d117cf0be113a8334b5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.10"
+  pay_ios:
+    dependency: transitive
+    description:
+      name: pay_ios
+      sha256: "04c12e73d404e69f8a6e3cc0a3261d0b3980007a7bd6a2de2940b856d3de9d4c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.8"
+  pay_platform_interface:
+    dependency: transitive
+    description:
+      name: pay_platform_interface
+      sha256: "12580f960066855d4821c4eaf2ef77093c0b20bce623db33104f76db16642e3b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
   petitparser:
     dependency: transitive
     description:
@@ -493,6 +549,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.0"
+  photo_view:
+    dependency: "direct main"
+    description:
+      name: photo_view
+      sha256: "8036802a00bae2a78fc197af8a158e3e2f7b500561ed23b4c458107685e645bb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.14.0"
   pin_code_fields:
     dependency: "direct main"
     description:
@@ -770,6 +834,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  webview_flutter:
+    dependency: transitive
+    description:
+      name: webview_flutter
+      sha256: "1a37bdbaaf5fbe09ad8579ab09ecfd473284ce482f900b5aea27cf834386a567"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.0"
+  webview_flutter_android:
+    dependency: transitive
+    description:
+      name: webview_flutter_android
+      sha256: "1acea8def62592123e2fbbca164ed8681a98a890bdcbb88f916d5b4a22687759"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.7.0"
+  webview_flutter_platform_interface:
+    dependency: transitive
+    description:
+      name: webview_flutter_platform_interface
+      sha256: "78715dc442b7849dbde74e92bb67de1cecf5addf95531c5fb474e72f5fe9a507"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
+  webview_flutter_wkwebview:
+    dependency: transitive
+    description:
+      name: webview_flutter_wkwebview
+      sha256: "4646bb68297803bdbb96d46853e8fcb560d6cb5e04153fa64581535767875dfe"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.4.3"
   win32:
     dependency: transitive
     description:

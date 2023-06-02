@@ -91,6 +91,14 @@ class _LoadingLogoAnimatedState extends State<LoadingLogoAnimated> with TickerPr
     }
   }
 
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _circlesRotationAnimController.stop();
+  }
+
   @override
   Widget build(BuildContext context) {
 

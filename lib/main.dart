@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:breakpoint/breakpoint.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:vaea_mobile/bloc/providers/booking_provider.dart';
 import 'package:vaea_mobile/bloc/providers/home_search_provider.dart';
 import 'package:vaea_mobile/bloc/providers/launch_requirements_provider.dart';
 import 'package:vaea_mobile/bloc/providers/profile_provider.dart';
@@ -20,10 +23,10 @@ import 'package:vaea_mobile/view/screens/spash_screen.dart';
 void main() async{
   // loading env variables
   if (kReleaseMode) {
-    await dotenv.load(fileName: ".env.prod");
+    await dotenv.load(fileName: ".env.dev");
     //await dotenv.load(fileName: ".env.test");
   } else {
-    await dotenv.load(fileName: ".env.prod");
+    await dotenv.load(fileName: ".env.dev");
   }
 
   runApp( MyApp() );
@@ -37,12 +40,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // Retrieve locale from the system information.
+    Locale myLocale = window.locale;
 
     return MultiProvider(
       providers: getProvidersList(),
       child: Consumer<UserSettingsProvider>(
         builder: (context, value, child) => MaterialApp(
           title: 'VAEA',
+          debugShowCheckedModeBanner: false,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: [
             Locale('en'),
@@ -54,7 +60,7 @@ class MyApp extends StatelessWidget {
           onGenerateTitle: (ctx) => AppLocalizations.of(ctx)!.appName,
           theme: ThemeData(
             colorScheme: getColorScheme(),
-            fontFamily: "Montserrat",
+            fontFamily: (myLocale.languageCode == "en") ? "Kollektif" : "29LTZawi",
           ),
           home: SplashScreen(),
           onGenerateRoute: (settings) {
@@ -78,29 +84,42 @@ class MyApp extends StatelessWidget {
       ChangeNotifierProvider(create: (_) => LaunchRequirementsProvider()),
       ChangeNotifierProvider(create: (_) => ProfileProvider()),
       ChangeNotifierProvider(create: (_) => HomeSearchProvider()),
+      ChangeNotifierProvider(create: (_) => BookingProvider()),
     ];
   }
   
   /// It is a helper method for main. It sets the color scheme theme.
   ColorScheme getColorScheme() {
     return const ColorScheme(
-      primary: Color(0xFF1D2C59),
-      onPrimary: Color(0xffffffff),
-      primaryContainer: Color(0xFF1B1B1F),
-      onPrimaryContainer: Color(0xFF00164D),
-      secondary: Color(0xff6DA9DE),
-      onSecondary: Color(0xFF010101),
-      secondaryContainer: Color(0xFFC1DAF1),
-      onSecondaryContainer: Color(0xFF1C4F7D),
-      tertiary: Color(0xFFB8E6F3),
-      onTertiary: Color(0xFF343434),
+      // primary: Color(0xFF1D2C59),
+      // onPrimary: Color(0xffffffff),
+      // primaryContainer: Color(0xFF1B1B1F),
+      // onPrimaryContainer: Color(0xFF00164D),
+      // secondary: Color(0xff6DA9DE),
+      // onSecondary: Color(0xFF010101),
+      // secondaryContainer: Color(0xFFC1DAF1),
+      // onSecondaryContainer: Color(0xFF1C4F7D),
+      // tertiary: Color(0xFFB8E6F3),
+      // onTertiary: Color(0xFF343434),
+      primary: Color.fromRGBO(87, 78, 174, 1),
+      onPrimary: Color(0xFFFFFFFF),
+      primaryContainer: Color(0xFFE4DFFF),
+      onPrimaryContainer: Color(0xFF150066),
+      secondary: Color.fromRGBO(107, 136, 243, 1),
+      onSecondary: Color(0xFFFFFFFF),
+      secondaryContainer: Color(0xFFDCE1FF),
+      onSecondaryContainer: Color(0xFF001551),
+      tertiary: Color.fromRGBO(242, 153, 113, 1),
+      onTertiary: Color(0xFFFFFFFF),
+      tertiaryContainer: Color(0xFFFFDBCD),
+      onTertiaryContainer: Color(0xFF360F00),
       background: Color(0xFFFFFFFF),
-      onBackground: Color(0xFF1B1B1F),
+      onBackground: Color.fromRGBO(52, 52, 52, 1),
       outline: Color(0xFF8F909A),
       surface: Color(0xFFF5F5F5),
       onSurface: Color(0xFF1B1B1F),
       onSurfaceVariant: Color(0xFF45464F),
-      error: Color(0xFFBA1A1A),
+      error: Color.fromRGBO(247, 105, 132, 1),
       onError: Color(0xFFFFFFFF),
       brightness: Brightness.light,
       outlineVariant: Color.fromRGBO(82, 82, 96, 1.0)// medium emphasis text

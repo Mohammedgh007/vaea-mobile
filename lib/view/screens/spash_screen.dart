@@ -47,9 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
       requirementsProvider.checkLaunchRequirements(),
       settingsProvider.loadSettings(),
       profileProvider.loadProfileInfo()
-    ]).catchError((e) {
-      // TODO
-    });
+    ]);
 
     // notify the view for the result.
     if (requirementsProvider.hasInternetConnection! && requirementsProvider.useMinimumAppVersion!) { // it is ready to launch
@@ -68,8 +66,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void handlePassingRequirements() {
     if (settingsProvider.userSettingsModel!.languageCode == null) { // the user is new
       Navigator.of(context).pushNamed(RoutesMapper.getScreenRoute(ScreenName.introScreen));
-    } else if (profileProvider.profileModel == null) { // the user is signed out
-      Navigator.of(context).pushNamed(RoutesMapper.getScreenRoute(ScreenName.signIn));
     } else {
       Navigator.of(context).pushNamed(RoutesMapper.getScreenRoute(ScreenName.home));
     }

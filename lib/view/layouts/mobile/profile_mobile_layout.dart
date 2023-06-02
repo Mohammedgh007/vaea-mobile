@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:vaea_mobile/routes_mapper.dart';
+import 'package:vaea_mobile/view/widgets/alerts/account_termination_alert.dart';
 import 'package:vaea_mobile/view/widgets/buttons/icon_text_btn.dart';
 import 'package:vaea_mobile/view/widgets/buttons/primary_button.dart';
 import 'package:vaea_mobile/view/widgets/containers/profile_page_container.dart';
@@ -111,7 +112,12 @@ class _ProfileMobileLayoutState extends State<ProfileMobileLayout> {
       Divider(height: btnSpacer, color: Theme.of(context).colorScheme.outline),
       buildLanguageBtn(),
       Divider(height: btnSpacer, color: Theme.of(context).colorScheme.outline),
-      buildSignOutBtn()
+      buildTermsConditionBtn(),
+      Divider(height: btnSpacer, color: Theme.of(context).colorScheme.outline),
+      buildSignOutBtn(),
+      Divider(height: btnSpacer, color: Theme.of(context).colorScheme.outline),
+      buildTerminateBtn(),
+
     ];
   }
 
@@ -163,6 +169,18 @@ class _ProfileMobileLayoutState extends State<ProfileMobileLayout> {
   }
 
 
+  /// It is a helper method to buildSpacedBtns. It builds terms and condition button.
+  Widget buildTermsConditionBtn() {
+    return IconTextBtn(
+      breakpoint: breakpoint,
+      layoutConstraints: layoutConstraints,
+      handleClick: () => Navigator.of(context).pushNamed(RoutesMapper.getScreenRoute(ScreenName.termsConditions)),
+      buttonText: AppLocalizations.of(context)!.termAndCondition,
+      iconData: Icons.policy_outlined
+    );
+  }
+
+
   /// It is a helper method to buildSpacedBtns. It builds sign out button.
   Widget buildSignOutBtn() {
     return IconTextBtn(
@@ -171,6 +189,21 @@ class _ProfileMobileLayoutState extends State<ProfileMobileLayout> {
       handleClick: widget.handleClickSignOut,
       buttonText: AppLocalizations.of(context)!.signOut,
       iconData: Icons.logout,
+      btnColor: Theme.of(context).colorScheme.error,
+    );
+  }
+
+
+  /// It is a helper method to buildSpacedBtns. It builds account termination button.
+  Widget buildTerminateBtn() {
+    return IconTextBtn(
+      breakpoint: breakpoint,
+      layoutConstraints: layoutConstraints,
+      handleClick: () {
+        showDialog(context: context, builder: (_) => AccountTerminationAlert());
+      },
+      buttonText: AppLocalizations.of(context)!.deleteAccount,
+      iconData: Icons.person_remove_rounded,
       btnColor: Theme.of(context).colorScheme.error,
     );
   }

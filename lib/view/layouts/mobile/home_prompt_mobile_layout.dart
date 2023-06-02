@@ -7,17 +7,20 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:vaea_mobile/view/widgets/navigation/bottom_navigation.dart';
 
 import '../../../data/enums/city_name.dart';
+import '../../../data/enums/gender.dart';
 import '../../widgets/buttons/rect_img_button.dart';
 
 /// It handles the ui interaction for HomePromptScreen
 class HomePromptMobileLayout extends StatefulWidget {
 
   void Function(HomeType selectedHomeType) saveHomeType;
+  void Function(Gender selectedGender) saveTenantGender;
   void Function(CityName selectedCityName) submitCityName;
 
   HomePromptMobileLayout({
     super.key,
     required this.saveHomeType,
+    required this.saveTenantGender,
     required this.submitCityName
   });
 
@@ -28,21 +31,20 @@ class HomePromptMobileLayout extends StatefulWidget {
 
 class _HomePromptMobileLayout extends State<HomePromptMobileLayout> {
 
-  int currPageView = 0;
-
   late Breakpoint breakpoint;
   late BoxConstraints layoutConstraints;
-  final PageController pageController = PageController();
+  final PageController pageController = PageController(initialPage: 0);
+
 
   // dimensions
   late double topPadding;
   late double horizontalPadding;
   late double homeTypeImageSize;
   late double homeTypeTextAreaWidth;
-  late double homeTypeIconSize;
+  late double TypeOptionIconSize;
   late double cityNameImageSize;
   late double? selectPromptFontSize;
-  late double? homeTypeTitleFontSize;
+  late double? typeOptionTitleFontSize;
   late double? homeTypeSubtitleFontSize;
   late double? selectPromptSpacer;
   late double? homeTypesOptionsSpacer;
@@ -54,10 +56,10 @@ class _HomePromptMobileLayout extends State<HomePromptMobileLayout> {
       horizontalPadding = layoutConstraints.maxWidth * 0.04;
       homeTypeImageSize = layoutConstraints.maxWidth * 0.25;
       homeTypeTextAreaWidth = layoutConstraints.maxWidth * 0.46;
-      homeTypeIconSize = layoutConstraints.maxWidth * 0.13;
+      TypeOptionIconSize = layoutConstraints.maxWidth * 0.13;
       cityNameImageSize = layoutConstraints.maxWidth * 0.43;
       selectPromptFontSize = Theme.of(context).textTheme.headlineMedium!.fontSize;
-      homeTypeTitleFontSize = Theme.of(context).textTheme.titleLarge!.fontSize;
+      typeOptionTitleFontSize = Theme.of(context).textTheme.titleLarge!.fontSize;
       homeTypeSubtitleFontSize = Theme.of(context).textTheme.bodySmall!.fontSize;
       selectPromptSpacer = layoutConstraints.maxHeight * 0.055;
       homeTypesOptionsSpacer = layoutConstraints.maxHeight * 0.026;
@@ -66,10 +68,10 @@ class _HomePromptMobileLayout extends State<HomePromptMobileLayout> {
       horizontalPadding = layoutConstraints.maxWidth * 0.04;
       homeTypeImageSize = layoutConstraints.maxWidth * 0.25;
       homeTypeTextAreaWidth = layoutConstraints.maxWidth * 0.46;
-      homeTypeIconSize = layoutConstraints.maxWidth * 0.13;
+      TypeOptionIconSize = layoutConstraints.maxWidth * 0.13;
       cityNameImageSize = layoutConstraints.maxWidth * 0.43;
       selectPromptFontSize = Theme.of(context).textTheme.headlineMedium!.fontSize;
-      homeTypeTitleFontSize = Theme.of(context).textTheme.headlineSmall!.fontSize;
+      typeOptionTitleFontSize = Theme.of(context).textTheme.headlineSmall!.fontSize;
       homeTypeSubtitleFontSize = Theme.of(context).textTheme.bodyMedium!.fontSize;
       selectPromptSpacer = layoutConstraints.maxHeight * 0.055;
       homeTypesOptionsSpacer = layoutConstraints.maxHeight * 0.026;
@@ -78,10 +80,10 @@ class _HomePromptMobileLayout extends State<HomePromptMobileLayout> {
       horizontalPadding = layoutConstraints.maxWidth * 0.04;
       homeTypeImageSize = layoutConstraints.maxWidth * 0.25;
       homeTypeTextAreaWidth = layoutConstraints.maxWidth * 0.46;
-      homeTypeIconSize = layoutConstraints.maxWidth * 0.13;
+      TypeOptionIconSize = layoutConstraints.maxWidth * 0.13;
       cityNameImageSize = layoutConstraints.maxWidth * 0.43;
       selectPromptFontSize = Theme.of(context).textTheme.headlineMedium!.fontSize;
-      homeTypeTitleFontSize = Theme.of(context).textTheme.headlineSmall!.fontSize;
+      typeOptionTitleFontSize = Theme.of(context).textTheme.headlineSmall!.fontSize;
       homeTypeSubtitleFontSize = Theme.of(context).textTheme.bodyMedium!.fontSize;
       selectPromptSpacer = layoutConstraints.maxHeight * 0.055;
       homeTypesOptionsSpacer = layoutConstraints.maxHeight * 0.026;
@@ -106,9 +108,10 @@ class _HomePromptMobileLayout extends State<HomePromptMobileLayout> {
           controller: pageController,
           children: [
             buildHomeTypePrompt(),
-            buildCityNamePrompt()
+            buildTenantGenderPrompt(),
+            buildCityNamePrompt(),
           ],
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
         ),
         bottomNavigationBar: BottomNavigation(currentIndex: 0),
       );
@@ -123,26 +126,29 @@ class _HomePromptMobileLayout extends State<HomePromptMobileLayout> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            AppLocalizations.of(context)!.selectHomeType,
-            style: TextStyle(
-              fontSize: Theme.of(context).textTheme.headlineMedium!.fontSize,
-              fontWeight: Theme.of(context).textTheme.headlineMedium!.fontWeight,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              AppLocalizations.of(context)!.selectHomeType,
+              style: TextStyle(
+                fontSize: Theme.of(context).textTheme.headlineMedium!.fontSize,
+                fontWeight: Theme.of(context).textTheme.headlineMedium!.fontWeight,
+              ),
             ),
           ),
           SizedBox(height: selectPromptSpacer),
-          buildHomeTypeOption(
+          buildTypeOption(
             "assets/images/entire_home_option.png",
             AppLocalizations.of(context)!.entireHomeTitle,
             AppLocalizations.of(context)!.entireHomeSubtitle,
-            HomeType.private
+            () => handleSelectHomeType(HomeType.private)
           ),
           SizedBox(height: homeTypesOptionsSpacer),
-          buildHomeTypeOption(
+          buildTypeOption(
             "assets/images/share_home_option.png",
             AppLocalizations.of(context)!.sharedHomeTitle,
             AppLocalizations.of(context)!.sharedHomeSubtitle,
-            HomeType.shared
+            () => handleSelectHomeType(HomeType.shared)
           ),
         ],
       ),
@@ -150,17 +156,55 @@ class _HomePromptMobileLayout extends State<HomePromptMobileLayout> {
   }
 
 
-  /// It builds a home type option card
-  Widget buildHomeTypeOption(String imagePath, String homeTypeTitle,
-      String homeTypeSubtitle, HomeType optionType) {
+  /// It builds the page view for the tenant gender
+  Widget buildTenantGenderPrompt() {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.only(top: topPadding, right: horizontalPadding, left: horizontalPadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              AppLocalizations.of(context)!.selectTenantGender,
+              style: TextStyle(
+                fontSize: Theme.of(context).textTheme.headlineMedium!.fontSize,
+                fontWeight: Theme.of(context).textTheme.headlineMedium!.fontWeight,
+              ),
+            ),
+          ),
+          SizedBox(height: selectPromptSpacer),
+          buildTypeOption(
+            "assets/images/male_tenant_option.png",
+            AppLocalizations.of(context)!.maleTenantGenderTitle,
+            AppLocalizations.of(context)!.maleTenantGenderSubTitle,
+            () => handleSelectTenantGender(Gender.male)
+          ),
+          SizedBox(height: homeTypesOptionsSpacer),
+          buildTypeOption(
+            "assets/images/female_tenant_option.png",
+            AppLocalizations.of(context)!.femaleTenantGenderTitle,
+            AppLocalizations.of(context)!.femaleTenantGenderSubTitle,
+            () => handleSelectTenantGender(Gender.female)
+          ),
+        ],
+      ),
+    );
+  }
+
+
+  /// It builds a home type option card and a tenant gender type card
+  Widget buildTypeOption(String imagePath, String homeTypeTitle,
+      String homeTypeSubtitle, void Function() handleSelect) {
     return GestureDetector(
-      onTap: () => handleSelectHomeType(optionType),
+      onTap: handleSelect,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          buildHomeTypeImage(imagePath),
-          buildHomeTypeText(homeTypeTitle, homeTypeSubtitle),
+          buildTypeOptionImage(imagePath),
+          buildTypeOptionText(homeTypeTitle, homeTypeSubtitle),
           buildOptionIcon()
         ],
       ),
@@ -168,8 +212,8 @@ class _HomePromptMobileLayout extends State<HomePromptMobileLayout> {
   }
 
 
-  /// It is a helper method for buildHomeTypeOption. It builds the leading image.
-  Widget buildHomeTypeImage(String imagePath) {
+  /// It is a helper method for buildTypeOption. It builds the leading image.
+  Widget buildTypeOptionImage(String imagePath) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(homeTypeImageSize * 0.1),
       child: Image.asset(
@@ -183,7 +227,7 @@ class _HomePromptMobileLayout extends State<HomePromptMobileLayout> {
 
 
   /// It is a helper method for buildHomeTypeOption. It builds the text area section.
-  Widget buildHomeTypeText(String title, String subTitle) {
+  Widget buildTypeOptionText(String title, String subTitle) {
     return ConstrainedBox(
       constraints: BoxConstraints(
         minHeight: homeTypeImageSize,
@@ -192,19 +236,21 @@ class _HomePromptMobileLayout extends State<HomePromptMobileLayout> {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          SizedBox(height: 5),
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
               title,
               style: TextStyle(
-                fontSize: homeTypeTitleFontSize,
+                fontSize: typeOptionTitleFontSize,
                 fontWeight: Theme.of(context).textTheme.headlineSmall!.fontWeight,
                 color: Theme.of(context).colorScheme.primary
               ),
             ),
           ),
+          SizedBox(height: 5),
           Text(
             subTitle,
             softWrap: true,
@@ -223,12 +269,12 @@ class _HomePromptMobileLayout extends State<HomePromptMobileLayout> {
   /// It is a helper method for buildHoeTypeOption.
   Widget buildOptionIcon() {
     return Container(
-        width: homeTypeIconSize,
-        height: homeTypeIconSize * 0.62,
+        width: TypeOptionIconSize,
+        height: TypeOptionIconSize * 0.62,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primary,
-          borderRadius: BorderRadius.circular(homeTypeIconSize * 0.2)
+          borderRadius: BorderRadius.circular(TypeOptionIconSize * 0.2)
         ),
         child: (AppLocalizations.of(context)!.localeName == "ar")
             ? Transform(
@@ -237,13 +283,13 @@ class _HomePromptMobileLayout extends State<HomePromptMobileLayout> {
             child: Icon(
               Icons.arrow_right_alt_rounded,
               color: Theme.of(context).colorScheme.onPrimary,
-              size: homeTypeIconSize * 0.62,
+              size: TypeOptionIconSize * 0.62,
             )
         )
             : Icon(
           Icons.arrow_right_alt_rounded,
           color: Theme.of(context).colorScheme.onPrimary,
-          size: homeTypeIconSize * 0.62,
+          size: TypeOptionIconSize * 0.62,
         )
     );
   }
@@ -325,8 +371,18 @@ class _HomePromptMobileLayout extends State<HomePromptMobileLayout> {
   /// It handles selecting home type option by saving the input then take the
   /// user to the next PageView.
   void handleSelectHomeType(HomeType selectedType) {
-    pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeInBack);
+    pageController.jumpToPage(1);
     widget.saveHomeType(selectedType);
+    debugPrint("ffff ${selectedType.toString()}");
+
+  }
+
+
+  /// It handles selecting the tenant gender option by saving the input then take
+  /// the user to the next page.
+  void handleSelectTenantGender(Gender selectedGender) {
+    pageController.jumpToPage(2);
+    widget.saveTenantGender(selectedGender);
   }
 
 

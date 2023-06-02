@@ -3,6 +3,7 @@ import 'package:breakpoint/breakpoint.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vaea_mobile/data/enums/home_type.dart';
 
 import '../../../data/model/searched_home_listing_model.dart';
 import '../../formatters/district_formatter.dart';
@@ -34,10 +35,12 @@ class _SearchedHomeCardState extends State<SearchedHomeCard> {
   int currImageIndex = 0;
 
   // dimensions
-  late double imageSize;
-  late double stepperIconSize;
-  late double imageTextSpacer; // between title and image
-  late double textSpacer;
+  late double cardWidth;
+  late double imageWidth;
+  late double textsImageSpacer;
+  late double textRowsSpacer;
+
+
 
   @override
   void initState() {
@@ -50,20 +53,20 @@ class _SearchedHomeCardState extends State<SearchedHomeCard> {
   /// It is a helper method for initState(). It initializes the dimension fields.
   void setupDimensions() {
     if (widget.breakpoint.device.name == "smallHandset") {
-      imageSize = widget.layoutConstraints.maxWidth * 0.95;
-      stepperIconSize = widget.layoutConstraints.maxWidth * 0.03;
-      imageTextSpacer = widget.layoutConstraints.maxHeight * 0.0098;
-      textSpacer = widget.layoutConstraints.maxHeight * 0.0033;
+      cardWidth = widget.layoutConstraints.maxWidth * 0.92;
+      imageWidth = widget.layoutConstraints.maxWidth * 0.24;
+      textsImageSpacer = widget.layoutConstraints.maxWidth * 0.032;
+      textRowsSpacer = widget.layoutConstraints.maxHeight * 0.012;
     } else if (widget.breakpoint.device.name == "mediumHandset") {
-      imageSize = widget.layoutConstraints.maxWidth * 0.95;
-      stepperIconSize = widget.layoutConstraints.maxWidth * 0.03;
-      imageTextSpacer = widget.layoutConstraints.maxHeight * 0.0098;
-      textSpacer = widget.layoutConstraints.maxHeight * 0.0033;
+      cardWidth = widget.layoutConstraints.maxWidth * 0.92;
+      imageWidth = widget.layoutConstraints.maxWidth * 0.24;
+      textsImageSpacer = widget.layoutConstraints.maxWidth * 0.032;
+      textRowsSpacer = widget.layoutConstraints.maxHeight * 0.012;
     } else {
-      imageSize = widget.layoutConstraints.maxWidth * 0.92;
-      stepperIconSize = widget.layoutConstraints.maxWidth * 0.03;
-      imageTextSpacer = widget.layoutConstraints.maxHeight * 0.0098;
-      textSpacer = widget.layoutConstraints.maxHeight * 0.0033;
+      cardWidth = widget.layoutConstraints.maxWidth * 0.92;
+      imageWidth = widget.layoutConstraints.maxWidth * 0.24;
+      textsImageSpacer = widget.layoutConstraints.maxWidth * 0.032;
+      textRowsSpacer = widget.layoutConstraints.maxHeight * 0.012;
     }
   }
 
@@ -72,69 +75,129 @@ class _SearchedHomeCardState extends State<SearchedHomeCard> {
 
     return GestureDetector(
       onTap: () => widget.handleClickCard(currImageIndex),
-      child: SizedBox(
-        width: imageSize,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildImageViewSection(),
-            SizedBox(height: imageTextSpacer),
-            buildListingTitle(),
-            SizedBox(height: textSpacer),
-            buildListingRooms(),
-            SizedBox(height: textSpacer),
-            buildListingDistrict(),
-            SizedBox(height: textSpacer),
-            buildListingPrice()
-          ],
+      child: Container(
+        width: cardWidth,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.background,
+          borderRadius: BorderRadius.circular(cardWidth * 0.05),
+          border: Border.all(width: 0.1, color: Color.fromRGBO(151, 151, 151, 1)),
+          boxShadow: [BoxShadow(blurRadius: 40, offset: Offset(0, 4), color: Color.fromRGBO(0, 0, 0, 0.05))]
+        ),
+        child: IntrinsicHeight(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              buildImageSection(),
+              SizedBox(width: textsImageSpacer),
+              buildTextsSection()
+            ],
+          ),
         ),
       ),
     );
   }
 
 
-  /// It builds the image view section in the card.
-  Widget buildImageViewSection() {
-    List<Widget> imageViews = [ ];
-    bool isRTL = AppLocalizations.of(context)!.localeName == "ar";
-    for (int i = 0; i < widget.listingModel.imagesUrls.length; i++) {
-      imageViews.add(
-        Stack(
-          children: [
-            Positioned.fill(
-              left: (isRTL) ? null : widget.layoutConstraints.maxWidth - imageSize,
-              right:  (isRTL) ? widget.layoutConstraints.maxWidth - imageSize : null,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(imageSize * 0.05),
-                child: Image.network(
-                  widget.listingModel.imagesUrls[i],
-                  width: imageSize,
-                  height: imageSize,
-                  fit: BoxFit.fill,
-                ),
-              ),
-            )
-          ],
-        )
+  /// It builds the image section in the card
+  Widget buildImageSection() {
+    bool isLangRTL = AppLocalizations.of(context)!.localeName == "ar";
+    BorderRadius languageBorderRadius;
+    if (isLangRTL) {
+      languageBorderRadius = BorderRadius.only(
+        topRight: Radius.circular(cardWidth * 0.05),
+        bottomRight: Radius.circular(cardWidth * 0.05),
+      );
+    } else {
+      languageBorderRadius = BorderRadius.only(
+        topLeft: Radius.circular(cardWidth * 0.05),
+        bottomLeft: Radius.circular(cardWidth * 0.05),
       );
     }
 
-    return Hero(
-      tag: "transition-home${widget.listingModel.listingId}-details",
-      child: Container(
-        height: imageSize,
-        width: imageSize,
-        alignment: Alignment.center,
-        child: CarouselSlider(
-          items: imageViews,
-          options: CarouselOptions(
-            onPageChanged: (int nextPage, CarouselPageChangedReason reason) {
-              currImageIndex = nextPage;
-            },
-            viewportFraction: 1,
-            height: imageSize,
-          )
-        )
+    return ClipRRect(
+      borderRadius: languageBorderRadius,
+      child: Image.network(
+        widget.listingModel.imagesUrls[0],
+        width: imageWidth,
+        fit: BoxFit.fill,
+      ),
+    );
+  }
+
+
+  /// It builds the whole text section that to the right of the image.
+  Widget buildTextsSection() {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: textRowsSpacer),
+          buildUnitDetailsRow(),
+          SizedBox(height: textRowsSpacer),
+          buildListingTitle(),
+          SizedBox(height: textRowsSpacer),
+          buildAvailabilityAndDistrictText(),
+          SizedBox(height: textRowsSpacer),
+        ],
+      ),
+    );
+  }
+
+
+  /// It builds the details of the apartment that are bathrooms, bedrooms, and price.
+  Widget buildUnitDetailsRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        buildUnitRooms(),
+        Spacer(),
+        buildUnitPrice(),
+        SizedBox(width: textsImageSpacer)
+      ],
+    );
+  }
+
+
+  /// It builds the number of bathrooms and bedrooms
+  Widget buildUnitRooms() {
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            widget.listingModel.bedrooms.toString(),
+            style: TextStyle(
+              fontSize: Theme.of(context).textTheme.labelMedium!.fontSize,
+              color: Theme.of(context).colorScheme.outlineVariant
+            ),
+          ),
+          Icon(Icons.bed_rounded, size: imageWidth * 0.25, color: Theme.of(context).colorScheme.outlineVariant),
+          Text(
+            widget.listingModel.bathrooms.toString(),
+            style: TextStyle(
+                fontSize: Theme.of(context).textTheme.labelMedium!.fontSize,
+                color: Theme.of(context).colorScheme.outlineVariant
+            ),
+          ),
+          Icon(Icons.bathtub_outlined, size: imageWidth * 0.2, color: Theme.of(context).colorScheme.outlineVariant),
+        ],
+      ),
+    );
+  }
+
+  /// It builds the unit price.
+  Widget buildUnitPrice() {
+    String outputStr = (widget.listingModel.listingType == HomeType.private)
+      ? "${widget.listingModel.price} ${AppLocalizations.of(context)!.sar}/ ${AppLocalizations.of(context)!.unit}"
+      : "${widget.listingModel.price} ${AppLocalizations.of(context)!.sar} / ${AppLocalizations.of(context)!.roomUnitCard}";
+
+    return Text(
+      outputStr,
+      style: TextStyle(
+        fontSize: Theme.of(context).textTheme.labelMedium!.fontSize,
+        color: Theme.of(context).colorScheme.primary
       ),
     );
   }
@@ -143,84 +206,37 @@ class _SearchedHomeCardState extends State<SearchedHomeCard> {
   /// It builds the listing title text.
   Widget buildListingTitle() {
     return FittedBox(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: widget.layoutConstraints.maxWidth - imageSize ),
-        child: Text(
-          widget.listingModel.listingTitle,
-          overflow: TextOverflow.fade,
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: Theme.of(context).textTheme.titleLarge!.fontSize
-          ),
+      child: Text(
+        widget.listingModel.listingTitle,
+        overflow: TextOverflow.fade,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: Theme.of(context).textTheme.titleMedium!.fontSize
         ),
       ),
     );
   }
 
 
-  /// It builds the listing rooms text.
-  Widget buildListingRooms() {
-    String bedroomText = (widget.listingModel.bedrooms == 1)
-        ? "${AppLocalizations.of(context)!.bedroom} ${widget.listingModel.bedrooms}"
-        : "${AppLocalizations.of(context)!.bedrooms} ${widget.listingModel.bedrooms}";
-    String bathroomText = (widget.listingModel.bathrooms == 1)
-        ? "${AppLocalizations.of(context)!.bathroom} ${widget.listingModel.bathrooms}"
-        : "${AppLocalizations.of(context)!.bathrooms} ${widget.listingModel.bathrooms}";
+  /// It builds the availability and district text.
+  Widget buildAvailabilityAndDistrictText() {
+    String districtOutput = (AppLocalizations.of(context)!.localeName == "ar")
+      ? "${AppLocalizations.of(context)!.districtLabel} ${DistrictFormatter.mapEnumToText(context, widget.listingModel.district)}"
+      : "${DistrictFormatter.mapEnumToText(context, widget.listingModel.district)} ${AppLocalizations.of(context)!.districtLabel}";
+    String availabilityOutput = (widget.listingModel.unitMaxCapacity == 1)
+      ? ""
+      : "\n${widget.listingModel.unitAvailableCapacity} ${AppLocalizations.of(context)!.availableUnitCard} ${AppLocalizations.of(context)!.outOfUnitCard} ${widget.listingModel.unitMaxCapacity}";
+    String output = "$districtOutput$availabilityOutput";
 
-    return FittedBox(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: widget.layoutConstraints.maxWidth - imageSize ),
-        child: Text(
-          "${bedroomText} / ${bathroomText}",
-          overflow: TextOverflow.fade,
-          style: TextStyle(
-            fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
-            fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
-            color: Theme.of(context).colorScheme.outlineVariant
-          ),
-        ),
+    return Text(
+      output,
+      style: TextStyle(
+        fontSize: Theme.of(context).textTheme.labelMedium!.fontSize,
+        color: Theme.of(context).colorScheme.outlineVariant
       ),
     );
   }
 
 
-  /// It builds the listing district text.
-  Widget buildListingDistrict() {
-    String districtText = (AppLocalizations.of(context)!.localeName == "ar")
-        ? "${AppLocalizations.of(context)!.districtLabel} ${DistrictFormatter.mapEnumToText(context, widget.listingModel.district)}"
-        : "${DistrictFormatter.mapEnumToText(context, widget.listingModel.district)} ${AppLocalizations.of(context)!.districtLabel}";
-    return FittedBox(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: widget.layoutConstraints.maxWidth - imageSize ),
-        child: Text(
-          districtText,
-          overflow: TextOverflow.fade,
-          style: TextStyle(
-            fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
-            fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
-            color: Theme.of(context).colorScheme.outlineVariant
-          ),
-        ),
-      ),
-    );
-  }
-
-  /// It builds the listing price text.
-  Widget buildListingPrice() {
-    String text = "${widget.listingModel.price} ${AppLocalizations.of(context)!.sar} ${AppLocalizations.of(context)!.monthly}";
-    return FittedBox(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: widget.layoutConstraints.maxWidth - imageSize ),
-        child: Text(
-          text,
-          overflow: TextOverflow.fade,
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: Theme.of(context).textTheme.titleSmall!.fontSize
-          ),
-        ),
-      ),
-    );
-  }
 
 }

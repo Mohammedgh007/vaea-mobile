@@ -43,21 +43,21 @@ class VAEARadioBtnField<T> extends StatelessWidget {
   void setupDimensions() {
     if (breakpoint.device.name == "smallHandset") {
       fieldWidth = (width != null) ?  width! : layoutConstraints.maxWidth * 0.92;
-      labelFieldSpacer = layoutConstraints.maxHeight * 0.001;
+      labelFieldSpacer = layoutConstraints.maxHeight * 0.02;
       radioIconBorderWidth = layoutConstraints.maxWidth * 0.008;
       radioIconSize = layoutConstraints.maxWidth * 0.058;
       optionIconTextSpacer = layoutConstraints.maxWidth * 0.045;
       optionsSpacer = layoutConstraints.maxHeight * 0.03;
     } else if(breakpoint.device.name == "mediumHandset") {
       fieldWidth = (width != null) ?  width! : layoutConstraints.maxWidth * 0.92;
-      labelFieldSpacer = layoutConstraints.maxHeight * 0.001;
+      labelFieldSpacer = layoutConstraints.maxHeight * 0.02;
       radioIconBorderWidth = layoutConstraints.maxWidth * 0.008;
       radioIconSize = layoutConstraints.maxWidth * 0.058;
       optionIconTextSpacer = layoutConstraints.maxWidth * 0.045;
       optionsSpacer = layoutConstraints.maxHeight * 0.03;
     } else {
       fieldWidth = (width != null) ?  width! : layoutConstraints.maxWidth * 0.92;
-      labelFieldSpacer = layoutConstraints.maxHeight * 0.001;
+      labelFieldSpacer = layoutConstraints.maxHeight * 0.02;
       radioIconBorderWidth = layoutConstraints.maxWidth * 0.008;
       radioIconSize = layoutConstraints.maxWidth * 0.058;
       optionIconTextSpacer = layoutConstraints.maxWidth * 0.045;
@@ -75,7 +75,7 @@ class VAEARadioBtnField<T> extends StatelessWidget {
         children: [
           if (labelStr != null) Text(
             labelStr!,
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           if (labelStr != null) SizedBox(height: labelFieldSpacer),
           buildOptions(context)
@@ -143,8 +143,8 @@ class VAEARadioBtnField<T> extends StatelessWidget {
           Text(
             options[optionIndex],
             style: TextStyle(
-              fontSize: Theme.of(context)!.textTheme.titleMedium!.fontSize,
-              fontWeight: Theme.of(context)!.textTheme.titleMedium!.fontWeight
+              fontSize: Theme.of(context)!.textTheme.titleSmall!.fontSize,
+              fontWeight: Theme.of(context)!.textTheme.titleSmall!.fontWeight
             ),
           )
         ],

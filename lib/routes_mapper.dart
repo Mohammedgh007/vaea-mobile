@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:vaea_mobile/view/screens/account_termination_screen.dart';
 import 'package:vaea_mobile/view/screens/activities_screen.dart';
+import 'package:vaea_mobile/view/screens/booking_screen.dart';
 import 'package:vaea_mobile/view/screens/home_details_screen.dart';
 import 'package:vaea_mobile/view/screens/home_prompt_screen.dart';
 import 'package:vaea_mobile/view/screens/home_screen.dart';
@@ -10,6 +12,7 @@ import 'package:vaea_mobile/view/screens/services_screen.dart';
 import 'package:vaea_mobile/view/screens/sign_in_screen.dart';
 import 'package:vaea_mobile/view/screens/sign_up_screen.dart';
 import 'package:vaea_mobile/view/screens/spash_screen.dart';
+import 'package:vaea_mobile/view/screens/terms_condition_screen.dart';
 
 /**
  * It is a helper class for main file and navigator. It stores all the routes and
@@ -32,7 +35,11 @@ class RoutesMapper {
 
     ScreenName.homePrompt: "/home/search-prompt",
     ScreenName.homeSearch: "/home/search-prompt/search-result",
-    ScreenName.homeDetails: "/home/search-prompt/search-result/home-details"
+    ScreenName.homeDetails: "/home/search-prompt/search-result/home-details",
+    ScreenName.booking: "/home/search-prompt/search-result/home-details/booking",
+
+    ScreenName.accountTermination: "/profile/account-termination",
+    ScreenName.termsConditions: "/profile/terms-conditions"
   };
 
 
@@ -52,8 +59,11 @@ class RoutesMapper {
 
     _routesMap[ScreenName.homePrompt] ?? "errorScreen": HomePromptScreen(),
     _routesMap[ScreenName.homeSearch] ?? "errorScreen": HomeSearchScreen(),
-    _routesMap[ScreenName.homeDetails] ?? "errorScreen": HomeDetailsScreen()
+    _routesMap[ScreenName.homeDetails] ?? "errorScreen": HomeDetailsScreen(),
+    _routesMap[ScreenName.booking] ?? "errorScreen": BookingScreen(),
 
+    _routesMap[ScreenName.accountTermination] ?? "errorScreen" : AccountTerminationScreen(),
+    _routesMap[ScreenName.termsConditions] ?? "errorScreen" : TermsConditionScreen()
   };
 
 
@@ -85,5 +95,9 @@ enum ScreenName {
 
   homePrompt,
   homeSearch,
-  homeDetails
+  homeDetails,
+  booking,
+
+  termsConditions,
+  accountTermination
 }

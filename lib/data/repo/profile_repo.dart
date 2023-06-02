@@ -27,6 +27,7 @@ class ProfileRepo {
   /// It loads the profile info from the storage. also, it loads and setups the auth data.
   Future<UserProfileModel?> loadUserprofile() async {
     Map<String, dynamic>? result = await _profileStorage.loadUserProfile();
+    AuthContainer.loadToken();
     if (result == null) {// there is not profile
       return null;
     }
@@ -59,7 +60,6 @@ class ProfileRepo {
       if (await LaunchRequirementRepo.checkInternetConnection()) {
         String pathStr = "/tenants/register";
         Map<String, dynamic> result = await RequestsContainer.postFormData(pathStr, payload.getFieldMap());
-        debugPrint("result ${result.toString()}");
         AuthContainer.saveToken(result["data"]["auth_token"]);
 
         String? profileImageUrl = result["data"]["profile_image_url"];
@@ -82,7 +82,7 @@ class ProfileRepo {
     try {
       String pathStr = "/tenants/sign-in";
       Map<String, dynamic> result = await RequestsContainer.postData(pathStr, payload.getFieldMap());
-      debugPrint("result $result");
+      AuthContainer.saveToken(result["data"]["auth_token"]);
 
       result["data"]["email_address"] = payload.emailAddress;
       UserProfileModel model = UserProfileModel.fromMap(result["data"]);
@@ -99,6 +99,19 @@ class ProfileRepo {
       return model;
     } on Exception catch(e) {
       throw InvalidCredentialsException(msg: "error in auth sign in $e");
+    }
+  }
+
+  /// It terminates the user account.
+  /// @pre-condition termination otp has been requested and verified.
+  /// @throws InternetConnectionException, UnknownException
+  Future<void> terminateAccount(String reason) async {
+    try {
+      String pathStr = "/tenants/terminate-account";
+      Map<String, dynamic> result = await RequestsContainer.postAuthData(pathStr, {"reason": reason});
+      signOut();
+    } on Exception catch(e) {
+      throw UnknownException(msg: "error in terminateAccount $e");
     }
   }
 

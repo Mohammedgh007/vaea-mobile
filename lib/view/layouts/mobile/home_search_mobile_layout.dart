@@ -92,19 +92,19 @@ class _HomeSearchMobileLayoutState extends State<HomeSearchMobileLayout> {
       tabsTopPadding = layoutConstraints.maxHeight * 0.02;
       listTopPadding = layoutConstraints.maxHeight * 0.03;
       bodyBottomPadding = MediaQuery.of(context).viewPadding.bottom + kBottomNavigationBarHeight;
-      cardsSpacer = layoutConstraints.maxHeight * 0.08;
+      cardsSpacer = layoutConstraints.maxHeight * 0.04;
     } else if (breakpoint.device.name == "mediumHandset") {
       bottomPaddingFilterSortingButton = layoutConstraints.maxHeight * 0.30;
       tabsTopPadding = layoutConstraints.maxHeight * 0.02;
       listTopPadding = layoutConstraints.maxHeight * 0.03;
       bodyBottomPadding = MediaQuery.of(context).viewPadding.bottom + kBottomNavigationBarHeight;
-      cardsSpacer = layoutConstraints.maxHeight * 0.08;
+      cardsSpacer = layoutConstraints.maxHeight * 0.04;
     } else {
       bottomPaddingFilterSortingButton = layoutConstraints.maxHeight * 0.30;
       tabsTopPadding = layoutConstraints.maxHeight * 0.02;
       listTopPadding = layoutConstraints.maxHeight * 0.03;
       bodyBottomPadding = MediaQuery.of(context).viewPadding.bottom + kBottomNavigationBarHeight;
-      cardsSpacer = layoutConstraints.maxHeight * 0.08;
+      cardsSpacer = layoutConstraints.maxHeight * 0.04;
     }
   }
 
@@ -256,17 +256,19 @@ class _HomeSearchMobileLayoutState extends State<HomeSearchMobileLayout> {
         padding: EdgeInsets.only(top: listTopPadding, bottom: bodyBottomPadding * 4),
         itemCount: widget.listings!.length,
         itemBuilder: (BuildContext context, int itemIndex) {
-          return SearchedHomeCard(
-            breakpoint: breakpoint,
-            layoutConstraints: layoutConstraints,
-            listingModel: widget.listings![itemIndex],
-            handleClickCard: (int imageIndex) {
-              widget.handleClickListing(
-                imageIndex: imageIndex,
-                homeId: widget.listings![itemIndex].listingId,
-                sliderImages: widget.listings![itemIndex].imagesUrls
-              );
-            }
+          return Center(
+            child: SearchedHomeCard(
+              breakpoint: breakpoint,
+              layoutConstraints: layoutConstraints,
+              listingModel: widget.listings![itemIndex],
+              handleClickCard: (int imageIndex) {
+                widget.handleClickListing(
+                  imageIndex: imageIndex,
+                  homeId: widget.listings![itemIndex].listingId,
+                  sliderImages: widget.listings![itemIndex].imagesUrls
+                );
+              }
+            ),
           );
         },
 

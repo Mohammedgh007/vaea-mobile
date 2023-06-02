@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:vaea_mobile/routes_mapper.dart';
 import 'package:vaea_mobile/view/layouts/mobile/profile_mobile_layout.dart';
 import 'package:vaea_mobile/view/widgets/modals/language_modal.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../bloc/providers/profile_provider.dart';
 import '../../bloc/providers/user_settings_provider.dart';
@@ -33,6 +34,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (profileProvider.profileModel == null && profileProvider.targetScreenAfterSignIn == null) {
+      profileProvider.targetScreenAfterSignIn = ScreenName.profile;
+    }
 
     return ProfileMobileLayout(
       isSignedIn: profileProvider.profileModel != null,
@@ -56,6 +60,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   /// then direct him/her to the sign in screen.
   void handleClickSignOut() {
     profileProvider.signOut();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(AppLocalizations.of(context)!.signedOutSuccessfully)),
+    );
     Navigator.of(context).pushReplacementNamed(RoutesMapper.getScreenRoute(ScreenName.splashScreen));
   }
 

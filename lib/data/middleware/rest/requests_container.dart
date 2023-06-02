@@ -8,9 +8,11 @@ import 'package:http_parser/http_parser.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:mime/mime.dart';
+import 'package:vaea_mobile/data/middleware/rest/auth.dart';
 import 'package:vaea_mobile/helpers/excpetions/unknown_except.dart';
 
 import '../../../helpers/Env.dart';
+import '../../../helpers/excpetions/expired_token_except.dart';
 
 /// It encapsulates the logic of using http calls
 class RequestsContainer {
@@ -42,7 +44,7 @@ class RequestsContainer {
         throw UnknownException(msg: "unknown error in RequestContainer.getData.statusCode");
       }
     } on Exception catch(e) {
-      debugPrint("in catch get request $e");
+      debugPrint("in catch get request $e ;;;;; $pathStr");
       throw UnknownException(msg: "unknown error in RequestContainer.getData$e");
     }
   }
@@ -72,6 +74,35 @@ class RequestsContainer {
     } on Exception catch(e) {
       debugPrint("in catch $e");
       throw UnknownException(msg: "unknown error in RequestContainer.postData $e");
+    }
+  }
+
+
+  /// It preforms an authenticated POST request in a json format.
+  /// @pre-condition the caller checks internet connection.
+  /// @throws ExpiredTokenException
+  static Future<Map<String, dynamic>> postAuthData(String pathStr, Map<String, dynamic> payload) async {
+    try {
+      // setup the header and uri
+      Map<String, String> header = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ${AuthContainer.token}"
+      };
+      Uri uri = Uri.parse(Env.apiUrl + ":" + Env.apiPort + pathStr);
+
+      // call the request
+      debugPrint("before api post $pathStr");
+      http.Response response = await http.post(uri, body: jsonEncode(payload), headers: header);
+      debugPrint("after api post $pathStr ${response.statusCode}");
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else {
+        throw UnknownException(msg: "unknown error in else RequestContainer.postData");
+      }
+
+    } on Exception catch(e) {
+      debugPrint("in catch $e");
+      throw ExpiredTokenException(msg: "expired token error in RequestContainer.postAuthData $e");
     }
   }
 

@@ -6,6 +6,7 @@ import 'package:vaea_mobile/data/dto/sign_up_dto.dart';
 import 'package:vaea_mobile/data/model/user_profile_model.dart';
 import 'package:vaea_mobile/data/repo/profile_repo.dart';
 import 'package:vaea_mobile/helpers/excpetions/invalid_credentials_except.dart';
+import 'package:vaea_mobile/routes_mapper.dart';
 
 import '../../data/dto/save_user_profile_dto.dart';
 import '../../helpers/excpetions/internet_connection_except.dart';
@@ -17,6 +18,7 @@ class ProfileProvider extends ChangeNotifier {
   final ProfileRepo _repo = ProfileRepo();
 
   UserProfileModel? profileModel;
+  ScreenName? targetScreenAfterSignIn;
 
   /// It loads the profile info from the local storage. Also, it setups the auth data.
   Future<void> loadProfileInfo() async {
@@ -67,6 +69,20 @@ class ProfileProvider extends ChangeNotifier {
     } on InternetConnectionException catch(e) {
       rethrow;
     } on InvalidCredentialsException catch(e) {
+      rethrow;
+    }
+  }
+
+
+  /// It terminates the user account
+  /// @pre-condition termination otp has been requested and verified.
+  /// @throws InternetConnectionException, UnknownException
+  Future<void> terminateAccount(String reason) async {
+    try {
+      await _repo.terminateAccount(reason);
+    } on InternetConnectionException catch(e) {
+      rethrow;
+    } on UnknownException catch(e) {
       rethrow;
     }
   }

@@ -6,8 +6,10 @@ import 'package:vaea_mobile/view/widgets/fields/dropdown_field.dart';
 import 'package:vaea_mobile/view/widgets/fields/file_field.dart';
 import 'package:vaea_mobile/view/widgets/fields/text_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vaea_mobile/view/widgets/vaea_ui/vaea_policy_checkbox.dart';
 
 import '../../../data/enums/gender.dart';
+import '../../../routes_mapper.dart';
 
 /// It builds, validates, and manages the registration form in SignUpMobileLayout.
 class RegistrationForm extends StatefulWidget {
@@ -52,19 +54,20 @@ class _RegistrationFormState extends State<RegistrationForm> {
   // inputs
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
-  Gender? selectedGender;
+  //Gender? selectedGender;
   File? selectedProfileImage;
-  TextEditingController idIqamaNumberController = TextEditingController();
+  //TextEditingController idIqamaNumberController = TextEditingController();
   TextEditingController emailAddressController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  bool hasAgreedOnPrivacyPolicy = false;
 
   // error message
   String? firstNameErrorMsg;
   String? lastNameErrorMsg;
-  String? genderErrorMsg;
+  //String? genderErrorMsg;
   String? profileImageErrorMsg;
-  String? idIqamaErrorMsg;
+  //String? idIqamaErrorMsg;
   String? emailAddressErrorMsg;
   String? passwordErrorMsg;
   String? confirmPasswordErrorMsg;
@@ -108,12 +111,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
         children: [
           buildSeparatedFields(),
           SizedBox(height: fieldsBtnSpacer),
-          PrimaryBtn(
-            breakpoint: widget.breakpoint,
-            layoutConstraints: widget.layoutConstraints,
-            handleClick: handleSubmit,
-            buttonText: AppLocalizations.of(context)!.signUp
-          ),
+          buildActionBtns(),
           SizedBox(height: fieldsSpacer * 2),
         ],
       ),
@@ -130,12 +128,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
         SizedBox(height: fieldsSpacer),
         buildLastNameField(),
         SizedBox(height: fieldsSpacer),
-        buildGenderField(),
-        SizedBox(height: fieldsSpacer),
+        //buildGenderField(),
+        //SizedBox(height: fieldsSpacer),
         buildProfileImageField(),
         SizedBox(height: fieldsSpacer),
-        buildIdIqamaField(),
-        SizedBox(height: fieldsSpacer),
+        //buildIdIqamaField(),
+        //SizedBox(height: fieldsSpacer),
         buildEmailAddressField(),
         SizedBox(height: fieldsSpacer),
         buildPasswordField(),
@@ -186,24 +184,24 @@ class _RegistrationFormState extends State<RegistrationForm> {
   }
 
 
-  /// It is a helper method for buildSeparatedFields. It builds gender field.
-  Widget buildGenderField() {
-    return VAEADropdownField<Gender>(
-      breakpoint: widget.breakpoint,
-      layoutConstraints: widget.layoutConstraints,
-      handleChange: (Gender? selected) {
-        setState(() {
-          selectedGender = selected;
-          genderErrorMsg = widget.validateGender(selected);
-        });
-      },
-      options: [AppLocalizations.of(context)!.male, AppLocalizations.of(context)!.female],
-      optionsValues: const [Gender.male, Gender.female],
-      labelStr: AppLocalizations.of(context)!.genderFieldLabel,
-      hintStr: AppLocalizations.of(context)!.genderFieldHint,
-      errorMsg: genderErrorMsg,
-    );
-  }
+  // /// It is a helper method for buildSeparatedFields. It builds gender field.
+  // Widget buildGenderField() {
+  //   return VAEADropdownField<Gender>(
+  //     breakpoint: widget.breakpoint,
+  //     layoutConstraints: widget.layoutConstraints,
+  //     handleChange: (Gender? selected) {
+  //       setState(() {
+  //         selectedGender = selected;
+  //         genderErrorMsg = widget.validateGender(selected);
+  //       });
+  //     },
+  //     options: [AppLocalizations.of(context)!.male, AppLocalizations.of(context)!.female],
+  //     optionsValues: const [Gender.male, Gender.female],
+  //     labelStr: AppLocalizations.of(context)!.genderFieldLabel,
+  //     hintStr: AppLocalizations.of(context)!.genderFieldHint,
+  //     errorMsg: genderErrorMsg,
+  //   );
+  // }
 
 
   /// It is a helper method for buildSeparatedFields. It builds profile image field.
@@ -224,25 +222,25 @@ class _RegistrationFormState extends State<RegistrationForm> {
   }
 
 
-  /// It is a helper method for buildSeparatedFields. It builds id/iqama field
-  Widget buildIdIqamaField() {
-    return VAEATextField(
-      breakpoint: widget.breakpoint,
-      layoutConstraints: widget.layoutConstraints,
-      controller: idIqamaNumberController,
-      labelStr: AppLocalizations.of(context)!.idIqamaFieldLabel,
-      hintStr: AppLocalizations.of(context)!.idIqamaFieldHint,
-      textInputAction: TextInputAction.next,
-      isTextObscure: false,
-      errorMsg: idIqamaErrorMsg,
-      handleOnSubmitted: (String? input) async {
-        String? errorMsg = await widget.validateIDIqamaNumber(input);
-        setState(() {
-          idIqamaErrorMsg = errorMsg;
-        });
-      },
-    );
-  }
+  // /// It is a helper method for buildSeparatedFields. It builds id/iqama field
+  // Widget buildIdIqamaField() {
+  //   return VAEATextField(
+  //     breakpoint: widget.breakpoint,
+  //     layoutConstraints: widget.layoutConstraints,
+  //     controller: idIqamaNumberController,
+  //     labelStr: AppLocalizations.of(context)!.idIqamaFieldLabel,
+  //     hintStr: AppLocalizations.of(context)!.idIqamaFieldHint,
+  //     textInputAction: TextInputAction.next,
+  //     isTextObscure: false,
+  //     errorMsg: idIqamaErrorMsg,
+  //     handleOnSubmitted: (String? input) async {
+  //       String? errorMsg = await widget.validateIDIqamaNumber(input);
+  //       setState(() {
+  //         idIqamaErrorMsg = errorMsg;
+  //       });
+  //     },
+  //   );
+  // }
 
 
   /// It is a helper method for buildSeparatedFields. It builds email address field
@@ -310,6 +308,63 @@ class _RegistrationFormState extends State<RegistrationForm> {
   }
 
 
+  /// It is a helper method for buildThirdBeach. It builds the action buttons that
+  /// includes sign up and sign in
+  Widget buildActionBtns() {
+    String privacyUrl = (AppLocalizations.of(context)!.localeName == "ar")
+      ? "https://rentvaea.com/ar/privacy-policy"
+      : "https://rentvaea.com/privacy-policy" ;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        VAEAPolicyCheckBox(
+          prePolicyNameText: AppLocalizations.of(context)!.byCheckingHere + " ",
+          policyNameText: AppLocalizations.of(context)!.privacyPolicy,
+          postPolicyNameText: ".",
+          hasChecked: hasAgreedOnPrivacyPolicy,
+          handleChangeHasChanged: (isChecked) => setState(() => hasAgreedOnPrivacyPolicy = isChecked),
+          popupType: PolicyPopupWindowType.webpage,
+          policyUrl: privacyUrl,
+        ),
+        PrimaryBtn(
+          breakpoint: widget.breakpoint,
+          layoutConstraints: widget.layoutConstraints,
+          handleClick: handleSubmit,
+          buttonText: AppLocalizations.of(context)!.signUp
+        ),
+        SizedBox(height: widget.layoutConstraints.maxHeight * 0.015),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              AppLocalizations.of(context)!.youHaveAccountAlready,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
+                color: Theme.of(context).colorScheme.onBackground
+              ),
+            ),
+            SizedBox(width: 5),
+            GestureDetector(
+              onTap: () => Navigator.of(context).pushReplacementNamed(RoutesMapper.getScreenRoute(ScreenName.signIn)),
+              child: Text(
+                AppLocalizations.of(context)!.signIn,
+                //textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
+                  color: Theme.of(context).colorScheme.primary,
+                  decoration: TextDecoration.underline,
+                ),
+              )
+            )
+          ],
+        )
+      ],
+    );
+  }
+
+
   /// It handles clicking sign up by validating the inputs once more for calling
   /// Screen method handleSubmitValidateInput.
   Future<void> handleSubmit() async {
@@ -319,9 +374,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
       widget.handleSubmitRegistrationForm(
         firstName: firstNameController.text,
         lastName: lastNameController.text,
-        gender: selectedGender!,
+        gender: Gender.female,
         profileImage: selectedProfileImage,
-        idIqamaNumber: idIqamaNumberController.text,
+        idIqamaNumber: "0000000000",
         emailAddress: emailAddressController.text,
         password: passwordController.text
       );
@@ -344,20 +399,20 @@ class _RegistrationFormState extends State<RegistrationForm> {
     });
     areValid = areValid && lastNameErrorMsg == null;
 
-    setState(() {
-      genderErrorMsg = widget.validateGender(selectedGender);
-    });
-    areValid = areValid && genderErrorMsg == null;
+    // setState(() {
+    //   genderErrorMsg = widget.validateGender(selectedGender);
+    // });
+    // areValid = areValid && genderErrorMsg == null;
 
     setState(() {
       profileImageErrorMsg = widget.validateProfileImage(selectedProfileImage);
     });
     areValid = areValid && profileImageErrorMsg == null;
 
-    setState(() {
-      idIqamaErrorMsg = widget.validateIDIqamaNumber(idIqamaNumberController.text);
-    });
-    areValid = areValid && idIqamaErrorMsg == null;
+    // setState(() {
+    //   idIqamaErrorMsg = widget.validateIDIqamaNumber(idIqamaNumberController.text);
+    // });
+    // areValid = areValid && idIqamaErrorMsg == null;
 
     String? errorMsg = await widget.validateEmailAddress(emailAddressController.text);
     setState(() {
@@ -374,6 +429,13 @@ class _RegistrationFormState extends State<RegistrationForm> {
       confirmPasswordErrorMsg = widget.validateConfirmPassword(passwordController.text, confirmPasswordController.text);
     });
     areValid = areValid && confirmPasswordErrorMsg == null;
+
+    if (!hasAgreedOnPrivacyPolicy) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context)!.youNeedToAcceptPrivacyPolicy)),
+      );
+      return false;
+    }
 
     return areValid;
   }

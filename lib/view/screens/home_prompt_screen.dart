@@ -6,6 +6,7 @@ import 'package:vaea_mobile/routes_mapper.dart';
 import 'package:vaea_mobile/view/layouts/mobile/home_prompt_mobile_layout.dart';
 
 import '../../data/enums/city_name.dart';
+import '../../data/enums/gender.dart';
 import '../../data/enums/home_type.dart';
 
 /// This class handles the view and its interactions with the rest of app
@@ -36,6 +37,7 @@ class _HomePromptScreenState extends State<HomePromptScreen> {
 
     return HomePromptMobileLayout(
       saveHomeType: saveSelectedHomeType,
+      saveTenantGender: saveTenantGender,
       submitCityName: submitSelectedCityName
     );
   }
@@ -44,6 +46,12 @@ class _HomePromptScreenState extends State<HomePromptScreen> {
   /// It saves the input home type to the filters of search
   void saveSelectedHomeType(HomeType selectedHomeType) {
     searchProvider.filters.homeType = selectedHomeType;
+  }
+
+
+  /// It saves the input of tenant gender
+  void saveTenantGender(Gender selectedGender) {
+    searchProvider.filters.gender = selectedGender;
   }
 
   /// It saves the input city name to the filters of search then navigates the

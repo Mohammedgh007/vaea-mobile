@@ -15,6 +15,8 @@ class SearchedHomeListingModel {
   late double lon;
   late int bedrooms;
   late int bathrooms;
+  late int unitMaxCapacity;
+  late int unitAvailableCapacity;
   late List<String> imagesUrls;
   late String listingTitle;
   late int price;
@@ -28,6 +30,8 @@ class SearchedHomeListingModel {
     lon = decodedMap["lon"];
     bedrooms = decodedMap["bedroms"];
     bathrooms = decodedMap["bathrooms"];
+    unitMaxCapacity = decodedMap["capacity"];
+    unitAvailableCapacity = decodedMap["available_units"];
     imagesUrls = List<String>.from( decodedMap["urls"] as List);
     listingTitle = decodedMap["listing_title"];
     price = decodedMap["price"];
@@ -35,8 +39,8 @@ class SearchedHomeListingModel {
 
   SearchedHomeListingModel({
     required this.listingId, required this.listingType, required this.district,
-    required this.lat, required this.lon,
-    required this.bedrooms, required this.bathrooms, required this.imagesUrls,
+    required this.lat, required this.lon, required this.bedrooms, required this.bathrooms,
+    required this.unitMaxCapacity, required this.unitAvailableCapacity, required this.imagesUrls,
     required this.listingTitle, required this.price});
 
 }

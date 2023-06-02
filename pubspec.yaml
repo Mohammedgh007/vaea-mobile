@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.1
+version: 1.0.4+1
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
@@ -59,11 +59,15 @@ dependencies:
   carousel_slider: ^4.2.1
   google_maps_flutter: ^2.2.6
   maps_launcher: ^2.2.0
-  flutter_launcher_icons: ^0.13.1
+  easy_stepper: ^0.5.2+1
+  moyasar: ^2.0.0
+  photo_view: ^0.14.0
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -71,6 +75,13 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+
+## It is used to setup app icons for android based Google Play and Android requirements
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: false
+  image_path: "assets/logos/temp_icon.png"
+  min_sdk_android: 21
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -86,12 +97,18 @@ flutter:
   generate: true
 
   fonts:
-    - family: Montserrat
+    - family: Kollektif
       fonts:
-        - asset: assets/fonts/en_font/Montserrat/static/Montserrat-Light.ttf
-        - asset: assets/fonts/en_font/Montserrat/static/Montserrat-Regular.ttf
-        - asset: assets/fonts/en_font/Montserrat/static/Montserrat-Bold.ttf
-        - asset: assets/fonts/en_font/Montserrat/static/Montserrat-ExtraBold.ttf
+        - asset: assets/fonts/en_font/Kollektif/Kollektif.ttf
+        - asset: assets/fonts/en_font/Kollektif/Kollektif-Italic.ttf
+        - asset: assets/fonts/en_font/Kollektif/Kollektif-Bold.ttf
+        - asset: assets/fonts/en_font/Kollektif/Kollektif-BoldItalic.ttf
+    - family: 29LTZawi
+      fonts:
+        - asset: assets/fonts/ar_font/29LT.Zawi/29LTZawi-Regular.ttf
+        - asset: assets/fonts/ar_font/29LT.Zawi/29LTZawi-Light.ttf
+        - asset: assets/fonts/ar_font/29LT.Zawi/29LTZawi-Bold.ttf
+        - asset: assets/fonts/ar_font/29LT.Zawi/29LTZawi-Medium.ttf
 
   assets:
     - .env.dev
@@ -99,6 +116,7 @@ flutter:
     - .env.prod
     - assets/images/
     - assets/logos/
+    - assets/logos/amenity_logos/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

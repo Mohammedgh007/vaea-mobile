@@ -78,7 +78,7 @@ class FormPageContainer extends StatelessWidget {
         child: Container(
           width: double.infinity,
           height: imageHeight,
-          color: Theme.of(context).colorScheme.tertiary,
+          color: Theme.of(context).colorScheme.secondary,
           alignment: Alignment.topCenter,
           padding: EdgeInsets.only(top: logoTopPadding),
           child: Crab(

@@ -18,6 +18,8 @@ class HomeDetailsModel {
   late double lon;
   late int bedrooms;
   late int bathrooms;
+  late int unitMaxCapacity;
+  late int unitAvailableCapacity;
   late int area;
   late FloorEnum floor;
   late List<String> imagesUrls;
@@ -35,6 +37,8 @@ class HomeDetailsModel {
     lon = decodedMap["lon"];
     bedrooms = decodedMap["bedroms"];
     bathrooms = decodedMap["bathrooms"];
+    unitMaxCapacity = decodedMap["capacity"];
+    unitAvailableCapacity = decodedMap["available_units"];
     area = decodedMap["area"];
     floor = FloorEnumParser.parse(decodedMap["floor"]);
     imagesUrls = List<String>.from( decodedMap["urls"] as List);
@@ -45,7 +49,8 @@ class HomeDetailsModel {
   HomeDetailsModel({
     required this.listingId, required this.buildingId, required this.listingType,
     required this.district, required this.street, required this.lat, required this.lon,
-    required this.bedrooms, required this.bathrooms,  required this.area,
+    required this.bedrooms, required this.bathrooms,  required this.unitMaxCapacity,
+    required this.unitAvailableCapacity,required this.area,
     required this.imagesUrls, required this.floor,
     required this.listingTitle, required this.price});
 

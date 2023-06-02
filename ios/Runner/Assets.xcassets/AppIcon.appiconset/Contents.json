@@ -1,0 +1,194 @@
+{
+  "images" : [
+    {
+      "filename" : "Apple Icon full colored-20@2x.png",
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "20x20"
+    },
+    {
+      "filename" : "Apple Icon full colored-20@3x.png",
+      "idiom" : "iphone",
+      "scale" : "3x",
+      "size" : "20x20"
+    },
+    {
+      "filename" : "Apple Icon full colored-29.png",
+      "idiom" : "iphone",
+      "scale" : "1x",
+      "size" : "29x29"
+    },
+    {
+      "filename" : "Apple Icon full colored-29@2x.png",
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "29x29"
+    },
+    {
+      "filename" : "Apple Icon full colored-29@3x.png",
+      "idiom" : "iphone",
+      "scale" : "3x",
+      "size" : "29x29"
+    },
+    {
+      "filename" : "Apple Icon full colored-40@2x.png",
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "40x40"
+    },
+    {
+      "filename" : "Apple Icon full colored-40@3x.png",
+      "idiom" : "iphone",
+      "scale" : "3x",
+      "size" : "40x40"
+    },
+    {
+      "filename" : "Apple Icon full colored-60@2x.png",
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "60x60"
+    },
+    {
+      "filename" : "Apple Icon full colored-60@3x.png",
+      "idiom" : "iphone",
+      "scale" : "3x",
+      "size" : "60x60"
+    },
+    {
+      "filename" : "Apple Icon full colored-20 1.png",
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "size" : "20x20"
+    },
+    {
+      "filename" : "Apple Icon full colored-20@2x 1.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "20x20"
+    },
+    {
+      "filename" : "Apple Icon full colored-29 1.png",
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "size" : "29x29"
+    },
+    {
+      "filename" : "Apple Icon full colored-29@2x 1.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "29x29"
+    },
+    {
+      "filename" : "Apple Icon full colored-40 1.png",
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "size" : "40x40"
+    },
+    {
+      "filename" : "Apple Icon full colored-40@2x 1.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "40x40"
+    },
+    {
+      "filename" : "Apple Icon full colored-76 1.png",
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "size" : "76x76"
+    },
+    {
+      "filename" : "Apple Icon full colored-76@2x 1.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "76x76"
+    },
+    {
+      "filename" : "Apple Icon full colored-83.5@2x 1.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "83.5x83.5"
+    },
+    {
+      "filename" : "ios-icon.png",
+      "idiom" : "ios-marketing",
+      "scale" : "1x",
+      "size" : "1024x1024"
+    },
+    {
+      "filename" : "Apple Icon full colored-20.png",
+      "idiom" : "universal",
+      "scale" : "1x",
+      "size" : "20x20"
+    },
+    {
+      "filename" : "ios-icon-20.png",
+      "idiom" : "universal",
+      "scale" : "1x",
+      "size" : "20x20"
+    },
+    {
+      "filename" : "Apple Icon full colored-40.png",
+      "idiom" : "universal",
+      "scale" : "1x",
+      "size" : "40x40"
+    },
+    {
+      "filename" : "ios-icon-40.png",
+      "idiom" : "universal",
+      "scale" : "1x",
+      "size" : "40x40"
+    },
+    {
+      "filename" : "Apple Icon full colored-76.png",
+      "idiom" : "universal",
+      "scale" : "1x",
+      "size" : "76x76"
+    },
+    {
+      "filename" : "ios-icon-76.png",
+      "idiom" : "universal",
+      "scale" : "1x",
+      "size" : "76x76"
+    },
+    {
+      "filename" : "Apple Icon full colored-76@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x",
+      "size" : "76x76"
+    },
+    {
+      "filename" : "ios-icon-76@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x",
+      "size" : "76x76"
+    },
+    {
+      "filename" : "Apple Icon full colored-83.5@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x",
+      "size" : "83.5x83.5"
+    },
+    {
+      "filename" : "ios-icon-83.5@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x",
+      "size" : "83.5x83.5"
+    },
+    {
+      "filename" : "Apple Icon full colored-1024.png",
+      "idiom" : "universal",
+      "scale" : "1x",
+      "size" : "1024x1024"
+    },
+    {
+      "filename" : "ios-icon-1024 1.png",
+      "idiom" : "universal",
+      "scale" : "1x",
+      "size" : "1024x1024"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

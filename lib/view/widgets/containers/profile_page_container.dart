@@ -84,7 +84,7 @@ class ProfilePageContainer extends StatelessWidget {
         child: Container(
           width: double.infinity,
           height: imageSectionHeight,
-          color: Theme.of(context).colorScheme.tertiary,
+          color: Theme.of(context).colorScheme.secondary,
           alignment: Alignment.topCenter,
           padding: EdgeInsets.only(top: imageTopPadding),
           child: (imageProfileUrl == null) ? null : ClipOval(

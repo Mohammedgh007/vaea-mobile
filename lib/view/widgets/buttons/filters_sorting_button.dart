@@ -31,20 +31,20 @@ class FiltersSortingButton extends StatelessWidget {
   /// It is a helper method for the constructor. It initializes the dimensions fields.
   void setupDimensions() {
     if (breakpoint.device.name == "smallHandset") {
-      buttonWidth = layoutConstraints.maxWidth * 0.61;
+      buttonWidth = layoutConstraints.maxWidth * 0.51;
       buttonsSpacerWidth = layoutConstraints.maxHeight * 0.002;
-      buttonPadding = layoutConstraints.minWidth * 0.03;
-      iconSize = layoutConstraints.maxWidth * 0.0267;
+      buttonPadding = layoutConstraints.minWidth * 0.02;
+      iconSize = layoutConstraints.maxWidth * 0.0367;
     } else if (breakpoint.device.name == "mediumHandset") {
-      buttonWidth = layoutConstraints.maxWidth * 0.61;
+      buttonWidth = layoutConstraints.maxWidth * 0.51;
       buttonsSpacerWidth = layoutConstraints.maxHeight * 0.002;
-      buttonPadding = layoutConstraints.minWidth * 0.03;
-      iconSize = layoutConstraints.maxWidth * 0.0267;
+      buttonPadding = layoutConstraints.minWidth * 0.02;
+      iconSize = layoutConstraints.maxWidth * 0.0367;
     } else {
-      buttonWidth = layoutConstraints.maxWidth * 0.61;
+      buttonWidth = layoutConstraints.maxWidth * 0.51;
       buttonsSpacerWidth = layoutConstraints.maxHeight * 0.002;
-      buttonPadding = layoutConstraints.minWidth * 0.03;
-      iconSize = layoutConstraints.maxWidth * 0.0267;
+      buttonPadding = layoutConstraints.minWidth * 0.02;
+      iconSize = layoutConstraints.maxWidth * 0.0367;
     }
   }
 
@@ -82,6 +82,7 @@ class FiltersSortingButton extends StatelessWidget {
         width: buttonWidth / 2 - buttonsSpacerWidth,
         padding: EdgeInsets.all(buttonPadding),
         child: FittedBox(
+          fit: BoxFit.scaleDown,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -89,7 +90,7 @@ class FiltersSortingButton extends StatelessWidget {
               Text(
                 AppLocalizations.of(context)!.filters,
                 style: TextStyle(
-                  fontSize: Theme.of(context).textTheme.labelSmall!.fontSize,
+                  fontSize: Theme.of(context).textTheme.titleSmall!.fontSize,
                   fontWeight: Theme.of(context).textTheme.labelSmall!.fontWeight,
                   color: Theme.of(context).colorScheme.onPrimary
                 ),
@@ -115,6 +116,7 @@ class FiltersSortingButton extends StatelessWidget {
         width: buttonWidth / 2 - buttonsSpacerWidth,
         padding: EdgeInsets.all(buttonPadding),
         child: FittedBox(
+          fit: BoxFit.scaleDown,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -122,7 +124,7 @@ class FiltersSortingButton extends StatelessWidget {
               Text(
                 AppLocalizations.of(context)!.sorting,
                 style: TextStyle(
-                  fontSize: Theme.of(context).textTheme.labelSmall!.fontSize,
+                  fontSize: Theme.of(context).textTheme.titleSmall!.fontSize,
                   fontWeight: Theme.of(context).textTheme.labelSmall!.fontWeight,
                   color: Theme.of(context).colorScheme.onPrimary
                 ),
