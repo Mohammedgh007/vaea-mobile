@@ -124,11 +124,12 @@ class _ServicesScreenState extends State<ServicesScreen> {
                         if (provider.serviceResponse != null)
                           Expanded(
                               child: ListView.builder(
+                            padding: EdgeInsets.only(bottom: 100.h),
                             itemBuilder: (context, index) => RequestElement(
                                 requestElement:
                                     provider.serviceResponse!.data[index]),
                             itemCount: provider.serviceResponse!.data.length,
-                          ))
+                          )),
                       ],
                     ),
                     bottomNavigationBar: BottomNavigation(currentIndex: 2),
