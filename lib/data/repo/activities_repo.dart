@@ -22,34 +22,4 @@ class ActivitiesRepo {
       throw ExpiredTokenException(msg: "error in lockUnit $e");
     }
   }
-
-  Future makeRequest(
-      {required String supUrl,
-      required String preferedDate,
-      required String room,
-      required String category,
-      required String description,
-      String? notes}) async {
-    var body = {
-      "prefered_date": preferedDate,
-      "room": room,
-      "category": category,
-      "description": description,
-      "notes": notes,
-    };
-    try {
-      if (await LaunchRequirementRepo.checkInternetConnection()) {
-        String pathStr = "/tenants/$supUrl";
-        Map<String, dynamic> result =
-            await RequestsContainer.postAuthData(pathStr, body);
-
-        return result;
-      } else {
-        throw InternetConnectionException(
-            msg: "error no internet in home search");
-      }
-    } on Exception catch (e) {
-      throw ExpiredTokenException(msg: "error in lockUnit $e");
-    }
-  }
 }
