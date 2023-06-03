@@ -42,31 +42,58 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (context) => ActivitiesProvider(),
-        child: Consumer<ActivitiesProvider>(
-            builder: (context, provider, child) => LayoutBuilder(builder:
-                    (BuildContext context, BoxConstraints constraints) {
-                  Breakpoint breakpoint =
-                      Breakpoint.fromConstraints(constraints);
-                  return Scaffold(
-                    appBar: AdaptiveTopAppBar(
-                      breakpoint: breakpoint,
-                      layoutConstraints: constraints,
-                      currPageTitle: AppLocalizations.of(context)!.activities,
+    return Consumer<ActivitiesProvider>(
+      builder: (context, provider, child) => LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          Breakpoint breakpoint = Breakpoint.fromConstraints(constraints);
+          return Scaffold(
+            appBar: AdaptiveTopAppBar(
+              breakpoint: breakpoint,
+              layoutConstraints: constraints,
+              currPageTitle: AppLocalizations.of(context)!.activities,
+            ),
+            body: SfCalendar(
+              view: CalendarView.month,
+              dataSource: EventDataSource(provider.appointments),
+
+              onViewChanged: (viewChangedDetails) {
+                DateTime currentMonth = viewChangedDetails.visibleDates[0];
+                provider.loadMonthEvents(currentMonth.month.toString());
+              },
+
+              appointmentBuilder:
+                  (BuildContext context, CalendarAppointmentDetails details) {
+                final Event event = details.appointments.first as Event;
+                return Container(
+                  // width: details.bounds.width,
+                  // height: details.bounds.height,
+                  decoration: BoxDecoration(
+                    color: Colors.blue.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4.0),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${event.eventName}, Going people: ${event.goingPeople}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
-                    body: SfCalendar(
-                      view: CalendarView.month,
-                      monthViewSettings: const MonthViewSettings(
-                          navigationDirection:
-                              MonthNavigationDirection.vertical,
-                          showAgenda: true,
-                          appointmentDisplayMode:
-                              MonthAppointmentDisplayMode.indicator),
-                      // dataSource: AppointmentDataSource(recurringAppointments),
-                    ),
-                    bottomNavigationBar: BottomNavigation(currentIndex: 1),
-                  );
-                })));
+                  ),
+                );
+              },
+
+              monthViewSettings: const MonthViewSettings(
+                navigationDirection: MonthNavigationDirection.vertical,
+                showAgenda: true,
+                appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
+                showTrailingAndLeadingDates: false,
+              ),
+              // dataSource: AppointmentDataSource(recurringAppointments),
+            ),
+            bottomNavigationBar: BottomNavigation(currentIndex: 1),
+          );
+        },
+      ),
+    );
   }
 }

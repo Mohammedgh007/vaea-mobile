@@ -1,10 +1,11 @@
 import 'dart:io';
-
+import 'package:collection/collection.dart'; // You have to add this manually, for some reason it cannot be added automatically
 import 'package:breakpoint/breakpoint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -173,11 +174,11 @@ class RequestElement extends StatelessWidget {
                   bottomLeft: Radius.circular(18),
                 ),
                 child: Image.asset(
-                  ServicesTypes.values
-                      .firstWhere((element) =>
-                          element.title.toLowerCase() ==
-                          requestElement.requestType.toLowerCase())
-                      .image,
+                  ((ServicesTypes.values.firstWhereOrNull((element) =>
+                              element.title.toLowerCase() ==
+                              requestElement.requestType.toLowerCase()) ??
+                          ServicesTypes.carsOilChange)
+                      .image),
                   height: 114.h,
                   width: 110.w,
                   fit: BoxFit.fill,

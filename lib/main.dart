@@ -21,6 +21,7 @@ import 'package:vaea_mobile/bloc/providers/user_settings_provider.dart';
 import 'package:vaea_mobile/routes_mapper.dart';
 import 'package:vaea_mobile/view/screens/spash_screen.dart';
 
+import 'bloc/providers/activities_provider.dart';
 import 'bloc/providers/services_provider.dart';
 
 void main() async {
@@ -94,6 +95,7 @@ class MyApp extends StatelessWidget {
       ChangeNotifierProvider(create: (_) => HomeSearchProvider()),
       ChangeNotifierProvider(create: (_) => BookingProvider()),
       ChangeNotifierProvider(create: (_) => ServicesProvider()),
+      ChangeNotifierProvider(create: (_) => ActivitiesProvider()),
     ];
   }
 
