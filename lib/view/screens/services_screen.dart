@@ -94,9 +94,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     ? FloatingActionButton(
                         backgroundColor: AppColors.lightPrimary,
                         onPressed: () {
-                          Navigator.of(context).pushNamed(
-                              RoutesMapper.getScreenRoute(
-                                  ScreenName.serviceList));
+                          pushServicesList(context);
                         },
                         child: const Icon(
                           Icons.add,
@@ -109,7 +107,17 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   layoutConstraints: constraints,
                   currPageTitle: AppLocalizations.of(context)!.services,
                   trailingWidgets: (Platform.isIOS)
-                      ? const [Center(child: Text('Add Request'))]
+                      ? [
+                          Center(
+                              child: TextButton(
+                            onPressed: () {
+                              pushServicesList(context);
+                            },
+                            child: const Text(
+                              'Add Request',
+                            ),
+                          ))
+                        ]
                       : null,
                 ),
                 body: Column(
@@ -149,6 +157,11 @@ class _ServicesScreenState extends State<ServicesScreen> {
         isShowingMap = didClickMap;
       }),
     );
+  }
+
+  void pushServicesList(BuildContext context) {
+    Navigator.of(context)
+        .pushNamed(RoutesMapper.getScreenRoute(ScreenName.serviceList));
   }
 }
 

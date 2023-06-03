@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../../bloc/providers/activities_provider.dart';
+import '../../routes_mapper.dart';
 import '../widgets/navigation/adaptive_top_app_bar.dart';
 import '../widgets/navigation/bottom_navigation.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -64,18 +65,28 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
               appointmentBuilder:
                   (BuildContext context, CalendarAppointmentDetails details) {
                 final Event event = details.appointments.first as Event;
-                return Container(
-                  // width: details.bounds.width,
-                  // height: details.bounds.height,
-                  decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(4.0),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '${event.eventName}, Going people: ${event.goingPeople}',
-                      style: const TextStyle(
-                        color: Colors.white,
+                return InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                      RoutesMapper.getScreenRoute(
+                        ScreenName.activityDetailsScreen,
+                      ),
+                      arguments: event,
+                    );
+                  },
+                  child: Container(
+                    width: details.bounds.width,
+                    height: details.bounds.height,
+                    decoration: BoxDecoration(
+                      color: Colors.blue.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '${event.eventName}, Going people: ${event.goingPeople}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
@@ -85,7 +96,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
               monthViewSettings: const MonthViewSettings(
                 navigationDirection: MonthNavigationDirection.vertical,
                 showAgenda: true,
-                appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
+                appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
                 showTrailingAndLeadingDates: false,
               ),
               // dataSource: AppointmentDataSource(recurringAppointments),

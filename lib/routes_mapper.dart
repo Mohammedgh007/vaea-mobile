@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vaea_mobile/view/screens/account_termination_screen.dart';
 import 'package:vaea_mobile/view/screens/activities_screen.dart';
+import 'package:vaea_mobile/view/screens/activity_details_screen.dart';
 import 'package:vaea_mobile/view/screens/add_new_service_success.dart';
 import 'package:vaea_mobile/view/screens/add_services_screen.dart';
 import 'package:vaea_mobile/view/screens/booking_screen.dart';
@@ -30,9 +31,10 @@ class RoutesMapper {
     ScreenName.signUp: "/signUp",
     ScreenName.home: "/home",
     ScreenName.activities: "/activities",
+    ScreenName.activityDetailsScreen: "/activities/screen",
     ScreenName.services: "/services",
     ScreenName.serviceList: "/serviceList",
-    ScreenName.services_list_screen: "/addNewService",
+    ScreenName.servicesListScreen: "/addNewService",
     ScreenName.addNewServiceSuccess: "/addNewServiceSuccess",
     ScreenName.profile: "/profile",
     ScreenName.homePrompt: "/home/search-prompt",
@@ -52,10 +54,13 @@ class RoutesMapper {
     _routesMap[ScreenName.signIn] ?? "errorScreen": SignInScreen(),
     _routesMap[ScreenName.signUp] ?? "errorScreen": SignUpScreen(),
     _routesMap[ScreenName.home] ?? "errorScreen": HomeScreen(),
-    _routesMap[ScreenName.activities] ?? "errorScreen": ActivitiesScreen(),
+    _routesMap[ScreenName.activities] ?? "errorScreen":
+        const ActivitiesScreen(),
+    _routesMap[ScreenName.activityDetailsScreen] ?? "errorScreen":
+        const ActivityDetailsScreen(),
     _routesMap[ScreenName.services] ?? "errorScreen": const ServicesScreen(),
     _routesMap[ScreenName.serviceList] ?? "errorScreen": const ServicesList(),
-    _routesMap[ScreenName.services_list_screen] ?? "errorScreen":
+    _routesMap[ScreenName.servicesListScreen] ?? "errorScreen":
         const MakeServiceRequest(),
     _routesMap[ScreenName.addNewServiceSuccess] ?? "errorScreen":
         const AddNewServiceSuccess(),
@@ -92,9 +97,10 @@ enum ScreenName {
 
   home,
   activities,
+  activityDetailsScreen,
   services,
   serviceList,
-  services_list_screen,
+  servicesListScreen,
   addNewServiceSuccess,
 
   profile,

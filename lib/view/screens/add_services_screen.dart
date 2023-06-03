@@ -96,7 +96,7 @@ class ServiceItem extends StatelessWidget {
       onTap: () {
         Navigator.of(context).pushNamed(
             RoutesMapper.getScreenRoute(
-              ScreenName.services_list_screen,
+              ScreenName.servicesListScreen,
             ),
             arguments: service);
       },

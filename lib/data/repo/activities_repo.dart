@@ -22,4 +22,21 @@ class ActivitiesRepo {
       throw ExpiredTokenException(msg: "error in lockUnit $e");
     }
   }
+
+  Future loadActivity(String id) async {
+    try {
+      if (await LaunchRequirementRepo.checkInternetConnection()) {
+        String pathStr = "/tenants/get-activity-details?activity_id=$id";
+        print(pathStr);
+        Map<String, dynamic> result =
+            await RequestsContainer.getData(pathStr, {});
+        return result;
+      } else {
+        throw InternetConnectionException(
+            msg: "error no internet in home search");
+      }
+    } on Exception catch (e) {
+      throw ExpiredTokenException(msg: "error in lockUnit $e");
+    }
+  }
 }

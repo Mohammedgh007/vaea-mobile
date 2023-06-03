@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:breakpoint/breakpoint.dart';
@@ -20,7 +19,6 @@ import '../../widgets/navigation/adaptive_top_app_bar.dart';
 
 /// It handles the ui interaction for HomeDetailsScreen
 class HomeDetailsMobileLayout extends StatefulWidget {
-
   bool isLoading;
   HomeDetailsModel? detailsModel;
   int listingId; // it is used for hero animation
@@ -28,24 +26,22 @@ class HomeDetailsMobileLayout extends StatefulWidget {
   List<String> sliderImages; // It is used for hero animation.
   Future<void> Function() handleClickBook;
 
-  HomeDetailsMobileLayout({
-    super.key,
-    required this.isLoading,
-    required this.detailsModel,
-    required this.listingId,
-    required this.sliderImageIndex,
-    required this.sliderImages,
-    required this.handleClickBook
-  });
-
+  HomeDetailsMobileLayout(
+      {super.key,
+      required this.isLoading,
+      required this.detailsModel,
+      required this.listingId,
+      required this.sliderImageIndex,
+      required this.sliderImages,
+      required this.handleClickBook});
 
   @override
-  State<HomeDetailsMobileLayout> createState() => _HomeDetailsHomeDetailsMobileLayout();
+  State<HomeDetailsMobileLayout> createState() =>
+      _HomeDetailsHomeDetailsMobileLayout();
 }
 
-class _HomeDetailsHomeDetailsMobileLayout extends State<HomeDetailsMobileLayout> {
-
-
+class _HomeDetailsHomeDetailsMobileLayout
+    extends State<HomeDetailsMobileLayout> {
   late Breakpoint breakpoint;
   late BoxConstraints layoutConstraints;
 
@@ -60,7 +56,6 @@ class _HomeDetailsHomeDetailsMobileLayout extends State<HomeDetailsMobileLayout>
   late double mapViewHeight;
   late double titleSpacer;
   late double bodyTextSpacer;
-
 
   /// It is a helper method for build(). It initializes the fields of dimensions
   void setupDimensions() {
@@ -102,24 +97,25 @@ class _HomeDetailsHomeDetailsMobileLayout extends State<HomeDetailsMobileLayout>
 
   @override
   Widget build(BuildContext context) {
-
-    return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
       breakpoint = Breakpoint.fromConstraints(constraints);
       layoutConstraints = constraints;
       setupDimensions();
 
       return Scaffold(
         appBar: AdaptiveTopAppBar(
-          breakpoint: breakpoint,
-          layoutConstraints: layoutConstraints,
-          previousPageTitle: AppLocalizations.of(context)!.homeSearch,
-          currPageTitle: AppLocalizations.of(context)!.homeDetails
-        ),
+            breakpoint: breakpoint,
+            layoutConstraints: layoutConstraints,
+            previousPageTitle: AppLocalizations.of(context)!.homeSearch,
+            currPageTitle: AppLocalizations.of(context)!.homeDetails),
         body: SizedBox(
           width: layoutConstraints.maxWidth,
           height: layoutConstraints.maxHeight,
-          child: ListView( // 90 is the default fab height and padding
-            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom + 90),
+          child: ListView(
+            // 90 is the default fab height and padding
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewPadding.bottom + 90),
             children: [
               buildImageSection(),
               SizedBox(height: sectionsSpacer),
@@ -141,48 +137,46 @@ class _HomeDetailsHomeDetailsMobileLayout extends State<HomeDetailsMobileLayout>
           ),
         ),
         floatingActionButton: PrimaryBtn(
-          breakpoint: breakpoint,
-          layoutConstraints: layoutConstraints,
-          handleClick: widget.handleClickBook,
-          buttonText: AppLocalizations.of(context)!.book
-        ),
+            breakpoint: breakpoint,
+            layoutConstraints: layoutConstraints,
+            handleClick: widget.handleClickBook,
+            buttonText: AppLocalizations.of(context)!.book),
       );
     });
   }
 
-
   /// It builds the image section of the layout.
   Widget buildImageSection() {
     return ImagesViewContainer(
-      breakpoint: breakpoint,
-      layoutConstraints: layoutConstraints,
-      imageUrls: widget.sliderImages
-    );
+        breakpoint: breakpoint,
+        layoutConstraints: layoutConstraints,
+        imageUrls: widget.sliderImages);
   }
-
 
   /// It is a helper method that builds the container decoration for the sections.
   BoxDecoration getContainerDecoration() {
     return BoxDecoration(
-    color: Theme.of(context).colorScheme.background,
-    borderRadius: BorderRadius.circular(sectionContainerWidth * 0.05),
-    border: Border.all(width: 0.1, color: const Color.fromRGBO(151, 151, 151, 1)),
-    boxShadow: const [BoxShadow(blurRadius: 40, offset: Offset(0, 4), color: Color.fromRGBO(0, 0, 0, 0.05))]
-    );
+        color: Theme.of(context).colorScheme.background,
+        borderRadius: BorderRadius.circular(sectionContainerWidth * 0.05),
+        border: Border.all(
+            width: 0.1, color: const Color.fromRGBO(151, 151, 151, 1)),
+        boxShadow: const [
+          BoxShadow(
+              blurRadius: 40,
+              offset: Offset(0, 4),
+              color: Color.fromRGBO(0, 0, 0, 0.05))
+        ]);
   }
-
 
   /// It is a helper method that builds a section title text.
   Widget buildSectionTitle(String titleStr) {
     return Text(
       titleStr,
       style: TextStyle(
-        fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,
-        fontWeight: FontWeight.normal
-      ),
+          fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,
+          fontWeight: FontWeight.normal),
     );
   }
-
 
   /// It builds the listing info section.
   Widget buildListingInfoSection() {
@@ -190,7 +184,8 @@ class _HomeDetailsHomeDetailsMobileLayout extends State<HomeDetailsMobileLayout>
       width: sectionContainerWidth,
       decoration: getContainerDecoration(),
       padding: EdgeInsets.all(sectionContainerPadding),
-      margin: EdgeInsets.symmetric(horizontal:  (layoutConstraints.maxWidth - sectionContainerWidth) / 2),
+      margin: EdgeInsets.symmetric(
+          horizontal: (layoutConstraints.maxWidth - sectionContainerWidth) / 2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -208,18 +203,15 @@ class _HomeDetailsHomeDetailsMobileLayout extends State<HomeDetailsMobileLayout>
     );
   }
 
-
   /// It is a helper method for buildListingInfoSection. It builds the listing title.
   Widget buildListingTitleRow() {
     return Text(
       widget.detailsModel!.listingTitle,
       style: TextStyle(
-        fontSize: Theme.of(context).textTheme.titleSmall!.fontSize,
-        fontWeight: FontWeight.bold
-      ),
+          fontSize: Theme.of(context).textTheme.titleSmall!.fontSize,
+          fontWeight: FontWeight.bold),
     );
   }
-
 
   /// It is a helper method for buildListingInfoSection. It builds the home type row.
   Widget buildHomeTypeRow() {
@@ -227,14 +219,16 @@ class _HomeDetailsHomeDetailsMobileLayout extends State<HomeDetailsMobileLayout>
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Icon(Icons.maps_home_work_outlined, size: sectionContainerWidth * 0.04, color: Theme.of(context).colorScheme.outlineVariant),
+          Icon(Icons.maps_home_work_outlined,
+              size: sectionContainerWidth * 0.04,
+              color: Theme.of(context).colorScheme.outlineVariant),
           const SizedBox(width: 8),
           Text(
-            HomeTypeFormatter.mapEnumToText(context, widget.detailsModel!.listingType),
+            HomeTypeFormatter.mapEnumToText(
+                context, widget.detailsModel!.listingType),
             style: TextStyle(
-              fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
-              color: Theme.of(context).colorScheme.outlineVariant
-            ),
+                fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
+                color: Theme.of(context).colorScheme.outlineVariant),
           )
         ],
       ),
@@ -243,26 +237,27 @@ class _HomeDetailsHomeDetailsMobileLayout extends State<HomeDetailsMobileLayout>
 
   /// It is a helper method for buildListingInfoSection. It builds the home type row.
   Widget buildListingIDRow() {
-    String outputString = "${AppLocalizations.of(context)!.listingIdIs} ${widget.detailsModel!.listingId}";
+    String outputString =
+        "${AppLocalizations.of(context)!.listingIdIs} ${widget.detailsModel!.listingId}";
 
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Icon(Icons.bookmark_border_rounded, size: sectionContainerWidth * 0.04, color: Theme.of(context).colorScheme.outlineVariant),
+          Icon(Icons.bookmark_border_rounded,
+              size: sectionContainerWidth * 0.04,
+              color: Theme.of(context).colorScheme.outlineVariant),
           const SizedBox(width: 8),
           Text(
             outputString,
             style: TextStyle(
-              fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
-              color: Theme.of(context).colorScheme.outlineVariant
-            ),
+                fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
+                color: Theme.of(context).colorScheme.outlineVariant),
           )
         ],
       ),
     );
   }
-
 
   /// It is a helper method for buildListingInfoSection. It builds the price row.
   Widget buildPriceRow() {
@@ -274,20 +269,20 @@ class _HomeDetailsHomeDetailsMobileLayout extends State<HomeDetailsMobileLayout>
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Icon(Icons.monetization_on_outlined, size: sectionContainerWidth * 0.04, color: Theme.of(context).colorScheme.secondary),
+          Icon(Icons.monetization_on_outlined,
+              size: sectionContainerWidth * 0.04,
+              color: Theme.of(context).colorScheme.secondary),
           const SizedBox(width: 8),
           Text(
             outputStr,
             style: TextStyle(
-              fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
-              color: Theme.of(context).colorScheme.secondary
-            ),
+                fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
+                color: Theme.of(context).colorScheme.secondary),
           )
         ],
       ),
     );
   }
-
 
   /// It builds the section of unit details
   Widget buildUnitDetailsSection() {
@@ -295,7 +290,8 @@ class _HomeDetailsHomeDetailsMobileLayout extends State<HomeDetailsMobileLayout>
       width: sectionContainerWidth,
       decoration: getContainerDecoration(),
       padding: EdgeInsets.all(sectionContainerPadding),
-      margin: EdgeInsets.symmetric(horizontal:  (layoutConstraints.maxWidth - sectionContainerWidth) / 2),
+      margin: EdgeInsets.symmetric(
+          horizontal: (layoutConstraints.maxWidth - sectionContainerWidth) / 2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -313,51 +309,53 @@ class _HomeDetailsHomeDetailsMobileLayout extends State<HomeDetailsMobileLayout>
     );
   }
 
-
   /// It is a helper method for buildUnitDetailsSection. It builds the first row
   /// below the title. It specifies the availability, area, and floor.
   Widget buildGeneralInfoRow() {
     String availabilityText = (widget.detailsModel!.unitMaxCapacity == 1)
-      ? AppLocalizations.of(context)!.wholeUnit
-      : "${widget.detailsModel!.unitAvailableCapacity} / ${widget.detailsModel!.unitMaxCapacity}";
-    String areaText = "${widget.detailsModel!.area} ${AppLocalizations.of(context)!.mUnit}";
-    String floorText = FloorFormatter.mapEnumToText(context, widget.detailsModel!.floor);
+        ? AppLocalizations.of(context)!.wholeUnit
+        : "${widget.detailsModel!.unitAvailableCapacity} / ${widget.detailsModel!.unitMaxCapacity}";
+    String areaText =
+        "${widget.detailsModel!.area} ${AppLocalizations.of(context)!.mUnit}";
+    String floorText =
+        FloorFormatter.mapEnumToText(context, widget.detailsModel!.floor);
 
     TextStyle labelStyle = TextStyle(
-      fontSize: Theme.of(context).textTheme.labelMedium!.fontSize,
-      color: Theme.of(context).colorScheme.outlineVariant
-    );
+        fontSize: Theme.of(context).textTheme.labelMedium!.fontSize,
+        color: Theme.of(context).colorScheme.outlineVariant);
     TextStyle subLabelStyle = TextStyle(
         fontSize: Theme.of(context).textTheme.labelMedium!.fontSize,
-        color: Theme.of(context).colorScheme.secondary
-    );
+        color: Theme.of(context).colorScheme.secondary);
 
     Widget availabilityColumn = Column(
       children: [
-        Text( AppLocalizations.of(context)!.availability, style: labelStyle ),
-        Text( availabilityText, style: subLabelStyle )
+        Text(AppLocalizations.of(context)!.availability, style: labelStyle),
+        Text(availabilityText, style: subLabelStyle)
       ],
     );
     Widget areaColumn = Column(
       children: [
-        Text( AppLocalizations.of(context)!.area, style: labelStyle ),
-        Text( areaText, style: subLabelStyle )
+        Text(AppLocalizations.of(context)!.area, style: labelStyle),
+        Text(areaText, style: subLabelStyle)
       ],
     );
     Widget floorColumn = Column(
       children: [
-        Text( AppLocalizations.of(context)!.floor, style: labelStyle ),
-        Text( floorText, style: subLabelStyle )
+        Text(AppLocalizations.of(context)!.floor, style: labelStyle),
+        Text(floorText, style: subLabelStyle)
       ],
     );
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [ Expanded(child: availabilityColumn), Expanded(child: areaColumn), Expanded(child: floorColumn) ],
+      children: [
+        Expanded(child: availabilityColumn),
+        Expanded(child: areaColumn),
+        Expanded(child: floorColumn)
+      ],
     );
   }
-
 
   /// It is a helper method for buildUnitDetailsSection. It builds the first row of
   /// amenities icons.
@@ -366,14 +364,29 @@ class _HomeDetailsHomeDetailsMobileLayout extends State<HomeDetailsMobileLayout>
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Expanded(child: AmenityIcon(breakpoint: breakpoint, layoutConstraints: layoutConstraints, amenityIconType: AmenityIconType.electricity)),
-        Expanded(child: AmenityIcon(breakpoint: breakpoint, layoutConstraints: layoutConstraints, amenityIconType: AmenityIconType.water)),
-        Expanded(child: AmenityIcon(breakpoint: breakpoint, layoutConstraints: layoutConstraints, amenityIconType: AmenityIconType.internet)),
-        Expanded(child: AmenityIcon(breakpoint: breakpoint, layoutConstraints: layoutConstraints, amenityIconType: AmenityIconType.parking)),
+        Expanded(
+            child: AmenityIcon(
+                breakpoint: breakpoint,
+                layoutConstraints: layoutConstraints,
+                amenityIconType: AmenityIconType.electricity)),
+        Expanded(
+            child: AmenityIcon(
+                breakpoint: breakpoint,
+                layoutConstraints: layoutConstraints,
+                amenityIconType: AmenityIconType.water)),
+        Expanded(
+            child: AmenityIcon(
+                breakpoint: breakpoint,
+                layoutConstraints: layoutConstraints,
+                amenityIconType: AmenityIconType.internet)),
+        Expanded(
+            child: AmenityIcon(
+                breakpoint: breakpoint,
+                layoutConstraints: layoutConstraints,
+                amenityIconType: AmenityIconType.parking)),
       ],
     );
   }
-
 
   /// It is a helper method for buildUnitDetailsSection. It builds the second row of
   /// amenities icons.
@@ -382,14 +395,29 @@ class _HomeDetailsHomeDetailsMobileLayout extends State<HomeDetailsMobileLayout>
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Expanded(child: AmenityIcon(breakpoint: breakpoint, layoutConstraints: layoutConstraints, amenityIconType: AmenityIconType.equippedKitchen)),
-        Expanded(child: AmenityIcon(breakpoint: breakpoint, layoutConstraints: layoutConstraints, amenityIconType: AmenityIconType.privateBathroom)),
-        Expanded(child: AmenityIcon(breakpoint: breakpoint, layoutConstraints: layoutConstraints, amenityIconType: AmenityIconType.furnishedBedroom)),
-        Expanded(child: AmenityIcon(breakpoint: breakpoint, layoutConstraints: layoutConstraints, amenityIconType: AmenityIconType.security)),
+        Expanded(
+            child: AmenityIcon(
+                breakpoint: breakpoint,
+                layoutConstraints: layoutConstraints,
+                amenityIconType: AmenityIconType.equippedKitchen)),
+        Expanded(
+            child: AmenityIcon(
+                breakpoint: breakpoint,
+                layoutConstraints: layoutConstraints,
+                amenityIconType: AmenityIconType.privateBathroom)),
+        Expanded(
+            child: AmenityIcon(
+                breakpoint: breakpoint,
+                layoutConstraints: layoutConstraints,
+                amenityIconType: AmenityIconType.furnishedBedroom)),
+        Expanded(
+            child: AmenityIcon(
+                breakpoint: breakpoint,
+                layoutConstraints: layoutConstraints,
+                amenityIconType: AmenityIconType.security)),
       ],
     );
   }
-
 
   /// It is a helper method for buildUnitDetailsSection. It builds the third row of
   /// amenities icons.
@@ -398,14 +426,29 @@ class _HomeDetailsHomeDetailsMobileLayout extends State<HomeDetailsMobileLayout>
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Expanded(child: AmenityIcon(breakpoint: breakpoint, layoutConstraints: layoutConstraints, amenityIconType: AmenityIconType.tv)),
-        Expanded(child: AmenityIcon(breakpoint: breakpoint, layoutConstraints: layoutConstraints, amenityIconType: AmenityIconType.ac)),
-        Expanded(child: AmenityIcon(breakpoint: breakpoint, layoutConstraints: layoutConstraints, amenityIconType: AmenityIconType.washer)),
-        Expanded(child: AmenityIcon(breakpoint: breakpoint, layoutConstraints: layoutConstraints, amenityIconType: AmenityIconType.waterHeater)),
+        Expanded(
+            child: AmenityIcon(
+                breakpoint: breakpoint,
+                layoutConstraints: layoutConstraints,
+                amenityIconType: AmenityIconType.tv)),
+        Expanded(
+            child: AmenityIcon(
+                breakpoint: breakpoint,
+                layoutConstraints: layoutConstraints,
+                amenityIconType: AmenityIconType.ac)),
+        Expanded(
+            child: AmenityIcon(
+                breakpoint: breakpoint,
+                layoutConstraints: layoutConstraints,
+                amenityIconType: AmenityIconType.washer)),
+        Expanded(
+            child: AmenityIcon(
+                breakpoint: breakpoint,
+                layoutConstraints: layoutConstraints,
+                amenityIconType: AmenityIconType.waterHeater)),
       ],
     );
   }
-
 
   /// It builds the address section
   Widget buildLocationSection() {
@@ -413,7 +456,8 @@ class _HomeDetailsHomeDetailsMobileLayout extends State<HomeDetailsMobileLayout>
       width: sectionContainerWidth,
       decoration: getContainerDecoration(),
       padding: EdgeInsets.all(sectionContainerPadding),
-      margin: EdgeInsets.symmetric(horizontal:  (layoutConstraints.maxWidth - sectionContainerWidth) / 2),
+      margin: EdgeInsets.symmetric(
+          horizontal: (layoutConstraints.maxWidth - sectionContainerWidth) / 2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -425,12 +469,16 @@ class _HomeDetailsHomeDetailsMobileLayout extends State<HomeDetailsMobileLayout>
           SizedBox(height: containerRowsSpacer),
           buildBuildingNumberRow(),
           SizedBox(height: containerRowsSpacer * 2),
-          buildGoogleMapView()
+          AppGoogleMapView(
+            position:
+                LatLng(widget.detailsModel!.lat, widget.detailsModel!.lon),
+            imageSize: imageSize,
+            mapViewHeight: mapViewHeight,
+          )
         ],
       ),
     );
   }
-
 
   /// It builds the district row for buildAddressSection.
   Widget buildDistrictRow() {
@@ -442,14 +490,15 @@ class _HomeDetailsHomeDetailsMobileLayout extends State<HomeDetailsMobileLayout>
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Icon(Icons.area_chart_outlined, size: sectionContainerWidth * 0.04, color: Theme.of(context).colorScheme.outlineVariant),
+          Icon(Icons.area_chart_outlined,
+              size: sectionContainerWidth * 0.04,
+              color: Theme.of(context).colorScheme.outlineVariant),
           const SizedBox(width: 8),
           Text(
             districtText,
             style: TextStyle(
                 fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
-                color: Theme.of(context).colorScheme.outlineVariant
-            ),
+                color: Theme.of(context).colorScheme.outlineVariant),
           )
         ],
       ),
@@ -466,60 +515,69 @@ class _HomeDetailsHomeDetailsMobileLayout extends State<HomeDetailsMobileLayout>
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Icon(Icons.edit_road_outlined, size: sectionContainerWidth * 0.04, color: Theme.of(context).colorScheme.outlineVariant),
+          Icon(Icons.edit_road_outlined,
+              size: sectionContainerWidth * 0.04,
+              color: Theme.of(context).colorScheme.outlineVariant),
           const SizedBox(width: 8),
           Text(
             streetText,
             style: TextStyle(
                 fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
-                color: Theme.of(context).colorScheme.outlineVariant
-            ),
+                color: Theme.of(context).colorScheme.outlineVariant),
           )
         ],
       ),
     );
   }
 
-
   /// It builds the building number row for buildAddressSection.
   Widget buildBuildingNumberRow() {
-    String buildingNumberText = "${AppLocalizations.of(context)!.building} ${widget.detailsModel!.buildingId}";
+    String buildingNumberText =
+        "${AppLocalizations.of(context)!.building} ${widget.detailsModel!.buildingId}";
 
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Icon(Icons.house_siding_outlined, size: sectionContainerWidth * 0.04, color: Theme.of(context).colorScheme.outlineVariant),
+          Icon(Icons.house_siding_outlined,
+              size: sectionContainerWidth * 0.04,
+              color: Theme.of(context).colorScheme.outlineVariant),
           const SizedBox(width: 8),
           Text(
             buildingNumberText,
             style: TextStyle(
                 fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
-                color: Theme.of(context).colorScheme.outlineVariant
-            ),
+                color: Theme.of(context).colorScheme.outlineVariant),
           )
         ],
       ),
     );
   }
+}
 
-  /// It is a helper method for buildLocationSection.
-  Widget buildGoogleMapView() {
-    LatLng position = LatLng(widget.detailsModel!.lat, widget.detailsModel!.lon);
+class AppGoogleMapView extends StatelessWidget {
+  final double imageSize;
+  final double mapViewHeight;
+  final LatLng position;
+  const AppGoogleMapView(
+      {super.key,
+      required this.imageSize,
+      required this.mapViewHeight,
+      required this.position});
+
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       width: imageSize,
       height: mapViewHeight,
       child: GoogleMap(
-        onTap: (_) => MapsLauncher.launchCoordinates(position.latitude, position.longitude),
-        mapType: MapType.normal,
-        markers: {Marker(markerId: MarkerId("market"), position: position)},
-        initialCameraPosition: CameraPosition(
-          zoom: 15.0,
-          target: position
-        )
-      ),
+          onTap: (_) => MapsLauncher.launchCoordinates(
+              position.latitude, position.longitude),
+          mapType: MapType.normal,
+          markers: {
+            Marker(markerId: const MarkerId("market"), position: position)
+          },
+          initialCameraPosition: CameraPosition(zoom: 15.0, target: position)),
     );
   }
-
-
 }
