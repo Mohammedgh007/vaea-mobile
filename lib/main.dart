@@ -21,6 +21,8 @@ import 'package:vaea_mobile/bloc/providers/user_settings_provider.dart';
 import 'package:vaea_mobile/routes_mapper.dart';
 import 'package:vaea_mobile/view/screens/spash_screen.dart';
 
+import 'bloc/providers/services_provider.dart';
+
 void main() async {
   // loading env variables
   if (kReleaseMode) {
@@ -91,6 +93,7 @@ class MyApp extends StatelessWidget {
       ChangeNotifierProvider(create: (_) => ProfileProvider()),
       ChangeNotifierProvider(create: (_) => HomeSearchProvider()),
       ChangeNotifierProvider(create: (_) => BookingProvider()),
+      ChangeNotifierProvider(create: (_) => ServicesProvider()),
     ];
   }
 

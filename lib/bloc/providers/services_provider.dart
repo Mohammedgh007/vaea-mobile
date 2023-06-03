@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import '../../data/repo/make_service_request_repo.dart';
+import '../../data/repo/service_repo.dart';
 
 class ServicesProvider extends ChangeNotifier {
   ServiceResponse? serviceResponse;
@@ -10,6 +10,7 @@ class ServicesProvider extends ChangeNotifier {
     var serviceRepo = ServiceRepo();
     var response = await serviceRepo.loadServices();
     serviceResponse = ServiceResponse.fromJson(response);
+    notifyListeners();
   }
 }
 

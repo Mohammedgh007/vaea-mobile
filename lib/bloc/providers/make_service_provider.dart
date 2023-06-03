@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../data/enums/issue_category.dart';
 import '../../data/enums/rooms_enum.dart';
-import '../../data/repo/make_service_request_repo.dart';
+import '../../data/repo/service_repo.dart';
 
 class MakeServicesProvider extends ChangeNotifier {
   RoomType? _selectedRoom = RoomType.BATHROOM;

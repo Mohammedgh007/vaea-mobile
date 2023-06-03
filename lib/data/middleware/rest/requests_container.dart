@@ -36,8 +36,11 @@ class RequestsContainer {
       debugPrint("before api get $url");
       Map<String, String> header = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer ${AuthContainer.token}"
       };
+      if (AuthContainer.token != null) {
+        header.putIfAbsent(
+            "Authorization", () => "Bearer ${AuthContainer.token}");
+      }
       http.Response response = await http.get(url, headers: header);
       debugPrint("after api get $url ${response.statusCode}");
       if (response.statusCode == 200) {

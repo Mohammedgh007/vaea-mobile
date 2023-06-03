@@ -49,7 +49,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
   @override
   void initState() {
     super.initState();
-
+    Provider.of<ServicesProvider>(context, listen: false).loadServicesHistory();
     uiEventsManager.listenToClosingSearchPanelEvent((event) {
       _panelController.close();
     });
@@ -82,59 +82,56 @@ class _ServicesScreenState extends State<ServicesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (context) => ServicesProvider(),
-        child: Consumer<ServicesProvider>(
-            builder: (context, provider, child) => LayoutBuilder(builder:
-                    (BuildContext context, BoxConstraints constraints) {
-                  provider.loadServicesHistory();
-                  breakpoint = Breakpoint.fromConstraints(constraints);
-                  layoutConstraints = constraints;
-                  setupDimensions();
-                  return Scaffold(
-                    floatingActionButton: (Platform.isAndroid)
-                        ? FloatingActionButton(
-                            backgroundColor: AppColors.lightPrimary,
-                            onPressed: () {
-                              Navigator.of(context).pushNamed(
-                                  RoutesMapper.getScreenRoute(
-                                      ScreenName.serviceList));
-                            },
-                            child: const Icon(
-                              Icons.add,
-                              size: 40,
-                            ),
-                          )
-                        : null,
-                    appBar: AdaptiveTopAppBar(
-                      breakpoint: breakpoint,
-                      layoutConstraints: constraints,
-                      currPageTitle: AppLocalizations.of(context)!.services,
-                      trailingWidgets: (Platform.isIOS)
-                          ? const [Center(child: Text('Add Request'))]
-                          : null,
-                    ),
-                    body: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        SizedBox(
-                          height: 16.h,
+    return Consumer<ServicesProvider>(
+        builder: (context, provider, child) => LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+              breakpoint = Breakpoint.fromConstraints(constraints);
+              layoutConstraints = constraints;
+              setupDimensions();
+              return Scaffold(
+                floatingActionButton: (Platform.isAndroid)
+                    ? FloatingActionButton(
+                        backgroundColor: AppColors.lightPrimary,
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(
+                              RoutesMapper.getScreenRoute(
+                                  ScreenName.serviceList));
+                        },
+                        child: const Icon(
+                          Icons.add,
+                          size: 40,
                         ),
-                        Center(child: buildTabsSection()),
-                        if (provider.serviceResponse != null)
-                          Expanded(
-                              child: ListView.builder(
-                            padding: EdgeInsets.only(bottom: 100.h),
-                            itemBuilder: (context, index) => RequestElement(
-                                requestElement:
-                                    provider.serviceResponse!.data[index]),
-                            itemCount: provider.serviceResponse!.data.length,
-                          )),
-                      ],
+                      )
+                    : null,
+                appBar: AdaptiveTopAppBar(
+                  breakpoint: breakpoint,
+                  layoutConstraints: constraints,
+                  currPageTitle: AppLocalizations.of(context)!.services,
+                  trailingWidgets: (Platform.isIOS)
+                      ? const [Center(child: Text('Add Request'))]
+                      : null,
+                ),
+                body: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(
+                      height: 16.h,
                     ),
-                    bottomNavigationBar: BottomNavigation(currentIndex: 2),
-                  );
-                })));
+                    Center(child: buildTabsSection()),
+                    if (provider.serviceResponse != null)
+                      Expanded(
+                          child: ListView.builder(
+                        padding: EdgeInsets.only(bottom: 100.h),
+                        itemBuilder: (context, index) => RequestElement(
+                            requestElement:
+                                provider.serviceResponse!.data[index]),
+                        itemCount: provider.serviceResponse!.data.length,
+                      )),
+                  ],
+                ),
+                bottomNavigationBar: BottomNavigation(currentIndex: 2),
+              );
+            }));
   }
 
   Widget buildTabsSection() {
