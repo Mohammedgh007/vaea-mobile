@@ -211,7 +211,7 @@
     "unitName": "Unit",
     "navigateHome": "Navigate Home",
     "roommates": "Roommates",
-    "exploreHomes": "Explore Homes"
-
-
+    "exploreHomes": "Explore Homes",
+    "youNeedSignActivities": "you need to sign in to access the activities",
+    "youNeedSignServices": "you need to sign in to access the services"
 }

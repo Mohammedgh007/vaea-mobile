@@ -27,10 +27,10 @@ import 'bloc/providers/services_provider.dart';
 void main() async {
   // loading env variables
   if (kReleaseMode) {
-    await dotenv.load(fileName: ".env.dev");
+    await dotenv.load(fileName: ".env.prod");
     //await dotenv.load(fileName: ".env.test");
   } else {
-    await dotenv.load(fileName: ".env.dev");
+    await dotenv.load(fileName: ".env.prod");
   }
 
   runApp(MyApp());

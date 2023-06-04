@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../../bloc/providers/activities_provider.dart';
+import '../../bloc/providers/profile_provider.dart';
 import '../../routes_mapper.dart';
 import '../widgets/navigation/adaptive_top_app_bar.dart';
 import '../widgets/navigation/bottom_navigation.dart';
@@ -18,11 +19,14 @@ class ActivitiesScreen extends StatefulWidget {
 }
 
 class _ActivitiesScreenState extends State<ActivitiesScreen> {
+  late final ProfileProvider profileProvider;
+
   List<Appointment> getRecurringAppointments() {
     final List<Appointment> appointments = [];
 
     final startDate = DateTime(2023, 6, 3);
     final endDate = DateTime(2023, 7, 15);
+
 
     for (DateTime date = startDate;
         date.isBefore(endDate);
@@ -42,7 +46,24 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    profileProvider = Provider.of<ProfileProvider>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (profileProvider.profileModel == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(AppLocalizations.of(context)!.youNeedSignActivities)),
+        );
+      }
+
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+
     return Consumer<ActivitiesProvider>(
       builder: (context, provider, child) => LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {

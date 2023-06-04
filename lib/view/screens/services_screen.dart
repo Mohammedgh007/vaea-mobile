@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:vaea_mobile/view/widgets/navigation/adaptive_top_app_bar.dart';
+import '../../bloc/providers/profile_provider.dart';
 import '../../bloc/providers/services_provider.dart';
 import '../../data/enums/services_enums.dart';
 import '../../routes_mapper.dart';
@@ -30,6 +31,7 @@ class ServicesScreen extends StatefulWidget {
 class _ServicesScreenState extends State<ServicesScreen> {
   late Breakpoint breakpoint;
   late BoxConstraints layoutConstraints;
+  late final ProfileProvider profileProvider;
 
   final PanelController _panelController = PanelController();
   bool isFiltersSelected =
@@ -51,6 +53,16 @@ class _ServicesScreenState extends State<ServicesScreen> {
   void initState() {
     super.initState();
     Provider.of<ServicesProvider>(context, listen: false).loadServicesHistory();
+    profileProvider = Provider.of<ProfileProvider>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (profileProvider.profileModel == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(AppLocalizations.of(context)!.youNeedSignServices)),
+        );
+      }
+
+    });
+
     uiEventsManager.listenToClosingSearchPanelEvent((event) {
       _panelController.close();
     });

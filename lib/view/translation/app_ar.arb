@@ -210,6 +210,8 @@
     "unitName": "الغرفة",
     "navigateHome": "موقع المزل",
     "roommates": "رفقاء السكن",
-    "exploreHomes": "استكشف المنازل"
+    "exploreHomes": "استكشف المنازل",
+    "youNeedSignActivities": "يرجى تسجيل الدخول للوصول الى الفعاليات",
+    "youNeedSignServices": "يرجى تسجيل الدخول للوصول الى الخدمات"
 
 }
