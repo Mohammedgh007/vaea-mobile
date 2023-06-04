@@ -1,9 +1,11 @@
 
+import 'package:flutter/material.dart';
 import 'package:vaea_mobile/helpers/excpetions/expired_token_except.dart';
 
 import '../../helpers/excpetions/internet_connection_except.dart';
 import '../dto/confirm_booking_dto.dart';
 import '../middleware/rest/requests_container.dart';
+import '../model/my_home_details_model.dart';
 import 'launch_requirements_repo.dart';
 
 /// It facilitates accessing the rest api for booking an apartment or manage a booking
@@ -61,6 +63,21 @@ class BookingRepo {
       }
     } on Exception catch(e) {
       throw ExpiredTokenException(msg: "error in lockUnit $e");
+    }
+  }
+
+  /// It retrieves the current user home details
+  Future<MyHomeDetailsModel?> getMyHomeDetails() async {
+    try {
+      if (await LaunchRequirementRepo.checkInternetConnection()) {
+        String pathStr = "/tenants/get_my_home_details";
+        Map<String, dynamic> response = await RequestsContainer.getData(pathStr, null);
+        return (response["status"] == 0) ? null : MyHomeDetailsModel.fromMap(response["data"]);
+      } else {
+        throw InternetConnectionException(msg: "error no internet in get my home");
+      }
+    } on Exception catch(e) {
+      throw ExpiredTokenException(msg: "error in get $e");
     }
   }
 }

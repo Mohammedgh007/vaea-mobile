@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:vaea_mobile/data/model/curr_home_purview_model.dart';
+import 'package:vaea_mobile/data/model/my_home_details_model.dart';
 import 'package:vaea_mobile/view/widgets/buttons/primary_button.dart';
+import 'package:vaea_mobile/view/widgets/cards/my_home_card.dart';
 
 import '../../widgets/navigation/adaptive_top_app_bar.dart';
 import '../../widgets/navigation/bottom_navigation.dart';
@@ -14,11 +16,16 @@ import '../../widgets/navigation/bottom_navigation.dart';
 class HomeMobileLayout extends StatefulWidget {
 
   // null value indicates that the user has not rent yet
-  CurrHomePurviewModel? homeModel;
+  bool isScreenLoading;
+  bool shouldDisplayHomeDetails;
+  MyHomeDetailsModel? homeModel;
   void Function() handleClickFindHome;
+
 
   HomeMobileLayout({
     super.key,
+    required this.isScreenLoading,
+    required this.shouldDisplayHomeDetails,
     required this.homeModel,
     required this.handleClickFindHome
   });
@@ -90,7 +97,7 @@ class _HomeMobileLayoutState extends State<HomeMobileLayout> {
   /// It builds the body if the user has not rent yet.
   Widget buildNonRentBody() {
     return Center(
-      child: Column(
+      child: (widget.isScreenLoading) ? const CircularProgressIndicator.adaptive() : Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -150,7 +157,30 @@ class _HomeMobileLayoutState extends State<HomeMobileLayout> {
 
   /// It builds the body if the user has rent already.
   Widget buildRentBody() {
-    return Column();
+    return Container(
+      width: layoutConstraints.maxWidth,
+      padding: EdgeInsets.only(top: imageTopMargin),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          MyHomeCard(
+            breakpoint: breakpoint,
+            layoutConstraints: layoutConstraints,
+            homeDetails: widget.homeModel!
+          ),
+         Padding(
+           padding: const EdgeInsets.only(bottom: 8.0),
+           child: PrimaryBtn(
+              breakpoint: breakpoint,
+              layoutConstraints: layoutConstraints,
+              handleClick: widget.handleClickFindHome,
+              buttonText: AppLocalizations.of(context)!.exploreHomes
+            ),
+         )
+        ],
+      ),
+    );
   }
 
 }

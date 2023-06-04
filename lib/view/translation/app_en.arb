@@ -205,6 +205,13 @@
     "scheduledStatus": "Scheduled",
     "concludedStatus": "Concluded",
     "addRequest": "Add Request",
-    "preferredDayOfVisit": "Preferred Day Of Appointment"
+    "preferredDayOfVisit": "Preferred Day Of Appointment",
+    "myHome": "My Home",
+    "apartment": "Apartment",
+    "unitName": "Unit",
+    "navigateHome": "Navigate Home",
+    "roommates": "Roommates",
+    "exploreHomes": "Explore Homes"
+
 
 }

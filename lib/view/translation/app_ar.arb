@@ -204,6 +204,12 @@
     "scheduledStatus": "مجدول زيارة",
     "concludedStatus": "تم انهاؤه",
     "addRequest": "إضافة طلب",
-    "preferredDayOfVisit": "اليوم المفضل للموعد"
+    "preferredDayOfVisit": "اليوم المفضل للموعد",
+    "myHome": "منزلي",
+    "apartment": "شقة",
+    "unitName": "الغرفة",
+    "navigateHome": "موقع المزل",
+    "roommates": "رفقاء السكن",
+    "exploreHomes": "استكشف المنازل"
 
 }
