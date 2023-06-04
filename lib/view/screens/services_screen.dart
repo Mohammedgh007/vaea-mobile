@@ -38,7 +38,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
   UiEventsManager uiEventsManager = UiEventsManager();
   bool isLoading =
       false; // it is used when the user modifies the filters or the sorting
-  bool isShowingMap = false;
+  bool isShowingPrev = false;
 
   // dimensions
   late double bottomPaddingFilterSortingButton;
@@ -113,8 +113,8 @@ class _ServicesScreenState extends State<ServicesScreen> {
                             onPressed: () {
                               pushServicesList(context);
                             },
-                            child: const Text(
-                              'Add Request',
+                            child: Text(
+                              AppLocalizations.of(context)!.addRequest,
                             ),
                           ))
                         ]
@@ -133,8 +133,8 @@ class _ServicesScreenState extends State<ServicesScreen> {
                         padding: EdgeInsets.only(bottom: 100.h),
                         itemBuilder: (context, index) => RequestElement(
                             requestElement:
-                                provider.serviceResponse!.data[index]),
-                        itemCount: provider.serviceResponse!.data.length,
+                                getRequests(provider)[index]),
+                        itemCount: getRequests(provider).length,
                       )),
                   ],
                 ),
@@ -143,19 +143,29 @@ class _ServicesScreenState extends State<ServicesScreen> {
             }));
   }
 
+  List<ServiceRequest> getRequests(ServicesProvider provider) {
+    if (isShowingPrev) {
+      return provider.serviceResponse!.data.where((req) => req.status == 'CONCLUDED').toList();
+    } else {
+      return provider.serviceResponse!.data.where((req) => req.status != 'CONCLUDED').toList();
+    }
+  }
+
   Widget buildTabsSection() {
-    return VAEASegmentedButton<bool>(
-      breakpoint: breakpoint,
-      layoutConstraints: layoutConstraints,
-      options: [
-        AppLocalizations.of(context)!.current,
-        AppLocalizations.of(context)!.previous
-      ],
-      optionsValues: const [false, true],
-      selectedIndex: (!isShowingMap) ? 0 : 1,
-      handleSelect: (bool didClickMap) => setState(() {
-        isShowingMap = didClickMap;
-      }),
+    return GestureDetector(
+      child: VAEASegmentedButton<bool>(
+        breakpoint: breakpoint,
+        layoutConstraints: layoutConstraints,
+        options: [
+          AppLocalizations.of(context)!.current,
+          AppLocalizations.of(context)!.previous
+        ],
+        optionsValues: const [false, true],
+        selectedIndex: (!isShowingPrev) ? 0 : 1,
+        handleSelect: (bool didClickMap) => setState(() {
+          isShowingPrev = didClickMap;
+        }),
+      ),
     );
   }
 
@@ -168,6 +178,30 @@ class _ServicesScreenState extends State<ServicesScreen> {
 class RequestElement extends StatelessWidget {
   final ServiceRequest requestElement;
   const RequestElement({super.key, required this.requestElement});
+
+  String mapTypeToTitle(BuildContext context) {
+    switch(requestElement.status) {
+      case "PENDING":
+        return AppLocalizations.of(context)!.houseCleaning;
+      case "SCHEDULED":
+        return AppLocalizations.of(context)!.plumbing;
+      default: //case ServicesTypes.electrician:
+        return AppLocalizations.of(context)!.electrician;
+
+    }
+  }
+
+  String mapStatusToText(BuildContext context) {
+    switch(requestElement.requestType) {
+      case "CLEANING":
+        return AppLocalizations.of(context)!.pendingStatus;
+      case "PLUMBING":
+        return AppLocalizations.of(context)!.scheduledStatus;
+      default: //case ServicesTypes.electrician:
+        return AppLocalizations.of(context)!.concludedStatus;
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -192,7 +226,7 @@ class RequestElement extends StatelessWidget {
                               requestElement.requestType.toLowerCase()) ??
                           ServicesTypes.carsOilChange)
                       .image),
-                  height: 114.h,
+                  height: 90.h,
                   width: 110.w,
                   fit: BoxFit.fill,
                 ),
@@ -204,7 +238,7 @@ class RequestElement extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    requestElement.requestType,
+                    mapTypeToTitle(context),
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         fontWeight: FontWeight.w700, fontFamily: 'Montserrat'),
                   ),
@@ -228,19 +262,19 @@ class RequestElement extends StatelessWidget {
                                 backgroundColor: Colors.white,
                                 child: Image.asset(
                                   'assets/images/alarm_pending.png',
-                                  width: 26.h,
-                                  height: 26.h,
+                                  width: 16.h,
+                                  height: 16.h,
                                   // color: Colors.white,
                                 ),
                               ),
                               SizedBox(
-                                width: 8.w,
+                                width: 6.w,
                               ),
                               Text(
-                                requestElement.status,
+                                mapStatusToText(context),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .labelMedium!
+                                    .labelSmall!
                                     .copyWith(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w700,
@@ -252,7 +286,7 @@ class RequestElement extends StatelessWidget {
                   ),
                   Text(
                     'Order on ${getDateFormatted(requestElement.orderDate)}',
-                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
                         color: AppColors.mediumEmphasisText,
                         fontWeight: FontWeight.w700,
                         fontFamily: 'Montserrat'),

@@ -19,6 +19,8 @@
     "finish": "Finish",
     "registration": "Registration",
         "submitRequest": "Submit Request",
+    "issueCategoryLabel": "Issue Category",
+    "issueCategoryHint": "Select Issue Category",
     "issueDescriptionLabel": "Issue Description",
     "issueDescriptionHint": "issue here",
       "notesOptionalLabel": "Notes (Optional)",
@@ -191,6 +193,18 @@
     "getStarted": "Get Started",
     "youNeedToSignUpBeforeBook": "You need to sign up first.",
     "signedOutSuccessfully": "You Signed out Successfully",
-    "youNeedToAcceptPrivacyPolicy": "You need to accept the privacy policy first."
+    "youNeedToAcceptPrivacyPolicy": "You need to accept the privacy policy first.",
+    "selectTheService": "Select the service",
+    "houseCleaning": "House Cleaning",
+    "plumbing": "Plumbing",
+    "electrician": "Electrician",
+    "houseCleaningDisc": "Our home keep workers cleans home at scheduled time for your comfort",
+    "plumbingDisc": "Our trained plumbers can fix any plumbing related issue for free",
+    "electricianDisc": "Our trained electricians can fix any related issue for free",
+    "pendingStatus": "Pending",
+    "scheduledStatus": "Scheduled",
+    "concludedStatus": "Concluded",
+    "addRequest": "Add Request",
+    "preferredDayOfVisit": "Preferred Day Of Appointment"
 
 }

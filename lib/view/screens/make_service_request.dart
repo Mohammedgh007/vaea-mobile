@@ -118,6 +118,30 @@ class _MakeServiceRequestState extends State<MakeServiceRequest> {
     }
   }
 
+  String mapTypeToTitle(BuildContext context) {
+    switch(servicesTypes) {
+      case ServicesTypes.houseCleaning:
+        return AppLocalizations.of(context)!.houseCleaning;
+      case ServicesTypes.plumbing:
+        return AppLocalizations.of(context)!.plumbing;
+      default: //case ServicesTypes.electrician:
+        return AppLocalizations.of(context)!.electrician;
+
+    }
+  }
+
+  String mapTypeToDisc(BuildContext context) {
+    switch(servicesTypes) {
+      case ServicesTypes.houseCleaning:
+        return AppLocalizations.of(context)!.houseCleaningDisc;
+      case ServicesTypes.plumbing:
+        return AppLocalizations.of(context)!.plumbingDisc;
+      default: //case ServicesTypes.electrician:
+        return AppLocalizations.of(context)!.electricianDisc;
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -130,7 +154,7 @@ class _MakeServiceRequestState extends State<MakeServiceRequest> {
           setupDimensions();
           return Scaffold(
             appBar: AppBar(
-              title: Text(servicesTypes.title),
+              title: Text(mapTypeToTitle(context)),
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -146,7 +170,7 @@ class _MakeServiceRequestState extends State<MakeServiceRequest> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10),
-                    child: Text(servicesTypes.description),
+                    child: Text(mapTypeToDisc(context)),
                   ),
                   SizedBox(
                     height: 13.h,
@@ -157,7 +181,7 @@ class _MakeServiceRequestState extends State<MakeServiceRequest> {
                         padding: EdgeInsets.symmetric(
                             horizontal: 0.045.sw, vertical: 5.h),
                         child: Text(
-                          'Preferred Day of Appointment',
+                          AppLocalizations.of(context)!.preferredDayOfVisit,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
@@ -229,7 +253,7 @@ class _MakeServiceRequestState extends State<MakeServiceRequest> {
                                 ? provider.selectedCategory
                                 : IssueCategory.BATHROOM_SHOWER,
                             labelStr:
-                                AppLocalizations.of(context)!.categoryType,
+                                AppLocalizations.of(context)!.issueCategoryLabel,
                             hintStr: null),
                         SizedBox(
                           height: 13.h,

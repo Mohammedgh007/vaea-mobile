@@ -29,33 +29,21 @@ class _ServicesListState extends State<ServicesList> {
         builder: (BuildContext context, BoxConstraints constraints) {
       Breakpoint breakpoint = Breakpoint.fromConstraints(constraints);
       return Scaffold(
-        floatingActionButton: (Platform.isAndroid)
-            ? FloatingActionButton(
-                backgroundColor: AppColors.lightPrimary,
-                onPressed: () {},
-                child: const Icon(
-                  Icons.add,
-                  size: 40,
-                ),
-              )
-            : null,
         appBar: AdaptiveTopAppBar(
           breakpoint: breakpoint,
           layoutConstraints: constraints,
           currPageTitle: AppLocalizations.of(context)!.services,
-          trailingWidgets: (Platform.isIOS)
-              ? const [Center(child: Text('Add Request'))]
-              : null,
+          previousPageTitle: "",
         ),
         body: Column(
           children: [
             Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 15.w, top: 19.h),
+                  padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 19.h),
                   child: Text(
-                    'Select the Service',
-                    style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                    AppLocalizations.of(context)!.selectTheService,
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                         color: AppColors.lightOnBackground,
                         fontWeight: FontWeight.w300,
                         fontFamily: 'Montserrat'),
@@ -64,20 +52,31 @@ class _ServicesListState extends State<ServicesList> {
               ],
             ),
             Expanded(
-              child: GridView.builder(
-                shrinkWrap: true,
-                primary: false,
-                padding: const EdgeInsets.all(20),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  crossAxisCount: 2,
-                ),
-                itemBuilder: (context, index) =>
-                    ServiceItem(service: ServicesTypes.values[index]),
-                itemCount: ServicesTypes.values.length,
+              child: Wrap(
+                runSpacing: 20,
+                spacing: 20,
+                alignment: WrapAlignment.start,
+                children: [
+                  ServiceItem(service: ServicesTypes.values[0]),
+                  ServiceItem(service: ServicesTypes.values[1]),
+                  ServiceItem(service: ServicesTypes.values[2])
+                ],
               ),
             ),
+            // Expanded(
+            //   child: GridView.builder(
+            //     primary: false,
+            //     padding: const EdgeInsets.all(20),
+            //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            //       crossAxisSpacing: 10,
+            //       mainAxisSpacing: 10,
+            //       crossAxisCount: 2,
+            //     ),
+            //     itemBuilder: (context, index) =>
+            //         ServiceItem(service: ServicesTypes.values[index]),
+            //     itemCount: 1,
+            //   ),
+            // ),
           ],
         ),
         bottomNavigationBar: BottomNavigation(currentIndex: 2),
@@ -89,6 +88,30 @@ class _ServicesListState extends State<ServicesList> {
 class ServiceItem extends StatelessWidget {
   final ServicesTypes service;
   const ServiceItem({super.key, required this.service});
+
+  String mapTypeToTitle(BuildContext context) {
+    switch(service) {
+      case ServicesTypes.houseCleaning:
+        return AppLocalizations.of(context)!.houseCleaning;
+      case ServicesTypes.plumbing:
+        return AppLocalizations.of(context)!.plumbing;
+      default: //case ServicesTypes.electrician:
+        return AppLocalizations.of(context)!.electrician;
+
+    }
+  }
+
+  String mapTypeToDisc(BuildContext context) {
+    switch(service) {
+      case ServicesTypes.houseCleaning:
+        return AppLocalizations.of(context)!.houseCleaningDisc;
+      case ServicesTypes.plumbing:
+        return AppLocalizations.of(context)!.plumbingDisc;
+      default: //case ServicesTypes.electrician:
+        return AppLocalizations.of(context)!.electricianDisc;
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +128,7 @@ class ServiceItem extends StatelessWidget {
           border: Border.all(color: AppColors.lightSecondary),
           borderRadius: BorderRadius.circular(18),
         ),
+        width: 170.w,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -122,21 +146,22 @@ class ServiceItem extends StatelessWidget {
               padding: EdgeInsets.only(top: 12.0.h, bottom: 7.h),
               child: Center(
                 child: Text(
-                  service.title,
+                  mapTypeToTitle(context),
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       color: AppColors.lightPrimary, fontFamily: 'Montserrat'),
                 ),
               ),
             ),
-            Expanded(
+            Padding(
+              padding: EdgeInsets.only( bottom: 12.h),
               child: Text(
-                service.description,
+                mapTypeToDisc(context),
                 style: Theme.of(context).textTheme.labelMedium!.copyWith(
                       fontFamily: 'Montserrat',
                       overflow: TextOverflow.clip,
                     ),
                 textAlign: TextAlign.center,
-                maxLines: 2,
+                maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
             ),

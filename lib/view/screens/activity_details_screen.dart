@@ -46,6 +46,7 @@ class _ActivityDetailsScreenState extends State<ActivityDetailsScreen> {
                   breakpoint: breakpoint,
                   layoutConstraints: constraints,
                   currPageTitle: AppLocalizations.of(context)!.activityDetails,
+                  previousPageTitle: AppLocalizations.of(context)!.activities,
                 ),
                 body: provider.singleEventResponse != null
                     ? EventDetailsBody(

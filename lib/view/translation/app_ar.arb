@@ -19,7 +19,9 @@
     "registration": "التسجيل",
     "finish": "انهاء",
     "submitRequest": "ارسال الطلب",
-    "issueDescriptionLabel": "نوع المشكلة",
+    "issueCategoryLabel": "نوع المشكلة",
+    "issueCategoryHint": "اختر المشكلة",
+    "issueDescriptionLabel": "وصف المشكلة",
     "issueDescriptionHint": "اكتب المشكلة",
     "notesOptionalLabel": "ملحوظة (اختياري)",
     "notesOptionalHint": "",    "firstnameFieldLabel": "الإسم الشخصي",
@@ -190,6 +192,18 @@
     "getStarted": "لبندأ",
     "youNeedToSignUpBeforeBook": "يجب اتمام تسجيل الحساب قبل الحجز",
     "signedOutSuccessfully": "تم تسجيل الخروج بنجاح",
-    "youNeedToAcceptPrivacyPolicy": "الرجاء الموافقة على سياسة الخصوصية أولا"
+    "youNeedToAcceptPrivacyPolicy": "الرجاء الموافقة على سياسة الخصوصية أولا",
+    "selectTheService": "اختر الخدمة",
+    "houseCleaning": "تنظيف الشقة",
+    "plumbing": "سباكة",
+    "electrician": "كهرباء",
+    "houseCleaningDisc": "يتم تنظيف الشقة عبر عمالنا المتدربين حسب وقتك المناسب",
+    "plumbingDisc": "سباكنا المدرب يمكنه اصلاح اي مشكلة سباكة مجانا",
+    "electricianDisc": "الكهربائي المدرب يمكنه اصلا أي مشكلة كهرباء مجانا",
+    "pendingStatus": "قيد المعالجة",
+    "scheduledStatus": "مجدول زيارة",
+    "concludedStatus": "تم انهاؤه",
+    "addRequest": "إضافة طلب",
+    "preferredDayOfVisit": "اليوم المفضل للموعد"
 
 }
