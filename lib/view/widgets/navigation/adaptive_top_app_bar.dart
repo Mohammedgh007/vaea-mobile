@@ -1,4 +1,3 @@
-
 import 'package:breakpoint/breakpoint.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,12 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class AdaptiveTopAppBar extends StatelessWidget implements PreferredSize {
-
   Breakpoint breakpoint;
   BoxConstraints layoutConstraints;
   String currPageTitle;
   String? previousPageTitle;
   List<Widget>? trailingWidgets;
+  Widget? title;
 
   // dimensions
   late double barHeight;
@@ -22,8 +21,9 @@ class AdaptiveTopAppBar extends StatelessWidget implements PreferredSize {
     required this.layoutConstraints,
     required this.currPageTitle,
     this.previousPageTitle,
-    this.trailingWidgets
-  }){
+    this.trailingWidgets,
+    this.title,
+  }) {
     setupDimensions();
   }
 
@@ -56,10 +56,8 @@ class AdaptiveTopAppBar extends StatelessWidget implements PreferredSize {
     );
   }
 
-
   /// It builds cupertino variation that is navigation bar.
   Widget buildIosVariation(BuildContext context) {
-
     return AppBar(
       backgroundColor: Theme.of(context).colorScheme.surface,
       foregroundColor: Theme.of(context).colorScheme.onSurface,
@@ -80,6 +78,4 @@ class AdaptiveTopAppBar extends StatelessWidget implements PreferredSize {
   @override
   // TODO: implement child
   Widget get child => const SizedBox();
-
-
 }

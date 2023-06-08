@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vaea_mobile/bloc/providers/booking_provider.dart';
 import 'package:vaea_mobile/routes_mapper.dart';
 import 'package:vaea_mobile/view/layouts/mobile/profile_mobile_layout.dart';
 import 'package:vaea_mobile/view/widgets/modals/language_modal.dart';
@@ -21,6 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   late final ProfileProvider profileProvider;
   late final UserSettingsProvider settingsProvider;
+  late final BookingProvider bookingProvider;
 
   @override
   void initState() {
@@ -28,6 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     profileProvider = Provider.of<ProfileProvider>(context, listen: false);
     settingsProvider = Provider.of<UserSettingsProvider>(context, listen: false);
+    bookingProvider = Provider.of<BookingProvider>(context, listen: false);
 
   }
 
@@ -42,7 +45,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       isSignedIn: profileProvider.profileModel != null,
       profileImageUrl: profileProvider.profileModel?.profileImageUrl,
       profileFullName: "${profileProvider.profileModel?.firstName} ${profileProvider.profileModel?.lastName}",
-      preSelectedLanguage: settingsProvider.userSettingsModel!.languageCode!,
+      preSelectedLanguage: (settingsProvider.userSettingsModel != null && settingsProvider.userSettingsModel!.languageCode != null)
+        ? settingsProvider.userSettingsModel!.languageCode!
+        : AppLocalizations.of(context)!.localeName,
       handleClickLanguage: handleClickLanguage,
       handleClickSignOut: handleClickSignOut,
     );
@@ -60,6 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   /// then direct him/her to the sign in screen.
   void handleClickSignOut() {
     profileProvider.signOut();
+    bookingProvider.myHomeDetails = null;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(AppLocalizations.of(context)!.signedOutSuccessfully)),
     );

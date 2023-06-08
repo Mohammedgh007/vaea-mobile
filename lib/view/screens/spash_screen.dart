@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:vaea_mobile/bloc/providers/launch_requirements_provider.dart';
 import 'package:vaea_mobile/bloc/providers/profile_provider.dart';
 import 'package:vaea_mobile/bloc/providers/user_settings_provider.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:vaea_mobile/helpers/Env.dart';
 import 'package:vaea_mobile/routes_mapper.dart';
 import 'package:vaea_mobile/view/layouts/mobile/loading_mobile_layout.dart';
@@ -66,6 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void handlePassingRequirements() {
     if (settingsProvider.userSettingsModel!.languageCode == null) { // the user is new
       Navigator.of(context).pushNamed(RoutesMapper.getScreenRoute(ScreenName.introScreen));
+      settingsProvider.changeUserLanguage(AppLocalizations.of(context)!.localeName);
     } else {
       Navigator.of(context).pushNamed(RoutesMapper.getScreenRoute(ScreenName.home));
     }

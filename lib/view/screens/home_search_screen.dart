@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vaea_mobile/bloc/providers/home_search_provider.dart';
@@ -13,18 +12,17 @@ import '../../data/model/searched_home_listing_model.dart';
 /// This class handles the view and its interactions with the rest of app
 /// for home search screen.
 class HomeSearchScreen extends StatefulWidget {
+  const HomeSearchScreen({super.key});
 
   @override
   State<HomeSearchScreen> createState() => _HomeSearchScreenState();
 }
 
 class _HomeSearchScreenState extends State<HomeSearchScreen> {
-
   late HomeSearchProvider searchProvider;
 
   List<SearchedHomeListingModel>? listings;
   bool isLoading = true;
-
 
   @override
   void initState() {
@@ -44,7 +42,6 @@ class _HomeSearchScreenState extends State<HomeSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return HomeSearchMobileLayout(
       defaultHomeType: searchProvider.filters.homeType!,
       defaultCityName: searchProvider.filters.cityName!,
@@ -56,16 +53,13 @@ class _HomeSearchScreenState extends State<HomeSearchScreen> {
     );
   }
 
-
   /// It researches based on the given filters
-  Future<void> handleSubmitFilterForm({
-    required HomeType? selectedHomeType,
-    required CityName? selectedCityName,
-    required DistrictEnum? selectedDistrict,
-    required int? bedrooms,
-    required int? bathrooms
-  }) async {
-
+  Future<void> handleSubmitFilterForm(
+      {required HomeType? selectedHomeType,
+      required CityName? selectedCityName,
+      required DistrictEnum? selectedDistrict,
+      required int? bedrooms,
+      required int? bathrooms}) async {
     searchProvider.filters.homeType = selectedHomeType;
     searchProvider.filters.cityName = selectedCityName;
     searchProvider.filters.district = selectedDistrict;
@@ -77,7 +71,6 @@ class _HomeSearchScreenState extends State<HomeSearchScreen> {
     });
   }
 
-
   /// It researches to match the given sorting.
   Future<void> handleSubmitSortingForm(int selectedOption) async {
     searchProvider.filters.sortingOption = selectedOption;
@@ -87,14 +80,16 @@ class _HomeSearchScreenState extends State<HomeSearchScreen> {
     });
   }
 
-
   /// It handles the event of clicking a listing by taking the user to the home details.
-  void handleClickList({required int imageIndex, required List<String> sliderImages, required int homeId}) {
+  void handleClickList(
+      {required int imageIndex,
+      required List<String> sliderImages,
+      required int homeId}) {
     searchProvider.targetHomeDetailsId = homeId;
     searchProvider.sliderImageIndex = imageIndex;
     searchProvider.sliderImages = sliderImages;
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => RoutesMapper.getScreenWidget(ScreenName.homeDetails)));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+            RoutesMapper.getScreenWidget(ScreenName.homeDetails)));
   }
-
-
 }

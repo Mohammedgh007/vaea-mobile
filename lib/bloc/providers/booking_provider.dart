@@ -4,6 +4,7 @@ import 'package:vaea_mobile/data/dto/confirm_booking_dto.dart';
 import 'package:vaea_mobile/data/repo/booking_repo.dart';
 
 import '../../data/model/home_details_model.dart';
+import '../../data/model/my_home_details_model.dart';
 import '../../helpers/excpetions/expired_token_except.dart';
 import '../../helpers/excpetions/internet_connection_except.dart';
 
@@ -12,6 +13,9 @@ class BookingProvider extends ChangeNotifier {
 
   /// It should be initialized before calling bookListing or using BookingScreen
   late HomeDetailsModel? listingDetailsModel;
+
+  /// It stores the current house info.
+  MyHomeDetailsModel? myHomeDetails;
 
   BookingRepo _repo = BookingRepo();
   /// It is assigned after confirming the booking
@@ -50,6 +54,19 @@ class BookingProvider extends ChangeNotifier {
   Future<void> releaseUnit(int unitId) async {
     try {
       await _repo.releaseUnit(unitId);
+    } on InternetConnectionException catch(e) {
+      rethrow;
+    } on ExpiredTokenException catch(e) {
+      rethrow;
+    }
+  }
+
+  /// It retrieves the home details for the current user
+  /// @throws InternetConnectionException, ExpiredTokenException
+  Future<void> getMyHomeDetails() async {
+    try {
+      myHomeDetails = await _repo.getMyHomeDetails();
+      notifyListeners();
     } on InternetConnectionException catch(e) {
       rethrow;
     } on ExpiredTokenException catch(e) {

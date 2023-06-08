@@ -56,6 +56,9 @@ class IconTextBtn extends StatelessWidget {
       width: btnWidth,
       child: TextButton(
         onPressed: handleClick,
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.zero
+        ),
         child: getButtonContent(context),
       )
     );

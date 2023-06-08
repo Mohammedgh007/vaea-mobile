@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.4+1
+version: 1.0.8+8
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
@@ -62,7 +62,8 @@ dependencies:
   easy_stepper: ^0.5.2+1
   moyasar: ^2.0.0
   photo_view: ^0.14.0
-
+  flutter_screenutil: ^5.8.4
+  syncfusion_flutter_calendar: ^21.2.8
 
 dev_dependencies:
   flutter_test:
@@ -109,12 +110,20 @@ flutter:
         - asset: assets/fonts/ar_font/29LT.Zawi/29LTZawi-Light.ttf
         - asset: assets/fonts/ar_font/29LT.Zawi/29LTZawi-Bold.ttf
         - asset: assets/fonts/ar_font/29LT.Zawi/29LTZawi-Medium.ttf
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/en_font/Montserrat/static/Montserrat-Regular.ttf
+        - asset: assets/fonts/en_font/Montserrat/static/Montserrat-Light.ttf
+        - asset: assets/fonts/en_font/Montserrat/static/Montserrat-Bold.ttf
+        - asset: assets/fonts/en_font/Montserrat/static/Montserrat-Medium.ttf
+        - asset: assets/fonts/en_font/Montserrat/static/Montserrat-Black.ttf
 
   assets:
     - .env.dev
     - .env.test
     - .env.prod
     - assets/images/
+    - assets/images/services/
     - assets/logos/
     - assets/logos/amenity_logos/
 
