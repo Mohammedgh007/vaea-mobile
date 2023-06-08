@@ -13,16 +13,22 @@ class IntroScreen extends StatefulWidget {
 
 class _IntroScreenState extends State<IntroScreen> {
 
-  /// It handles clicking sign up button by taking the user to SignUpScreen
-  handleClickFindMyHome() {
+  /// It handles clicking Get Started button by taking the user to HomeScreen
+  handleClickGetStarted() {
     Navigator.of(context).pushReplacementNamed(RoutesMapper.getScreenRoute(ScreenName.home));
+  }
+
+  /// It handles clicking Sign button by taking the user to SignInScreen
+  handleClickSign() {
+    Navigator.of(context).pushReplacementNamed(RoutesMapper.getScreenRoute(ScreenName.signIn));
   }
 
   @override
   Widget build(BuildContext context) {
 
     return IntroMobileLayout(
-      handleClickGetStarted: handleClickFindMyHome,
+      handleClickGetStarted: handleClickGetStarted,
+      handleClickSignIn: handleClickSign
     );
   }
 

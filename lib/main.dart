@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
                   type: (AppLocalizations.of(context)?.localeName == "ar")
                       ? PageTransitionType.leftToRight
                       : PageTransitionType.rightToLeft,
-                  duration: const Duration(milliseconds: 550),
+                  duration: const Duration(milliseconds: 300),
                   settings: settings);
             },
           ),

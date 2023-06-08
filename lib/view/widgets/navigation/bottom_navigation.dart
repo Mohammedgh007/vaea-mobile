@@ -61,7 +61,7 @@ class BottomNavigation extends StatelessWidget {
     PageTransition pageTran = PageTransition(
       child: RoutesMapper.getScreenWidget(screens[index]),
       type: PageTransitionType.bottomToTop,
-      duration: Duration.zero,
+      duration: const Duration(milliseconds: 250),
     );
     Navigator.of(context).push(pageTran);
   }

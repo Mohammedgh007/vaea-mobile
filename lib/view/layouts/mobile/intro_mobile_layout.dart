@@ -10,10 +10,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class IntroMobileLayout extends StatefulWidget {
 
   void Function() handleClickGetStarted;
+  void Function() handleClickSignIn;
 
   IntroMobileLayout({
     super.key,
-    required this.handleClickGetStarted
+    required this.handleClickGetStarted,
+    required this.handleClickSignIn
   });
 
   @override
@@ -123,7 +125,7 @@ class _IntroMobileLayoutState extends State<IntroMobileLayout> {
             ),
             SizedBox(width: 5),
             GestureDetector(
-                onTap: () => Navigator.of(context).pushReplacementNamed(RoutesMapper.getScreenRoute(ScreenName.signIn)),
+                onTap: widget.handleClickSignIn,
                 child: Text(
                   AppLocalizations.of(context)!.signIn,
                   //textAlign: TextAlign.center,
