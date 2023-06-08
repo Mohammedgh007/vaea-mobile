@@ -32,21 +32,27 @@ class _HomeScreenState extends State<HomeScreen> {
     bookingProvider = Provider.of<BookingProvider>(context, listen: false);
     profileProvider = Provider.of<ProfileProvider>(context, listen: false);
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       if (profileProvider.profileModel == null) {
         setState(() {
           isLoading = false;
           shouldShowHomeDetails = false;
         });
       } else {
-        bookingProvider.getMyHomeDetails().then((value) {
-          debugPrint("IN SCREEn");
-          setState(() {
-            myHomeModel = bookingProvider.myHomeDetails;
-            isLoading = false;
-            shouldShowHomeDetails = (bookingProvider.myHomeDetails != null);
+        try {
+          await bookingProvider.getMyHomeDetails().then((value) {
+            setState(() {
+              myHomeModel = bookingProvider.myHomeDetails;
+              isLoading = false;
+              shouldShowHomeDetails = (bookingProvider.myHomeDetails != null);
+            });
           });
-        });
+        } on Exception catch(e) {
+          setState(() {
+            isLoading = false;
+            shouldShowHomeDetails = false;
+          });
+        }
       }
 
     });

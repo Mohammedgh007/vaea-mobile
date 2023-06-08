@@ -34,17 +34,17 @@ class MyHomeCard extends StatelessWidget {
   void setupDimensions() {
     if (breakpoint.device.name == "smallHandset") {
       cardWidth = layoutConstraints.maxWidth * 0.92;
-      imageWidth = layoutConstraints.maxWidth * 0.24;
+      imageWidth = layoutConstraints.maxWidth * 0.34;
       textsImageSpacer = layoutConstraints.maxWidth * 0.032;
       textRowsSpacer = layoutConstraints.maxHeight * 0.012;
     } else if (breakpoint.device.name == "mediumHandset") {
       cardWidth = layoutConstraints.maxWidth * 0.92;
-      imageWidth = layoutConstraints.maxWidth * 0.24;
+      imageWidth = layoutConstraints.maxWidth * 0.34;
       textsImageSpacer = layoutConstraints.maxWidth * 0.032;
       textRowsSpacer = layoutConstraints.maxHeight * 0.012;
     } else {
       cardWidth = layoutConstraints.maxWidth * 0.92;
-      imageWidth = layoutConstraints.maxWidth * 0.24;
+      imageWidth = layoutConstraints.maxWidth * 0.34;
       textsImageSpacer = layoutConstraints.maxWidth * 0.032;
       textRowsSpacer = layoutConstraints.maxHeight * 0.012;
     }
@@ -142,7 +142,7 @@ class MyHomeCard extends StatelessWidget {
     List<String> subTitles = [
       "${AppLocalizations.of(context)!.moveInDate} ${DateFormat("yyyy-MM-dd").format(homeDetails.moveIn)}",
       "${AppLocalizations.of(context)!.moveOutDate} ${DateFormat("yyyy-MM-dd").format(homeDetails.moveOut)}",
-      "${AppLocalizations.of(context)!.apartment} 19 ${AppLocalizations.of(context)!.unitName} ${homeDetails.unitName}"
+      "${AppLocalizations.of(context)!.apartment} ${homeDetails.apartmentName} ${AppLocalizations.of(context)!.unitName} ${homeDetails.unitName}"
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

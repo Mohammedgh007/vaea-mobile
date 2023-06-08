@@ -57,7 +57,7 @@
     "invalidCredentialsAlertTitle": "Invalid Credentials",
     "invalidCredentialsAlertBody": "Please Provide a valid email address and a valid password",
     "home": "Home",
-    "letUsWelcomeYouHome": "Let Us Welcome You Home",
+    "yourJourneyStartHere": "Your journey of finding home starts here",
     "findMyHome": "Find My Home",
     "activities": "Activities",
     "activityDetails": "Activity Details",

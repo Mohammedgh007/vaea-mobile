@@ -3,11 +3,13 @@ import 'package:breakpoint/breakpoint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:vaea_mobile/data/model/curr_home_purview_model.dart';
 import 'package:vaea_mobile/data/model/my_home_details_model.dart';
 import 'package:vaea_mobile/view/widgets/buttons/primary_button.dart';
 import 'package:vaea_mobile/view/widgets/cards/my_home_card.dart';
+import 'package:vaea_mobile/view/widgets/cards/my_roommates_card.dart';
 
 import '../../widgets/navigation/adaptive_top_app_bar.dart';
 import '../../widgets/navigation/bottom_navigation.dart';
@@ -41,7 +43,6 @@ class _HomeMobileLayoutState extends State<HomeMobileLayout> {
 
   // dimensions
   late double imageWidth;
-  late double imageHeight;
   late double imageTopMargin;
   late double textVerticalMargin;
 
@@ -49,20 +50,17 @@ class _HomeMobileLayoutState extends State<HomeMobileLayout> {
   /// It is a helper method to build(). It initializes the dimensions fields.
   void setupDimensions() {
     if (breakpoint.device.name == "smallHandset") {
-      imageWidth = layoutConstraints.maxWidth * 0.92;
-      imageHeight = layoutConstraints.maxHeight * 0.42;
+      imageWidth = layoutConstraints.maxWidth * 0.60;
       imageTopMargin = layoutConstraints.maxHeight * 0.02;
-      textVerticalMargin = layoutConstraints.maxHeight * 0.04;
+      textVerticalMargin = layoutConstraints.maxHeight * 0.05;
     } else if (breakpoint.device.name == "mediumHandset") {
-      imageWidth = layoutConstraints.maxWidth * 0.92;
-      imageHeight = layoutConstraints.maxHeight * 0.46;
+      imageWidth = layoutConstraints.maxWidth * 0.75;
       imageTopMargin = layoutConstraints.maxHeight * 0.02;
-      textVerticalMargin = layoutConstraints.maxHeight * 0.02;
+      textVerticalMargin = layoutConstraints.maxHeight * 0.035;
     } else {
-      imageWidth = layoutConstraints.maxWidth * 0.92;
-      imageHeight = layoutConstraints.maxHeight * 0.46;
+      imageWidth = layoutConstraints.maxWidth * 0.75;
       imageTopMargin = layoutConstraints.maxHeight * 0.02;
-      textVerticalMargin = layoutConstraints.maxHeight * 0.02;
+      textVerticalMargin = layoutConstraints.maxHeight * 0.035;
     }
   }
 
@@ -86,6 +84,14 @@ class _HomeMobileLayoutState extends State<HomeMobileLayout> {
             body: (widget.homeModel == null)
               ? buildNonRentBody()
               : buildRentBody(),
+            floatingActionButton: (widget.homeModel == null)
+              ? null
+              : PrimaryBtn(
+                breakpoint: breakpoint,
+                layoutConstraints: layoutConstraints,
+                handleClick: widget.handleClickFindHome,
+                buttonText: AppLocalizations.of(context)!.exploreHomes
+            ),
             bottomNavigationBar: BottomNavigation(currentIndex: 0),
           ),
         );
@@ -99,10 +105,10 @@ class _HomeMobileLayoutState extends State<HomeMobileLayout> {
     return Center(
       child: (widget.isScreenLoading) ? const CircularProgressIndicator.adaptive() : Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(height: imageTopMargin),
-          buildImageSection(),
+          buildIllustrationSection(),
           SizedBox(height: textVerticalMargin),
           buildTextSection(),
           SizedBox(height: textVerticalMargin),
@@ -115,18 +121,12 @@ class _HomeMobileLayoutState extends State<HomeMobileLayout> {
 
 
   /// It is a helper method to buildNonRentBody. It builds the image section.
-  Widget buildImageSection() {
-    return Expanded(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(imageWidth * 0.04),
-        child: Image.asset(
-          "assets/images/before_booking_home.png",
-          width: imageWidth,
-          //height: imageHeight,
-          fit: BoxFit.fill,
-          alignment: Alignment.center,
-        ),
-      ),
+  Widget buildIllustrationSection() {
+    return SvgPicture.asset(
+      "assets/logos/home_screen_illustration.svg",
+      width: imageWidth,
+      fit: BoxFit.fitWidth,
+      alignment: Alignment.center,
     );
   }
 
@@ -134,11 +134,11 @@ class _HomeMobileLayoutState extends State<HomeMobileLayout> {
   /// It is a helper method for buildNonRentBody. It builds the text "let us .." section.
   Widget buildTextSection() {
     return Text(
-      AppLocalizations.of(context)!.letUsWelcomeYouHome,
+      AppLocalizations.of(context)!.yourJourneyStartHere,
       textAlign: TextAlign.center,
       style: TextStyle(
-        fontSize: Theme.of(context).textTheme.headlineMedium!.fontSize,
-        fontWeight: Theme.of(context).textTheme.headlineMedium!.fontWeight
+        fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,
+        fontWeight: Theme.of(context).textTheme.titleLarge!.fontWeight
       ),
     );
   }
@@ -157,28 +157,32 @@ class _HomeMobileLayoutState extends State<HomeMobileLayout> {
 
   /// It builds the body if the user has rent already.
   Widget buildRentBody() {
+    EdgeInsets viewPadding = MediaQuery.of(context).viewPadding;
     return Container(
       width: layoutConstraints.maxWidth,
       padding: EdgeInsets.only(top: imageTopMargin),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          MyHomeCard(
-            breakpoint: breakpoint,
-            layoutConstraints: layoutConstraints,
-            homeDetails: widget.homeModel!
-          ),
-         Padding(
-           padding: const EdgeInsets.only(bottom: 8.0),
-           child: PrimaryBtn(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(height: imageTopMargin),
+            MyHomeCard(
               breakpoint: breakpoint,
               layoutConstraints: layoutConstraints,
-              handleClick: widget.handleClickFindHome,
-              buttonText: AppLocalizations.of(context)!.exploreHomes
+              homeDetails: widget.homeModel!
             ),
-         )
-        ],
+            if (widget.homeModel!.roommates != null && widget.homeModel!.roommates!.isNotEmpty) SizedBox(height: textVerticalMargin),
+            if (widget.homeModel!.roommates != null && widget.homeModel!.roommates!.isNotEmpty) MyRoommatesCards(
+              breakpoint: breakpoint,
+              layoutConstraints: layoutConstraints,
+              homeDetails: widget.homeModel!
+            ),
+            SizedBox(height: imageTopMargin * 7),
+
+          ],
+        ),
       ),
     );
   }

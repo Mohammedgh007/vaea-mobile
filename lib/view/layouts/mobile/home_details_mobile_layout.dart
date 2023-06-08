@@ -50,12 +50,8 @@ class _HomeDetailsHomeDetailsMobileLayout
   late double sectionContainerWidth;
   late double sectionContainerPadding;
   late double containerRowsSpacer;
-
   late double imageSize;
-  late double horizontalPadding;
   late double mapViewHeight;
-  late double titleSpacer;
-  late double bodyTextSpacer;
 
   /// It is a helper method for build(). It initializes the fields of dimensions
   void setupDimensions() {
@@ -64,34 +60,22 @@ class _HomeDetailsHomeDetailsMobileLayout
       sectionContainerWidth = layoutConstraints.maxWidth * 0.92;
       sectionContainerPadding = layoutConstraints.maxWidth * 0.04;
       containerRowsSpacer = layoutConstraints.maxHeight * 0.01;
-
       imageSize = layoutConstraints.maxWidth;
-      horizontalPadding = layoutConstraints.maxWidth * 0.03;
       mapViewHeight = layoutConstraints.maxHeight * 0.28;
-      titleSpacer = layoutConstraints.maxHeight * 0.012;
-      bodyTextSpacer = layoutConstraints.maxHeight * 0.004;
     } else if (breakpoint.device.name == "mediumHandset") {
       sectionsSpacer = layoutConstraints.maxHeight * 0.03;
       sectionContainerWidth = layoutConstraints.maxWidth * 0.92;
       sectionContainerPadding = layoutConstraints.maxWidth * 0.04;
       containerRowsSpacer = layoutConstraints.maxHeight * 0.01;
-
       imageSize = layoutConstraints.maxWidth;
-      horizontalPadding = layoutConstraints.maxWidth * 0.03;
       mapViewHeight = layoutConstraints.maxHeight * 0.28;
-      titleSpacer = layoutConstraints.maxHeight * 0.012;
-      bodyTextSpacer = layoutConstraints.maxHeight * 0.004;
     } else {
       sectionsSpacer = layoutConstraints.maxHeight * 0.03;
       sectionContainerWidth = layoutConstraints.maxWidth * 0.92;
       sectionContainerPadding = layoutConstraints.maxWidth * 0.04;
       containerRowsSpacer = layoutConstraints.maxHeight * 0.01;
-
       imageSize = layoutConstraints.maxWidth;
-      horizontalPadding = layoutConstraints.maxWidth * 0.03;
       mapViewHeight = layoutConstraints.maxHeight * 0.28;
-      titleSpacer = layoutConstraints.maxHeight * 0.012;
-      bodyTextSpacer = layoutConstraints.maxHeight * 0.004;
     }
   }
 
@@ -126,13 +110,6 @@ class _HomeDetailsHomeDetailsMobileLayout
               if (!widget.isLoading) SizedBox(height: sectionsSpacer),
               if (!widget.isLoading) buildLocationSection(),
               if (!widget.isLoading) SizedBox(height: sectionsSpacer),
-              // if (!widget.isLoading) buildTitleSection(),
-              // if (!widget.isLoading) SizedBox(height: sectionsSpacer),
-              // if (!widget.isLoading) buildLocationSection(),
-              // if (!widget.isLoading) SizedBox(height: sectionsSpacer),
-              // if (!widget.isLoading) buildApartmentDetails(),
-              // if (!widget.isLoading) SizedBox(height: sectionsSpacer),
-              // if (!widget.isLoading) buildFacilitiesSection()
             ],
           ),
         ),

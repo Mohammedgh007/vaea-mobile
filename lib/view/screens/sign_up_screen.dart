@@ -116,7 +116,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     profileProvider.signUpTenant(signUpDto, saveUserProfileDto);
 
     settingsProvider.changeUserLanguage(AppLocalizations.of(context)!.localeName);
-    Navigator.of(context).pushReplacementNamed(RoutesMapper.getScreenRoute(ScreenName.signIn));
+
+    if (profileProvider.targetScreenAfterSignIn == null) {
+      Navigator.of(context).pushReplacementNamed(RoutesMapper.getScreenRoute(ScreenName.home));
+    } else {
+      Navigator.of(context).pushReplacementNamed(RoutesMapper.getScreenRoute(profileProvider.targetScreenAfterSignIn!));
+      profileProvider.targetScreenAfterSignIn = null;
+    }
     return true;
   }
 
