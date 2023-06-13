@@ -9,4 +9,7 @@ class Env {
 
   static final String apiUrl = dotenv.env["API_URL"]!;
   static final String apiPort = dotenv.env["API_PORT"]!;
+
+  static final String moyasarAPI = dotenv.env["MOYASAR_API_KEY"]!;
+  static final String applePayMerchantId = dotenv.env["APPLE_PAY_MERCHANT_ID"]!;
 }

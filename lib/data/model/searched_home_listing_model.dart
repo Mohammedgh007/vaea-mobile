@@ -5,12 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:vaea_mobile/data/enums/district_enum.dart';
 import 'package:vaea_mobile/data/enums/home_type.dart';
 
+import '../enums/gender.dart';
+
 /// It represents the properties of the search result of a housing unit..
 class SearchedHomeListingModel {
 
   late int listingId;
   late HomeType listingType;
   late DistrictEnum district;
+  late Gender gender;
   late double lat;
   late double lon;
   late int bedrooms;
@@ -26,6 +29,7 @@ class SearchedHomeListingModel {
     listingId = decodedMap["unit_id"];
     listingType = HomeTypeParser.parse(decodedMap["unit_type"]);
     district = DistrictEnumParser.parse(decodedMap["district"]);
+    gender = GenderParser.parse(decodedMap["gender"]);
     lat = decodedMap["lat"];
     lon = decodedMap["lon"];
     bedrooms = decodedMap["bedroms"];
@@ -38,7 +42,7 @@ class SearchedHomeListingModel {
   }
 
   SearchedHomeListingModel({
-    required this.listingId, required this.listingType, required this.district,
+    required this.listingId, required this.listingType, required this.district, required this.gender,
     required this.lat, required this.lon, required this.bedrooms, required this.bathrooms,
     required this.unitMaxCapacity, required this.unitAvailableCapacity, required this.imagesUrls,
     required this.listingTitle, required this.price});

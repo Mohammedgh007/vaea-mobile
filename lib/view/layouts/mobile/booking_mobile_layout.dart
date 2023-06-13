@@ -25,6 +25,7 @@ import '../../widgets/navigation/adaptive_top_app_bar.dart';
 class BookingMobileLayout extends StatefulWidget {
 
   HomeDetailsModel listingModel;
+
   Future<bool> Function({
   required PaymentProviderEnum paymentProvider,
   required String paymentId,
@@ -32,10 +33,13 @@ class BookingMobileLayout extends StatefulWidget {
   required DateTime startingDate,
   required DateTime endingDate
   }) handleConfirmBooking;
+  void Function() handleClickFinish;
+
   BookingMobileLayout({
     super.key,
     required this.listingModel,
-    required this.handleConfirmBooking
+    required this.handleConfirmBooking,
+    required this.handleClickFinish
   });
 
   @override
@@ -358,7 +362,7 @@ class _BookingMobileLayoutState extends State<BookingMobileLayout> {
             size: layoutConstraints.maxWidth * 0.7,
           ),
           Text(
-            "تم حجز المنزل",
+            AppLocalizations.of(context)!.houseHasBeenBooked,
             style: TextStyle(
               fontSize: Theme.of(context).textTheme!.headlineMedium!.fontSize,
               color: Theme.of(context).colorScheme.onBackground,
@@ -366,7 +370,7 @@ class _BookingMobileLayoutState extends State<BookingMobileLayout> {
           ),
           SizedBox(height: 5),
           Text(
-            "سيتم ارسال عقد ايجار الى بريدك الإلكروني في ثواني",
+            AppLocalizations.of(context)!.leaseWillBeSent,
             style: TextStyle(
               fontSize: Theme.of(context).textTheme!.bodyLarge!.fontSize,
               color: Theme.of(context).colorScheme.outlineVariant,
@@ -376,8 +380,8 @@ class _BookingMobileLayoutState extends State<BookingMobileLayout> {
           PrimaryBtn(
             breakpoint: breakpoint,
             layoutConstraints: layoutConstraints,
-            handleClick: () {},
-            buttonText: "إنهاء"
+            handleClick: widget.handleClickFinish,
+            buttonText: AppLocalizations.of(context)!.finish
           )
         ],
       ),

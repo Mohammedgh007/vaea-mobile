@@ -15,7 +15,7 @@ class HomeSearchDto {
   DistrictEnum? district;
   int? bedrooms;
   int? bathrooms;
-  Gender gender;
+  Gender? gender;
   int sortingOption;
   /// it starts from 0 and increments by 1
   int pager;
@@ -26,7 +26,7 @@ class HomeSearchDto {
       this.district,
       this.bedrooms,
       this.bathrooms,
-      required this.gender,
+      this.gender,
       required this.sortingOption,
       required this.pager
       });
@@ -39,7 +39,7 @@ class HomeSearchDto {
       "district": (district == null) ? '' : DistrictEnumSerializer.serialize(district!),
       "bedrooms": (bedrooms == null) ? '' : bedrooms,
       "bathrooms": (bathrooms == null) ? '' : bathrooms,
-      "gender": GenderSerializer.serialize(gender),
+      "gender": (gender == null) ? '' : GenderSerializer.serialize(gender!),
       "sorting": sortingOption,
       "pager": pager
     };

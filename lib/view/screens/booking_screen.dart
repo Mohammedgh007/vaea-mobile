@@ -6,6 +6,7 @@ import 'package:vaea_mobile/data/enums/lease_period_enum.dart';
 import 'package:vaea_mobile/data/enums/payment_provider_enum.dart';
 import 'package:vaea_mobile/data/middleware/rest/auth.dart';
 import 'package:vaea_mobile/helpers/excpetions/internet_connection_except.dart';
+import 'package:vaea_mobile/routes_mapper.dart';
 import 'package:vaea_mobile/view/layouts/mobile/booking_mobile_layout.dart';
 
 import '../../bloc/providers/booking_provider.dart';
@@ -46,6 +47,7 @@ class _BookingScreenState extends State<BookingScreen> {
     return BookingMobileLayout(
       listingModel: bookingProvider.listingDetailsModel!,
       handleConfirmBooking: handleConfirmBook,
+      handleClickFinish: handleClickFinish,
     );
   }
 
@@ -76,5 +78,11 @@ class _BookingScreenState extends State<BookingScreen> {
       // TODO
       return false;
     }
+  }
+
+
+  /// It takes the user to hame screen.
+  void handleClickFinish() {
+    Navigator.of(context).pushReplacementNamed(RoutesMapper.getScreenRoute(ScreenName.home));
   }
 }

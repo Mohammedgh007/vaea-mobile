@@ -169,7 +169,7 @@ class _HomeSearchMobileLayoutState extends State<HomeSearchMobileLayout> {
                     transitionBuilder: (child, animation) {
                       return ScaleTransition(scale: animation, child: child);
                     },
-                    duration: const Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 300),
                     child: (isShowingMap) ? buildHomesMap() : buildHomesList(),
                   )),
               Positioned(
@@ -251,8 +251,7 @@ class _HomeSearchMobileLayoutState extends State<HomeSearchMobileLayout> {
         separatorBuilder: (BuildContext context, int itemIndex) {
           return SizedBox(height: cardsSpacer);
         },
-        padding:
-            EdgeInsets.only(top: listTopPadding, bottom: bodyBottomPadding * 4),
+        padding: EdgeInsets.only(top: listTopPadding, bottom: bodyBottomPadding * 4),
         itemCount: widget.listings!.length,
         itemBuilder: (BuildContext context, int itemIndex) {
           return Center(

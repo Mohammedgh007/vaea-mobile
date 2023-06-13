@@ -108,7 +108,7 @@ class _HomePromptMobileLayout extends State<HomePromptMobileLayout> {
           controller: pageController,
           children: [
             buildHomeTypePrompt(),
-            buildTenantGenderPrompt(),
+            //buildTenantGenderPrompt(),
             buildCityNamePrompt(),
           ],
           physics: const NeverScrollableScrollPhysics(),

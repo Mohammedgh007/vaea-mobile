@@ -6,8 +6,6 @@ import 'package:get/get.dart';
 import 'package:vaea_mobile/routes_mapper.dart';
 import 'package:vaea_mobile/view/widgets/alerts/account_termination_alert.dart';
 import 'package:vaea_mobile/view/widgets/buttons/icon_text_btn.dart';
-import 'package:vaea_mobile/view/widgets/buttons/primary_button.dart';
-import 'package:vaea_mobile/view/widgets/containers/profile_page_container.dart';
 
 import '../../widgets/modals/language_modal.dart';
 import '../../widgets/navigation/adaptive_top_app_bar.dart';
@@ -22,6 +20,7 @@ class ProfileMobileLayout extends StatefulWidget {
   String profileFullName;
   String preSelectedLanguage;
   void Function(String selectedLanguageIso) handleClickLanguage;
+  void Function() handleClickSignIn;
   void Function() handleClickSignOut;
 
   ProfileMobileLayout({
@@ -31,6 +30,7 @@ class ProfileMobileLayout extends StatefulWidget {
     required this.profileFullName,
     required this.preSelectedLanguage,
     required this.handleClickLanguage,
+    required this.handleClickSignIn,
     required this.handleClickSignOut
   });
 
@@ -44,15 +44,27 @@ class _ProfileMobileLayoutState extends State<ProfileMobileLayout> {
   late BoxConstraints layoutConstraints;
 
   // dimensions
+  late double bodyPadding;
+  late double imageSectionHeight;
+  late double profileAvatarSize;
   late double btnSpacer;
 
   /// It is a helper method to build(). It initializes the dimensions fields.
   void setupDimensions() {
     if (breakpoint.device.name == "smallHandset") {
+      bodyPadding = layoutConstraints.maxWidth * 0.08;
+      profileAvatarSize = layoutConstraints.maxWidth * 0.32;
+      imageSectionHeight = profileAvatarSize * 2;
       btnSpacer = layoutConstraints.maxHeight * 0.01;
     } else if (breakpoint.device.name == "mediumHandset") {
+      bodyPadding = layoutConstraints.maxWidth * 0.08;
+      profileAvatarSize = layoutConstraints.maxWidth * 0.32;
+      imageSectionHeight = profileAvatarSize * 2;
       btnSpacer = layoutConstraints.maxHeight * 0.01;
     } else {
+      bodyPadding = layoutConstraints.maxWidth * 0.08;
+      profileAvatarSize = layoutConstraints.maxWidth * 0.32;
+      imageSectionHeight = profileAvatarSize * 2;
       btnSpacer = layoutConstraints.maxHeight * 0.01;
     }
   }
@@ -72,38 +84,69 @@ class _ProfileMobileLayoutState extends State<ProfileMobileLayout> {
             breakpoint: breakpoint,
             layoutConstraints: constraints,
           ),
-          body: (widget.isSignedIn) ? buildSignInBody() : buildVisitor(),
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: bodyPadding),
+            child: buildBody(),
+          ),
           bottomNavigationBar: BottomNavigation(currentIndex: 3),
         );
       },
     );
   }
 
-  /// It builds the body in case the user was not signed in.
-  Widget buildVisitor() {
-    return Center(
-      child: PrimaryBtn(
-        breakpoint: breakpoint,
-        layoutConstraints: layoutConstraints,
-        handleClick: () => Navigator.of(context).pushNamed(RoutesMapper.getScreenRoute(ScreenName.signIn)),
-        buttonText: AppLocalizations.of(context)!.signIn),
+
+  /// It builds the body in case the user was signed in.
+  Widget buildBody() {
+    return SizedBox(
+      width: layoutConstraints.maxWidth,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildProfileImageSection(),
+            ...buildSpacedBtns()
+          ],
+        ),
+      ),
     );
   }
 
-  /// It builds the body in case the user was signed in.
-  Widget buildSignInBody() {
-    return ProfilePageContainer(
-        breakpoint: breakpoint,
-        layoutBoxConstrains: layoutConstraints,
-        imageProfileUrl: widget.profileImageUrl,
-        pageTitle: widget.profileFullName,
-        btnList: buildSpacedBtns()
+  /// It builds the profile image section that includes a center avatar and the full name.
+  Widget buildProfileImageSection() {
+    return Container(
+      width: layoutConstraints.maxWidth,
+      height: imageSectionHeight,
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Theme.of(context).colorScheme.secondary, width: 3),
+              borderRadius: BorderRadius.circular(layoutConstraints.maxHeight)
+            ),
+            child: ClipOval(
+              child: (widget.isSignedIn && widget.profileImageUrl != null)
+                ? Image.network(widget.profileImageUrl!, width: profileAvatarSize, height: profileAvatarSize, fit: BoxFit.fill)
+                : Image.asset("assets/logos/profile_logo.png", width: profileAvatarSize, height: profileAvatarSize, fit: BoxFit.fill),
+            ),
+          ),
+          if (widget.isSignedIn) SizedBox(height: profileAvatarSize * 0.1),
+          if (widget.isSignedIn) Text(
+            widget.profileFullName,
+            style: TextStyle(fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize),
+          )
+        ],
+      ),
     );
   }
 
   /// It builds a separated buttons for ProfilePageContainer
   List<Widget> buildSpacedBtns() {
     return [
+      if (!widget.isSignedIn) Divider(height: btnSpacer, color: Theme.of(context).colorScheme.outline),
+      if (!widget.isSignedIn) buildSignInBtn(),
+      Divider(height: btnSpacer, color: Theme.of(context).colorScheme.outline),
       buildHomeHistoryBtn(),
       Divider(height: btnSpacer, color: Theme.of(context).colorScheme.outline),
       buildPaymentBtn(),
@@ -114,22 +157,35 @@ class _ProfileMobileLayoutState extends State<ProfileMobileLayout> {
       Divider(height: btnSpacer, color: Theme.of(context).colorScheme.outline),
       buildTermsConditionBtn(),
       Divider(height: btnSpacer, color: Theme.of(context).colorScheme.outline),
-      buildSignOutBtn(),
-      Divider(height: btnSpacer, color: Theme.of(context).colorScheme.outline),
-      buildTerminateBtn(),
-
+      if (widget.isSignedIn) buildSignOutBtn(),
+      if (widget.isSignedIn) Divider(height: btnSpacer, color: Theme.of(context).colorScheme.outline),
+      if (widget.isSignedIn) buildTerminateBtn(),
+      if (widget.isSignedIn) Divider(height: btnSpacer, color: Theme.of(context).colorScheme.outline),
     ];
   }
 
 
+  /// It is a helper method for buildSpacedBtns. It builds the sign in button.
+  Widget buildSignInBtn() {
+    return IconTextBtn(
+      breakpoint: breakpoint,
+      layoutConstraints: layoutConstraints,
+      handleClick: widget.handleClickSignIn,
+      buttonText: AppLocalizations.of(context)!.signIn,
+      iconData: Icons.login,
+      includeNextIcon: true,
+    );
+  }
+
   /// It is a helper method to buildSpacedBtns. It builds homes history button.
   Widget buildHomeHistoryBtn() {
     return IconTextBtn(
-        breakpoint: breakpoint,
-        layoutConstraints: layoutConstraints,
-        handleClick: () {},
-        buttonText: AppLocalizations.of(context)!.homesHistory,
-        iconData: Icons.history
+      breakpoint: breakpoint,
+      layoutConstraints: layoutConstraints,
+      handleClick: () {},
+      buttonText: AppLocalizations.of(context)!.homesHistory,
+      iconData: Icons.history,
+      includeNextIcon: true,
     );
   }
 
@@ -141,18 +197,20 @@ class _ProfileMobileLayoutState extends State<ProfileMobileLayout> {
       layoutConstraints: layoutConstraints,
       handleClick: () {},
       buttonText: AppLocalizations.of(context)!.payment,
-      iconData: Icons.credit_card_rounded
+      iconData: Icons.credit_card_rounded,
+      includeNextIcon: true,
     );
   }
 
   /// It is a helper method to buildSpacedBtns. It builds notification button.
   Widget buildNotificationBtn() {
     return IconTextBtn(
-        breakpoint: breakpoint,
-        layoutConstraints: layoutConstraints,
-        handleClick: () {},
-        buttonText: AppLocalizations.of(context)!.notifications,
-        iconData: Icons.notifications
+      breakpoint: breakpoint,
+      layoutConstraints: layoutConstraints,
+      handleClick: () {},
+      buttonText: AppLocalizations.of(context)!.notifications,
+      iconData: Icons.notifications,
+      includeNextIcon: true,
     );
   }
 
@@ -164,7 +222,8 @@ class _ProfileMobileLayoutState extends State<ProfileMobileLayout> {
       layoutConstraints: layoutConstraints,
       handleClick: showLanguageModal,
       buttonText: AppLocalizations.of(context)!.language,
-      iconData: Icons.language
+      iconData: Icons.language,
+      includeNextIcon: true,
     );
   }
 
@@ -176,7 +235,8 @@ class _ProfileMobileLayoutState extends State<ProfileMobileLayout> {
       layoutConstraints: layoutConstraints,
       handleClick: () => Navigator.of(context).pushNamed(RoutesMapper.getScreenRoute(ScreenName.termsConditions)),
       buttonText: AppLocalizations.of(context)!.termAndCondition,
-      iconData: Icons.policy_outlined
+      iconData: Icons.policy_outlined,
+      includeNextIcon: true,
     );
   }
 
@@ -190,6 +250,7 @@ class _ProfileMobileLayoutState extends State<ProfileMobileLayout> {
       buttonText: AppLocalizations.of(context)!.signOut,
       iconData: Icons.logout,
       btnColor: Theme.of(context).colorScheme.error,
+      includeNextIcon: true,
     );
   }
 
@@ -205,6 +266,7 @@ class _ProfileMobileLayoutState extends State<ProfileMobileLayout> {
       buttonText: AppLocalizations.of(context)!.deleteAccount,
       iconData: Icons.person_remove_rounded,
       btnColor: Theme.of(context).colorScheme.error,
+      includeNextIcon: true,
     );
   }
 

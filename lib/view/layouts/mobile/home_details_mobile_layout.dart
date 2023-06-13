@@ -7,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:vaea_mobile/view/formatters/floor_formatter.dart';
+import 'package:vaea_mobile/view/formatters/gender_formatter.dart';
 import 'package:vaea_mobile/view/formatters/home_type_formatter.dart';
 import 'package:vaea_mobile/view/widgets/buttons/primary_button.dart';
 import 'package:vaea_mobile/view/widgets/containers/images_view_container.dart';
+import 'package:vaea_mobile/view/widgets/containers/virtual_tour_container.dart';
 import 'package:vaea_mobile/view/widgets/icons/amenity_icon.dart';
 
 import '../../../data/enums/home_type.dart';
@@ -108,6 +110,8 @@ class _HomeDetailsHomeDetailsMobileLayout
               if (!widget.isLoading) SizedBox(height: sectionsSpacer),
               if (!widget.isLoading) buildUnitDetailsSection(),
               if (!widget.isLoading) SizedBox(height: sectionsSpacer),
+              if (!widget.isLoading) buildVirtualTourSection(),
+              if (!widget.isLoading) SizedBox(height: sectionsSpacer),
               if (!widget.isLoading) buildLocationSection(),
               if (!widget.isLoading) SizedBox(height: sectionsSpacer),
             ],
@@ -174,7 +178,9 @@ class _HomeDetailsHomeDetailsMobileLayout
           SizedBox(height: containerRowsSpacer),
           buildListingIDRow(),
           SizedBox(height: containerRowsSpacer),
-          buildPriceRow()
+          buildPriceRow(),
+          if (widget.detailsModel!.listingType == HomeType.shared) SizedBox(height: containerRowsSpacer),
+          if (widget.detailsModel!.listingType == HomeType.shared) buildGenderRow()
         ],
       ),
     );
@@ -248,13 +254,35 @@ class _HomeDetailsHomeDetailsMobileLayout
         children: [
           Icon(Icons.monetization_on_outlined,
               size: sectionContainerWidth * 0.04,
-              color: Theme.of(context).colorScheme.secondary),
+              color: Theme.of(context).colorScheme.primary),
           const SizedBox(width: 8),
           Text(
             outputStr,
             style: TextStyle(
                 fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
-                color: Theme.of(context).colorScheme.secondary),
+                color: Theme.of(context).colorScheme.primary),
+          )
+        ],
+      ),
+    );
+  }
+
+  /// It is a helper method for buildListingInfoSection. It builds the gender row.
+  Widget buildGenderRow() {
+    String outputStr = GenderFormatter.getForGenderEmployeeStr(context, widget.detailsModel!.gender);
+
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          GenderFormatter.buildGenderIcon(context, widget.detailsModel!.gender, sectionContainerWidth * 0.045),
+          const SizedBox(width: 6),
+          Text(
+            outputStr,
+            style: TextStyle(
+                fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
+                color: GenderFormatter.getGenderColor(context, widget.detailsModel!.gender),
+            )
           )
         ],
       ),
@@ -302,7 +330,7 @@ class _HomeDetailsHomeDetailsMobileLayout
         color: Theme.of(context).colorScheme.outlineVariant);
     TextStyle subLabelStyle = TextStyle(
         fontSize: Theme.of(context).textTheme.labelMedium!.fontSize,
-        color: Theme.of(context).colorScheme.secondary);
+        color: Theme.of(context).colorScheme.primary);
 
     Widget availabilityColumn = Column(
       children: [
@@ -424,6 +452,31 @@ class _HomeDetailsHomeDetailsMobileLayout
                 layoutConstraints: layoutConstraints,
                 amenityIconType: AmenityIconType.waterHeater)),
       ],
+    );
+  }
+
+
+  /// It builds the section that contains the virtual tour.
+  Widget buildVirtualTourSection() {
+    return Container(
+      width: sectionContainerWidth,
+      decoration: getContainerDecoration(),
+      padding: EdgeInsets.all(sectionContainerPadding),
+      margin: EdgeInsets.symmetric(
+          horizontal: (layoutConstraints.maxWidth - sectionContainerWidth) / 2),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          buildSectionTitle(AppLocalizations.of(context)!.virtualTour),
+          SizedBox(height: containerRowsSpacer),
+          VirtualTourContainer(
+            breakpoint: breakpoint,
+            layoutConstraints: layoutConstraints,
+            imagePurviewUrl: "",
+            tourUrl: ""
+          )
+        ],
+      ),
     );
   }
 

@@ -49,6 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ? settingsProvider.userSettingsModel!.languageCode!
         : AppLocalizations.of(context)!.localeName,
       handleClickLanguage: handleClickLanguage,
+      handleClickSignIn: handleClickSignIn,
       handleClickSignOut: handleClickSignOut,
     );
   }
@@ -60,6 +61,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   }
 
+
+  /// It handles the event of clicking sign in
+  void handleClickSignIn() {
+    Navigator.of(context).pushNamed(RoutesMapper.getScreenRoute(ScreenName.signIn));
+  }
 
   /// It handles the event of clicking sign out by deleting the user data locally
   /// then direct him/her to the sign in screen.

@@ -17,7 +17,7 @@ class HomeSearchProvider extends ChangeNotifier {
   HomeSearchRepo _repo = HomeSearchRepo();
 
   // Search
-  HomeSearchDto filters = HomeSearchDto(gender: Gender.male, pager: 0, sortingOption: 0);
+  HomeSearchDto filters = HomeSearchDto(pager: 0, sortingOption: 0);
   List<SearchedHomeListingModel>? searchedListings;
 
   // home details

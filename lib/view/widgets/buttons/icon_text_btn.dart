@@ -15,6 +15,7 @@ class IconTextBtn extends StatelessWidget {
   double? fontSize;
   Color? btnColor;
   bool isIconTextOrderSwapped = false;
+  bool includeNextIcon = false;
 
   // dimensions
   late double btnWidth;
@@ -31,7 +32,8 @@ class IconTextBtn extends StatelessWidget {
     this.width,
     this.fontSize,
     this.btnColor,
-    this.isIconTextOrderSwapped = false
+    this.isIconTextOrderSwapped = false,
+    this.includeNextIcon = false,
   }){
     setupDimensions();
   }
@@ -57,9 +59,18 @@ class IconTextBtn extends StatelessWidget {
       child: TextButton(
         onPressed: handleClick,
         style: TextButton.styleFrom(
-          padding: EdgeInsets.zero
+            padding: EdgeInsets.zero
         ),
-        child: getButtonContent(context),
+        child: (includeNextIcon)
+          ? Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            getButtonContent(context),
+            Icon(Icons.navigate_next, color: Theme.of(context).colorScheme.primary)
+          ],
+        )
+          : getButtonContent(context),
       )
     );
   }

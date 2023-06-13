@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:vaea_mobile/data/enums/home_type.dart';
+import 'package:vaea_mobile/view/formatters/gender_formatter.dart';
 
 import '../../../data/model/searched_home_listing_model.dart';
 import '../../formatters/district_formatter.dart';
@@ -145,13 +146,13 @@ class _SearchedHomeCardState extends State<SearchedHomeCard> {
   }
 
 
-  /// It builds the details of the apartment that are bathrooms, bedrooms, and price.
+  /// It builds the details of the apartment that are bathrooms, bedrooms, gender, and price.
   Widget buildUnitDetailsRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        buildUnitRooms(),
+        buildUnitDetails(),
         Spacer(),
         buildUnitPrice(),
         SizedBox(width: textsImageSpacer)
@@ -160,8 +161,12 @@ class _SearchedHomeCardState extends State<SearchedHomeCard> {
   }
 
 
-  /// It builds the number of bathrooms and bedrooms
-  Widget buildUnitRooms() {
+  /// It builds the number of bathrooms and bedrooms and the gender
+  Widget buildUnitDetails() {
+    Color detailsColor = (widget.listingModel.listingType == HomeType.shared)
+      ? GenderFormatter.getGenderColor(context, widget.listingModel.gender)
+      : Theme.of(context).colorScheme.outlineVariant;
+
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -170,18 +175,19 @@ class _SearchedHomeCardState extends State<SearchedHomeCard> {
             widget.listingModel.bedrooms.toString(),
             style: TextStyle(
               fontSize: Theme.of(context).textTheme.labelMedium!.fontSize,
-              color: Theme.of(context).colorScheme.outlineVariant
+              color: detailsColor
             ),
           ),
-          Icon(Icons.bed_rounded, size: imageWidth * 0.25, color: Theme.of(context).colorScheme.outlineVariant),
+          Icon(Icons.bed_rounded, size: imageWidth * 0.25, color: detailsColor),
           Text(
             widget.listingModel.bathrooms.toString(),
             style: TextStyle(
                 fontSize: Theme.of(context).textTheme.labelMedium!.fontSize,
-                color: Theme.of(context).colorScheme.outlineVariant
+                color: detailsColor
             ),
           ),
-          Icon(Icons.bathtub_outlined, size: imageWidth * 0.2, color: Theme.of(context).colorScheme.outlineVariant),
+          Icon(Icons.bathtub_outlined, size: imageWidth * 0.2, color: detailsColor),
+          if (widget.listingModel.listingType == HomeType.shared) GenderFormatter.buildGenderIcon(context, widget.listingModel.gender, null)
         ],
       ),
     );

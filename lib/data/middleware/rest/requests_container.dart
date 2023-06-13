@@ -15,6 +15,8 @@ import '../../../helpers/excpetions/expired_token_except.dart';
 
 /// It encapsulates the logic of using http calls
 class RequestsContainer {
+
+
   /// It preforms non-authenticated GET request in a json format.
   /// @pre-condition the caller checks internet connection.
   /// @throws UnknownException
@@ -41,6 +43,45 @@ class RequestsContainer {
         header.putIfAbsent(
             "Authorization", () => "Bearer ${AuthContainer.token}");
       }
+      http.Response response = await http.get(url, headers: header);
+      debugPrint("after api get $url ${response.statusCode}");
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else {
+        throw UnknownException(
+            msg: "unknown error in RequestContainer.getData.statusCode");
+      }
+    } on Exception catch (e) {
+      debugPrint("in catch get request $e ;;;;; $pathStr");
+      throw UnknownException(
+          msg: "unknown error in RequestContainer.getData$e");
+    }
+  }
+
+
+  /// It preforms authenticated GET request in a json format.
+  /// @pre-condition the caller checks internet connection.
+  /// @throws UnknownException
+  static Future<Map<String, dynamic>> getAuthData( String pathStr, Map<String, dynamic>? queryMap) async {
+    try {
+      // prepare the request uri
+      Uri url;
+      if (queryMap != null && queryMap.isNotEmpty) {
+        String base =
+            "${Env.apiUrl.substring(Env.apiUrl.indexOf("/") + 2)}:${Env.apiPort}"; // to remove https://
+        url = Uri.http(base, pathStr,
+            queryMap.map((key, value) => MapEntry(key, value.toString())));
+      } else {
+        url = Uri.parse("${Env.apiUrl}:${Env.apiPort}$pathStr");
+      }
+
+      // set the header and call the request
+      debugPrint("before api get $url");
+      Map<String, String> header = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ${AuthContainer.token}"
+      };
+
       http.Response response = await http.get(url, headers: header);
       debugPrint("after api get $url ${response.statusCode}");
       if (response.statusCode == 200) {

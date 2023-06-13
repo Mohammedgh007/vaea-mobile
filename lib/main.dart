@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
             locale: (value.userSettingsModel != null &&
                     value.userSettingsModel!.languageCode != null)
                 ? Locale(value.userSettingsModel!.languageCode!)
-                : null,
+                : Locale("ar"),
             onGenerateTitle: (ctx) => AppLocalizations.of(ctx)!.appName,
             theme: ThemeData(
               colorScheme: getColorScheme(),

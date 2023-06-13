@@ -40,7 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       } else {
         try {
+          debugPrint("ELSE");
           await bookingProvider.getMyHomeDetails().then((value) {
+            debugPrint("got");
             setState(() {
               myHomeModel = bookingProvider.myHomeDetails;
               isLoading = false;
@@ -48,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
             });
           });
         } on Exception catch(e) {
+          debugPrint("catch $e");
           setState(() {
             isLoading = false;
             shouldShowHomeDetails = false;
