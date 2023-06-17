@@ -13,6 +13,7 @@ import 'package:vaea_mobile/helpers/excpetions/invalid_credentials_except.dart';
 import 'package:vaea_mobile/helpers/excpetions/unknown_except.dart';
 
 import '../../helpers/excpetions/internet_connection_except.dart';
+import '../dto/reset_password_dto.dart';
 
 /// It facilitates accessing the backend of user registration to SignUpProvider.
 class ProfileRepo {
@@ -99,6 +100,18 @@ class ProfileRepo {
       return model;
     } on Exception catch(e) {
       throw InvalidCredentialsException(msg: "error in auth sign in $e");
+    }
+  }
+
+
+  /// It lets the user to reset the password after otp verification
+  /// @throws InternetConnectionException, InvalidCredentialsException
+  Future<void> resetPassword(ResetPasswordDto payload) async {
+    try {
+      String pathStr = "/tenants/reset-password";
+      await RequestsContainer.postData(pathStr, payload.getFieldMap());
+    } on Exception catch(e) {
+      throw InvalidCredentialsException(msg: "error in resetPassowrd $e");
     }
   }
 

@@ -9,6 +9,7 @@ import 'package:vaea_mobile/view/screens/home_screen.dart';
 import 'package:vaea_mobile/view/screens/home_search_screen.dart';
 import 'package:vaea_mobile/view/screens/intro_screen.dart';
 import 'package:vaea_mobile/view/screens/profile_screen.dart';
+import 'package:vaea_mobile/view/screens/reset_password_screen.dart';
 import 'package:vaea_mobile/view/screens/services_screen.dart';
 import 'package:vaea_mobile/view/screens/sign_in_screen.dart';
 import 'package:vaea_mobile/view/screens/sign_up_screen.dart';
@@ -34,6 +35,7 @@ class RoutesMapper {
     ScreenName.services: "/services",
     ScreenName.submitServiceRequest: "/services/submit-request",
     ScreenName.profile: "/profile",
+    ScreenName.resetPassword: "/profile/reset-password",
     ScreenName.homePrompt: "/home/search-prompt",
     ScreenName.homeSearch: "/home/search-prompt/search-result",
     ScreenName.homeDetails: "/home/search-prompt/search-result/home-details",
@@ -52,11 +54,12 @@ class RoutesMapper {
     _routesMap[ScreenName.home] ?? "errorScreen": HomeScreen(),
     _routesMap[ScreenName.activities] ?? "errorScreen": const ActivitiesScreen(),
     _routesMap[ScreenName.activityDetailsScreen] ?? "errorScreen": const ActivityDetailsScreen(),
-    _routesMap[ScreenName.services] ?? "errorScreen": const ServicesScreen(),
+    _routesMap[ScreenName.services] ?? "errorScreen": ServicesScreen(),
     _routesMap[ScreenName.submitServiceRequest] ?? "errorScreen" : SubmitRequestScreen(),
+    _routesMap[ScreenName.resetPassword] ?? "errorScreen" : ResetPasswordScreen(),
     _routesMap[ScreenName.profile] ?? "errorScreen": ProfileScreen(),
     _routesMap[ScreenName.homePrompt] ?? "errorScreen": HomePromptScreen(),
-    _routesMap[ScreenName.homeSearch] ?? "errorScreen": const HomeSearchScreen(),
+    _routesMap[ScreenName.homeSearch] ?? "errorScreen": HomeSearchScreen(),
     _routesMap[ScreenName.homeDetails] ?? "errorScreen": HomeDetailsScreen(),
     _routesMap[ScreenName.booking] ?? "errorScreen": BookingScreen(),
     _routesMap[ScreenName.accountTermination] ?? "errorScreen": AccountTerminationScreen(),
@@ -89,6 +92,7 @@ enum ScreenName {
   submitServiceRequest,
 
   profile,
+  resetPassword,
 
   homePrompt,
   homeSearch,

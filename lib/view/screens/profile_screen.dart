@@ -49,6 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ? settingsProvider.userSettingsModel!.languageCode!
         : AppLocalizations.of(context)!.localeName,
       handleClickLanguage: handleClickLanguage,
+      handleClickResetPassword: handleClickResetPassword,
       handleClickSignIn: handleClickSignIn,
       handleClickSignOut: handleClickSignOut,
     );
@@ -58,7 +59,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   /// It handles the event of clicking changing the language by showing the modal language.
   void handleClickLanguage(String selectedLanguageIso) {
     settingsProvider.changeUserLanguage(selectedLanguageIso);
+  }
 
+
+  /// It handles the event of clicking reset password to take the user to reset password screen.
+  void handleClickResetPassword() {
+    Navigator.of(context).pushNamed(RoutesMapper.getScreenRoute(ScreenName.resetPassword));
   }
 
 

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:vaea_mobile/data/dto/request_email_otp_dto.dart';
+import 'package:vaea_mobile/data/dto/reset_password_dto.dart';
 import 'package:vaea_mobile/data/dto/sign_in_dto.dart';
 import 'package:vaea_mobile/data/dto/sign_up_dto.dart';
 import 'package:vaea_mobile/data/model/user_profile_model.dart';
@@ -66,6 +67,19 @@ class ProfileProvider extends ChangeNotifier {
       profileModel = await _repo.signInTenant(requestDto);
       notifyListeners();
       return profileModel!.userLanguage;
+    } on InternetConnectionException catch(e) {
+      rethrow;
+    } on InvalidCredentialsException catch(e) {
+      rethrow;
+    }
+  }
+
+
+  /// It lets the user to reset the password.
+  /// @throws InternetConnectionException, InvalidCredentialsException
+  Future<void> resetPassword(ResetPasswordDto requestDto) async {
+    try {
+      _repo.resetPassword(requestDto);
     } on InternetConnectionException catch(e) {
       rethrow;
     } on InvalidCredentialsException catch(e) {

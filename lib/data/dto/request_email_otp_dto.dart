@@ -4,7 +4,7 @@
 class RequestEmailOTPDto {
 
   String emailAddress;
-  /// It must be either REGISTRATION or TERMINATION
+  /// It must be either REGISTRATION or TERMINATION or RESET_PASSWORD
   String requestType;
   /// It must be either en or ar
   String languageIso;

@@ -243,6 +243,8 @@
     "otherElectricianCategory": "Other",
     "houseHasBeenBooked": "The house has been booked",
     "leaseWillBeSent": "Your Eijar lease will be emailed to your within few hours",
-    "virtualTour": "Virtual Tour"
+    "virtualTour": "Virtual Tour",
+    "thereNoAccountWithThisEmail": "There is no associated account with this email address",
+    "resetPasswordScreen": "Reset Password"
 
 }

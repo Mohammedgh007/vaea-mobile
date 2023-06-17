@@ -19,6 +19,7 @@ import 'package:vaea_mobile/bloc/providers/launch_requirements_provider.dart';
 import 'package:vaea_mobile/bloc/providers/profile_provider.dart';
 import 'package:vaea_mobile/bloc/providers/user_settings_provider.dart';
 import 'package:vaea_mobile/routes_mapper.dart';
+import 'package:vaea_mobile/view/screens/intro_screen.dart';
 import 'package:vaea_mobile/view/screens/spash_screen.dart';
 
 import 'bloc/providers/activities_provider.dart';
@@ -63,14 +64,14 @@ class MyApp extends StatelessWidget {
             locale: (value.userSettingsModel != null &&
                     value.userSettingsModel!.languageCode != null)
                 ? Locale(value.userSettingsModel!.languageCode!)
-                : Locale("ar"),
+                : Locale("en"),
             onGenerateTitle: (ctx) => AppLocalizations.of(ctx)!.appName,
             theme: ThemeData(
               colorScheme: getColorScheme(),
               fontFamily:
                   (myLocale.languageCode == "en") ? "Kollektif" : "29LTZawi",
             ),
-            home: SplashScreen(),
+            home: IntroScreen(), //SplashScreen(),
             onGenerateRoute: (settings) {
               return PageTransition(
                   child: RoutesMapper.screensMap[settings.name]!,

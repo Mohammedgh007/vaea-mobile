@@ -243,7 +243,10 @@
     "otherElectricianCategory": "أخرى",
     "houseHasBeenBooked": "تم حجز المنزل",
     "leaseWillBeSent": "سيتم ارسال عقد ايجار الى بريدك الإلكروني في الساعات القادمة",
-    "virtualTour": "الجولة الافتراضية"
+    "virtualTour": "الجولة الافتراضية",
+    "thereNoAccountWithThisEmail": "لا يوجد حساب مربتط بعنوان البريد الإلكتروني",
+    "resetPasswordScreen": "تغيير كلمة المرور"
+
 
 
 }

@@ -20,6 +20,7 @@ class ProfileMobileLayout extends StatefulWidget {
   String profileFullName;
   String preSelectedLanguage;
   void Function(String selectedLanguageIso) handleClickLanguage;
+  void Function() handleClickResetPassword;
   void Function() handleClickSignIn;
   void Function() handleClickSignOut;
 
@@ -30,6 +31,7 @@ class ProfileMobileLayout extends StatefulWidget {
     required this.profileFullName,
     required this.preSelectedLanguage,
     required this.handleClickLanguage,
+    required this.handleClickResetPassword,
     required this.handleClickSignIn,
     required this.handleClickSignOut
   });
@@ -155,6 +157,8 @@ class _ProfileMobileLayoutState extends State<ProfileMobileLayout> {
       Divider(height: btnSpacer, color: Theme.of(context).colorScheme.outline),
       buildLanguageBtn(),
       Divider(height: btnSpacer, color: Theme.of(context).colorScheme.outline),
+      if (widget.isSignedIn) buildResetPasswordBtn(),
+      if (widget.isSignedIn) Divider(height: btnSpacer, color: Theme.of(context).colorScheme.outline),
       buildTermsConditionBtn(),
       Divider(height: btnSpacer, color: Theme.of(context).colorScheme.outline),
       if (widget.isSignedIn) buildSignOutBtn(),
@@ -223,6 +227,19 @@ class _ProfileMobileLayoutState extends State<ProfileMobileLayout> {
       handleClick: showLanguageModal,
       buttonText: AppLocalizations.of(context)!.language,
       iconData: Icons.language,
+      includeNextIcon: true,
+    );
+  }
+
+
+  /// It is a helper method for buildSpacedBtn. It builds the reset password button.
+  Widget buildResetPasswordBtn() {
+    return IconTextBtn(
+      breakpoint: breakpoint,
+      layoutConstraints: layoutConstraints,
+      handleClick: widget.handleClickResetPassword,
+      buttonText: AppLocalizations.of(context)!.resetPasswordScreen,
+      iconData: Icons.lock_reset_rounded,
       includeNextIcon: true,
     );
   }
