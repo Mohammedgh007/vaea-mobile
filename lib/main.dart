@@ -64,14 +64,14 @@ class MyApp extends StatelessWidget {
             locale: (value.userSettingsModel != null &&
                     value.userSettingsModel!.languageCode != null)
                 ? Locale(value.userSettingsModel!.languageCode!)
-                : Locale("en"),
+                : Locale("ar"),
             onGenerateTitle: (ctx) => AppLocalizations.of(ctx)!.appName,
             theme: ThemeData(
               colorScheme: getColorScheme(),
               fontFamily:
                   (myLocale.languageCode == "en") ? "Kollektif" : "29LTZawi",
             ),
-            home: IntroScreen(), //SplashScreen(),
+            home: SplashScreen(),
             onGenerateRoute: (settings) {
               return PageTransition(
                   child: RoutesMapper.screensMap[settings.name]!,

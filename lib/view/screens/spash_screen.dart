@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   /// It setups using the app by checking launch requirements, user settings, and
   /// loading authentication token.
-  Future<void> setupApp() async{ return;
+  Future<void> setupApp() async{
     // calling the providers to setup the app.
     await Future.wait([
       requirementsProvider.checkLaunchRequirements(),

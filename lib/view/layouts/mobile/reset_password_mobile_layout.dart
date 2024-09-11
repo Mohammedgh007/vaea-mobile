@@ -2,27 +2,35 @@
 import 'package:breakpoint/breakpoint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vaea_mobile/view/widgets/containers/confirmation_message_container.dart';
+import 'package:vaea_mobile/view/widgets/forms/reset_password_forms/email_address_reset_pass_form.dart';
+import 'package:vaea_mobile/view/widgets/forms/reset_password_forms/otp_reset_pass_form.dart';
+import 'package:vaea_mobile/view/widgets/forms/reset_password_forms/password_reset_pass_form.dart';
 import '../../widgets/navigation/adaptive_top_app_bar.dart';
 import '../../widgets/vaea_ui/vaea_horizontal_stepper.dart';
 
 /// It handles the ui appearance and user interaction for ResetPasswordScreen.
 class ResetPasswordMobileLayout extends StatefulWidget {
 
+  String? prefilledEmailAddress;
   Future<String?> Function(String? input) validateEmailAddress;
   Future<bool> Function(String emailAddress) submitEmailAddress;
   Future<String?> Function(String? input, String emailAddress) validateOTP;
   String? Function(String? input) validatePassword;
   String? Function( String? passwordInput, String? confirmPasswordInput) validateConfirmPassword;
   Future<bool> Function(String emailAddress, String oldPassword, String newPassword) submitResetPassword;
+  void Function() handleClickFinish;
 
   ResetPasswordMobileLayout({
     super.key,
+    this.prefilledEmailAddress,
     required this.validateEmailAddress,
     required this.submitEmailAddress,
     required this.validateOTP,
     required this.validatePassword,
     required this.validateConfirmPassword,
-    required this.submitResetPassword
+    required this.submitResetPassword,
+    required this.handleClickFinish
   });
 
 
@@ -31,6 +39,9 @@ class ResetPasswordMobileLayout extends StatefulWidget {
 }
 
 class _ResetPasswordMobileLayoutState extends State<ResetPasswordMobileLayout> {
+
+  // inputs
+  String inputtedEmailAddress = "";
 
   late Breakpoint breakpoint;
   late BoxConstraints layoutConstraints;
@@ -102,9 +113,9 @@ class _ResetPasswordMobileLayoutState extends State<ResetPasswordMobileLayout> {
         breakpoint: breakpoint,
         layoutConstraints: layoutConstraints,
         stepsNames: [
-          AppLocalizations.of(context)!.leasePeriod,
-          AppLocalizations.of(context)!.confirmation,
-          AppLocalizations.of(context)!.payment
+          AppLocalizations.of(context)!.emailAddressStep,
+          AppLocalizations.of(context)!.verification,
+          AppLocalizations.of(context)!.passwordResetStep
         ],
         currStep: currStep
     );
@@ -115,27 +126,93 @@ class _ResetPasswordMobileLayoutState extends State<ResetPasswordMobileLayout> {
   Widget buildNthStepContent() {
     switch(currStep) {
       case 0: // Lease period
-        return SizedBox();
+        return EmailAddressResetPassForm(
+          breakpoint: breakpoint,
+          layoutConstraints: layoutConstraints,
+          prefilledEmailAddress: (inputtedEmailAddress.isNotEmpty) ? inputtedEmailAddress : widget.prefilledEmailAddress,
+          validateEmailAddress: widget.validateEmailAddress,
+          handleSubmitEmailAddress: handleSubmitEmailAddressForm,
+          handleClickCancel: handleClickCancel
+        );
       case 1:
-        return SizedBox();
+        return OTPResetPassForm(
+          breakpoint: breakpoint,
+          layoutConstraints: layoutConstraints,
+          validateOTP: (String? otp) => widget.validateOTP(otp, inputtedEmailAddress),
+          handleSubmitOTP: handleSubmitOTP,
+          handleClickPrevious: handleClickPreviousOTP
+        );
       case 2:
-        return SizedBox();
+        return PasswordResetPassForm(
+          breakpoint: breakpoint,
+          layoutConstraints: layoutConstraints,
+          validatePassword: widget.validatePassword,
+          validateConfirmPassword: widget.validateConfirmPassword,
+          submitResetPassword: submitResetPassword,
+          handleClickPrevious: handleClickPreviousPassword
+        );
       default: // confirming the booking success
-        return SizedBox();
+        return ConfirmationMessageContainer(
+          breakpoint: breakpoint,
+          layoutConstraints: layoutConstraints,
+          titleMessage: AppLocalizations.of(context)!.resetPasswordConfirmTitle,
+          subTitleMessage: "sssssssss sssssss sssss ss\n aaaaaa",
+          actionButtonTitle: AppLocalizations.of(context)!.finish,
+          handleClickActionButton: widget.handleClickFinish
+        );
     }
   }
 
+  /// It handles submitting the email address form
+  Future<bool> handleSubmitEmailAddressForm(String emailAddress) async {
+    bool wasSuccess = await widget.submitEmailAddress(emailAddress);
+    if (wasSuccess) {
+      setState(() {
+        inputtedEmailAddress = emailAddress;
+        currStep = 1;
+      });
+    }
+
+    return wasSuccess;
+  }
+
+
+  /// It handles submitting the password form
+  Future<bool> submitResetPassword(String oldPassword, String newPassword) async {
+    bool wasSuccess = await widget.submitResetPassword(inputtedEmailAddress, oldPassword, newPassword);
+    if (wasSuccess) {
+      setState(() {
+        currStep = 3;
+      });
+    }
+
+    return wasSuccess;
+  }
+
+
+  /// It handles submitting the otp code assuming it is validated.
+  void handleSubmitOTP() {
+    setState(() {
+      currStep = 2;
+    });
+  }
 
   /// It handles the event of clicking cancel.
   void handleClickCancel() {
     Navigator.of(context).pop();
   }
 
-  /// It handles the event of clicking previous
-  void handleClickPrevious() {
+  /// It handles the event of clicking previous on otp form
+  void handleClickPreviousOTP() {
     setState(() {
       currStep = currStep - 1;
     });
+  }
+
+
+  /// It handles the event of clicking previous on reset password form
+  void handleClickPreviousPassword() {
+
   }
 
 }

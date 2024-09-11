@@ -44,13 +44,13 @@ class ConfirmationMessageContainer extends StatelessWidget {
       containerPadding = layoutConstraints.maxWidth * 0.04;
       textSpacer = layoutConstraints.maxHeight * 0.02;
       textButtonSpacer = layoutConstraints.maxHeight * 0.06;
-      titleFontSize = Theme.of(context).textTheme.headlineMedium!.fontSize;
+      titleFontSize = Theme.of(context).textTheme.headlineSmall!.fontSize;
     } else {
       iconSize = layoutConstraints.maxWidth * 0.7;
       containerPadding = layoutConstraints.maxWidth * 0.04;
       textSpacer = layoutConstraints.maxHeight * 0.02;
       textButtonSpacer = layoutConstraints.maxHeight * 0.06;
-      titleFontSize = Theme.of(context).textTheme.headlineMedium!.fontSize;
+      titleFontSize = Theme.of(context).textTheme.headlineSmall!.fontSize;
     }
   }
 

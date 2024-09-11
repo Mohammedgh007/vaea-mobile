@@ -245,6 +245,13 @@
     "leaseWillBeSent": "Your Eijar lease will be emailed to your within few hours",
     "virtualTour": "Virtual Tour",
     "thereNoAccountWithThisEmail": "There is no associated account with this email address",
-    "resetPasswordScreen": "Reset Password"
-
+    "resetPasswordScreen": "Reset Password",
+    "inputEmailAddressOfYourAccount": "Please type the email address that is associated with your account.",
+    "emailAddressStep": "Email Address",
+    "passwordResetStep": "Reset Password",
+    "resetPasswordStep2Instruction": "An otp code has been sent to your email address. Please type the code below to verify you.",
+    "oldPasswordLabelField": "Current Password",
+    "newPasswordLabelField": "New Password",
+    "newConfirmPasswordLabelField": "Confirm New Password",
+    "resetPasswordConfirmTitle": "The password has been reset successfully"
 }

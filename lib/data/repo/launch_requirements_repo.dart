@@ -26,7 +26,7 @@ class LaunchRequirementRepo {
 
   /// It checks if the current version is above the minimum version.
   /// @pre-condition there is a stable internet connection.
-  static Future<bool> checkMinimumVersion() async{
+  static Future<bool> checkMinimumVersion() async{ return true;
     try {
       // retrieves the minimum version from the server
       String pathStr = "/tenants/get-minimum-mobile-version";

@@ -6,6 +6,7 @@ import 'package:vaea_mobile/bloc/validators/reset_password_validator.dart';
 import 'package:vaea_mobile/data/dto/request_email_otp_dto.dart';
 import 'package:vaea_mobile/data/dto/reset_password_dto.dart';
 import 'package:vaea_mobile/helpers/excpetions/internet_connection_except.dart';
+import 'package:vaea_mobile/routes_mapper.dart';
 import 'package:vaea_mobile/view/layouts/mobile/reset_password_mobile_layout.dart';
 
 import '../../bloc/providers/profile_provider.dart';
@@ -38,12 +39,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   Widget build(BuildContext context) {
 
     return ResetPasswordMobileLayout(
+      prefilledEmailAddress: (profileProvider.profileModel != null) ? profileProvider.profileModel!.emailAddress : null,
       validateEmailAddress: validator.validateEmailAddress,
       submitEmailAddress: handleSubmitEmail,
       validateOTP: validator.validateOTP,
       validatePassword: validator.validatePassword,
       validateConfirmPassword: validator.validateConfirmPassword,
-      submitResetPassword: handleSubmitResetPassword
+      submitResetPassword: handleSubmitResetPassword,
+      handleClickFinish: handleClickFinish,
     );
   }
 
@@ -69,6 +72,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     } on InternetConnectionException catch(e) {
       return false;
     }
+  }
+
+
+  /// It lets the user leaves the screen after successfully resetting the password.
+  void handleClickFinish() {
+    if (profileProvider.profileModel != null) {
+      Navigator.of(context).pushReplacementNamed(RoutesMapper.getScreenRoute(ScreenName.profile));
+    } else {
+      Navigator.of(context).pushReplacementNamed(RoutesMapper.getScreenRoute(ScreenName.signIn));
+    }
+
   }
 
 }

@@ -245,8 +245,13 @@
     "leaseWillBeSent": "سيتم ارسال عقد ايجار الى بريدك الإلكروني في الساعات القادمة",
     "virtualTour": "الجولة الافتراضية",
     "thereNoAccountWithThisEmail": "لا يوجد حساب مربتط بعنوان البريد الإلكتروني",
-    "resetPasswordScreen": "تغيير كلمة المرور"
-
-
-
+    "resetPasswordScreen": "تغيير كلمة المرور",
+    "inputEmailAddressOfYourAccount": "برجاء كتابة عنوان البريد الإلكتروني المرتبط بحسابك",
+    "emailAddressStep": "البريد الإلكتزوني",
+    "passwordResetStep": "كلمة المرور",
+    "resetPasswordStep2Instruction":  "تم إرسال رمز تحقق لبريدك الإلكروني. يرجى كتابة الرمز للتأكد من هويتك.",
+    "oldPasswordLabelField": "كلمة المرور الحالية",
+    "newPasswordLabelField": "كلمة المرور الجديدة",
+    "newConfirmPasswordLabelField": "تأكيد كلمة المرور الجديدة",
+    "resetPasswordConfirmTitle": "تم تغيير كلمة المرور بنجاح"
 }
